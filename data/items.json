@@ -1532,6 +1532,18 @@
     "name": "Wellspring Mask"
   },
   {
+    "id": "absolitez",
+    "name": "Absolite Z"
+  },
+  {
+    "id": "barbaracite",
+    "name": "Barbaracite"
+  },
+  {
+    "id": "baxcalibrite",
+    "name": "Baxcalibrite"
+  },
+  {
     "id": "chandelurite",
     "name": "Chandelurite"
   },
@@ -1552,8 +1564,16 @@
     "name": "Crabominite"
   },
   {
+    "id": "darkranite",
+    "name": "Darkranite"
+  },
+  {
     "id": "delphoxite",
     "name": "Delphoxite"
+  },
+  {
+    "id": "dragalgite",
+    "name": "Dragalgite"
   },
   {
     "id": "dragoninite",
@@ -1564,12 +1584,20 @@
     "name": "Drampanite"
   },
   {
+    "id": "eelektrossite",
+    "name": "Eelektrossite"
+  },
+  {
     "id": "emboarite",
     "name": "Emboarite"
   },
   {
     "id": "excadrite",
     "name": "Excadrite"
+  },
+  {
+    "id": "falinksite",
+    "name": "Falinksite"
   },
   {
     "id": "feraligite",
@@ -1584,8 +1612,16 @@
     "name": "Frosslassite"
   },
   {
+    "id": "garchompitez",
+    "name": "Garchompite Z"
+  },
+  {
     "id": "glimmoranite",
     "name": "Glimmoranite"
+  },
+  {
+    "id": "golisopite",
+    "name": "Golisopite"
   },
   {
     "id": "golurkite",
@@ -1600,6 +1636,22 @@
     "name": "Hawluchanite"
   },
   {
+    "id": "heatranite",
+    "name": "Heatranite"
+  },
+  {
+    "id": "lucarionitez",
+    "name": "Lucarionite Z"
+  },
+  {
+    "id": "magearnite",
+    "name": "Magearnite"
+  },
+  {
+    "id": "malamarite",
+    "name": "Malamarite"
+  },
+  {
     "id": "meganiumite",
     "name": "Meganiumite"
   },
@@ -1608,19 +1660,55 @@
     "name": "Meowsticite"
   },
   {
+    "id": "pyroarite",
+    "name": "Pyroarite"
+  },
+  {
+    "id": "raichunitex",
+    "name": "Raichunite X"
+  },
+  {
+    "id": "raichunitey",
+    "name": "Raichunite Y"
+  },
+  {
+    "id": "scolipite",
+    "name": "Scolipite"
+  },
+  {
     "id": "scovillainite",
     "name": "Scovillainite"
+  },
+  {
+    "id": "scraftinite",
+    "name": "Scraftinite"
   },
   {
     "id": "skarmorite",
     "name": "Skarmorite"
   },
   {
+    "id": "staraptite",
+    "name": "Staraptite"
+  },
+  {
     "id": "Starminite",
     "name": "Starminite"
   },
   {
+    "id": "tatsugirinite",
+    "name": "Tatsugirinite"
+  },
+  {
     "id": "victreebelite",
     "name": "Victreebelite"
+  },
+  {
+    "id": "zeraorite",
+    "name": "Zeraorite"
+  },
+  {
+    "id": "zygardite",
+    "name": "Zygardite"
   }
 ]

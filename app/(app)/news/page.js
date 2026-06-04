@@ -1,8 +1,10 @@
-import ChangelogCard from "@/app/ui/changelog-card";
+import { auth } from "@/auth";
+import ChangelogCard from "@/app/ui/news-card";
 import Button from "@/app/ui/button";
 
-export default function Page() {
-  const isAdmin = false; // Placeholder for admin check
+export default async function Page() {
+  const session = await auth();
+  const isAdmin = session?.user?.isAdmin || false;
 
   return (
     <>

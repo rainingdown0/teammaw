@@ -1,12 +1,13 @@
-import Image from "next/image";
-import Link from "next/link";
+import { auth } from "@/auth";
 import Navbar from "@/app/ui/navbar";
 
-export default function Layout({ children }) {
+export default async function Layout({ children }) {
+  const session = await auth();
+
   return (
     <div className="flex h-dvh w-dvw">
-      <Navbar />
-      <div className="flex h-full min-w-0 flex-1 flex-col gap-8 overflow-y-scroll p-8">
+      <Navbar session={session} />
+      <div className="flex h-full min-w-0 flex-1 flex-col gap-8 overflow-y-scroll px-8 pt-16">
         {children}
       </div>
     </div>

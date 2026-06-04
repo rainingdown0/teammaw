@@ -6,8 +6,9 @@ import Icon from "./icons";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 
-export default function Navbar() {
-  const isAdmin = false; // TODO: Get this from the user session
+export default function Navbar({ session }) {
+  const isLoggedIn = !!session?.user;
+  const isAdmin = session?.user?.isAdmin || false;
 
   return (
     <nav className="flex h-full w-60 flex-col justify-between gap-16 p-8 pb-16">
@@ -20,9 +21,12 @@ export default function Navbar() {
         <NavTab name={"Build"} link={"/teams"} icon={"add"} />
       </div>
       <div className="flex h-fit w-full flex-col gap-4">
+        {!isLoggedIn && (
+          <NavTab name={"Sign in"} link={"/sign-in"} icon={"login"} />
+        )}
         {isAdmin && <NavTab name={"Admin"} link={"/admin"} icon={"terminal"} />}
+        <NavTab name={"News"} link={"/news"} icon={"megaphone"} />
         <NavTab name={"Donate"} link={"/donation"} icon={"donation"} />
-        <NavTab name={"Changelog"} link={"/changelog"} icon={"megaphone"} />
         <NavTab name={"Settings"} link={"/settings"} icon={"gear"} />
       </div>
     </nav>
@@ -44,13 +48,12 @@ export function NavTab({ name, link, icon }) {
       <Icon
         name={icon}
         color={clsx(
-          "transition",
           pathname.startsWith(link) && !["Build"].includes(name)
             ? "fill-base-text"
             : "fill-base-text-darker group-hover:fill-base-text-dark",
         )}
       />
-      <span className="text-normal font-semibold">{name}</span>
+      <span className="font-semibold">{name}</span>
     </Link>
   );
 }
@@ -64,7 +67,7 @@ export function NavLogo() {
         <span className="text-4xl text-primary">MAW</span>
       </p>
       <Image
-        className="relative right-8 bottom-3 h-auto"
+        className="relative right-9 bottom-1.5 h-8 w-8"
         src="/maw.png"
         width={32}
         height={32}

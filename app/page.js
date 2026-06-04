@@ -14,16 +14,12 @@ export default function Page() {
         loading="eager"
       />
       <div className="flex flex-col items-center">
-        <span className="text-normal leading-none font-extrabold text-accent">
-          TEAMMAW
-        </span>
+        <span className="leading-none font-extrabold text-accent">TEAMMAW</span>
         <h1 className="text-hero leading-none font-extrabold text-primary">
           BUILD. SHARE. DISCOVER.
         </h1>
       </div>
-      <p className="text-normal font-medium">
-        The Pokémon VGC teambuilding community
-      </p>
+      <p className="font-medium">The Pokémon VGC teambuilding community</p>
       <Link href={"/sign-in"}>
         <Button text="Start Building" />
       </Link>
