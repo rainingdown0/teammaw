@@ -4,7 +4,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "img.pokemondb.net",
+        hostname: "raw.githubusercontent.com",
         pathname: "/**",
       },
     ],

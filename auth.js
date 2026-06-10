@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
-import { z } from "zod"; // 1. Import Zod
+import { z } from "zod";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -45,6 +45,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (user) {
         token.username = user.username;
         token.isAdmin = user.isAdmin;
+        token.createdAt = user.createdAt;
       }
       return token;
     },

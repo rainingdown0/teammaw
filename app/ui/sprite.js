@@ -1,13 +1,21 @@
 import Image from "next/image";
-import { getPokemonSprite, getMegaSprite } from "@/lib/sprites";
 import { MEGASTONE_MAP } from "@/lib/megastones";
 import pokemonData from "@/data/pokemon";
+import { POKEAPI_VARIANT_IDS } from "@/lib/pokeapi-ids";
 
-function getCdnSlug(mon) {
+function getSprite(id) {
+  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+}
+
+function getVariantKey(mon, isMega, suffix) {
   const baseName = mon.name
     .toLowerCase()
     .replace(/\s+/g, "-")
     .replace(/[^a-z0-9-]/g, "");
+
+  if (isMega && suffix) {
+    return `${baseName}-${suffix.toLowerCase().trim()}`;
+  }
 
   if (!mon.form) return baseName;
 
@@ -32,11 +40,11 @@ export function TeamSprite({ pokemon, item }) {
     ? stoneConfig.holders.includes(pokemon.toLowerCase())
     : false;
 
-  const cdnSlug = getCdnSlug(mon);
+  const variantKey = getVariantKey(mon, isMega, stoneConfig?.suffix);
 
-  const src = isMega
-    ? getMegaSprite(cdnSlug, stoneConfig.suffix)
-    : getPokemonSprite(cdnSlug);
+  const targetId = POKEAPI_VARIANT_IDS[variantKey] || mon.dexNumber;
+
+  const src = getSprite(targetId);
 
   return (
     <Image

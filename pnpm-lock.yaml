@@ -11,12 +11,6 @@ importers:
       '@neondatabase/serverless':
         specifier: ^1.1.0
         version: 1.1.0
-      '@pkmn/data':
-        specifier: ^0.10.9
-        version: 0.10.9
-      '@pkmn/dex':
-        specifier: ^0.10.9
-        version: 0.10.9
       '@prisma/adapter-neon':
         specifier: ^7.8.0
         version: 7.8.0
@@ -511,18 +505,6 @@ packages:
 
   '@panva/hkdf@1.2.1':
     resolution: {integrity: sha512-6oclG6Y3PiDFcoyk8srjLfVKyMfVCKJ27JwNPViuXziFpmdz+MZnZN/aKY0JGXgYuO/VghU0jcOAZgWXZ1Dmrw==}
-
-  '@pkmn/data@0.10.9':
-    resolution: {integrity: sha512-VAXcHvQNW0AYDlsms64/9wlTNF3grqtpSjHeQoV+U6kyOAg2BqqERjiRUZToF+Zv5xww+HPjm6MaTMiLnNDc9g==}
-
-  '@pkmn/dex-types@0.10.9':
-    resolution: {integrity: sha512-EPHMWM+JckpaT58VnNcazH6s6D//DmvXVqCJFUn8id19OSZgcIGqg62TJFebQ+kWeCHKcXzDX8UMxRzBjaJJXA==}
-
-  '@pkmn/dex@0.10.9':
-    resolution: {integrity: sha512-MzNQmIDrVb7kAheSvwD3fZm2gZRlsFKnKtp8FXHgVFlkTqaD0bv1M4ndFXicTKlsmeYX4WP+3mGZqFgKQTwahA==}
-
-  '@pkmn/types@4.0.0':
-    resolution: {integrity: sha512-gR2s/pxJYEegek1TtsYCQupNR3d5hMlcJFsiD+2LyfKr4tc+gETTql47tWLX5mFSbPcbXh7f4+7txlMIDoZx/g==}
 
   '@prisma/adapter-neon@7.8.0':
     resolution: {integrity: sha512-9MoOjRuY53sQNyji87u1NivsK0tIacoUE3PqTxdG95b7ORn1pzwribH2z83j4Vh3eb9nQ/UC+MTfVW7jCFnXlA==}
@@ -2878,20 +2860,6 @@ snapshots:
   '@nolyfill/is-core-module@1.0.39': {}
 
   '@panva/hkdf@1.2.1': {}
-
-  '@pkmn/data@0.10.9':
-    dependencies:
-      '@pkmn/dex-types': 0.10.9
-
-  '@pkmn/dex-types@0.10.9':
-    dependencies:
-      '@pkmn/types': 4.0.0
-
-  '@pkmn/dex@0.10.9':
-    dependencies:
-      '@pkmn/dex-types': 0.10.9
-
-  '@pkmn/types@4.0.0': {}
 
   '@prisma/adapter-neon@7.8.0':
     dependencies:

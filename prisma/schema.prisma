@@ -50,6 +50,12 @@ model TeamPokemon {
   abilityId String
   itemId    String?
   nature    String
+  evHp      Int // min 0 max 32
+  evAtk     Int
+  evDef     Int
+  evSpa     Int
+  evSpd     Int
+  evSpe     Int
 
   team  Team              @relation(fields: [teamId], references: [id], onDelete: Cascade)
   moves TeamPokemonMove[]
@@ -68,17 +74,6 @@ model TeamPokemonMove {
   @@unique([teamPokemonId, slot])
 }
 
-model Changelog {
-  id        String   @id @default(cuid())
-  userId    String
-  title     String
-  content   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
 model TeamLike {
   id     String @id @default(cuid())
   teamId String
@@ -88,4 +83,15 @@ model TeamLike {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([teamId, userId]) // prevents a user liking the same team twice
+}
+
+model Changelog {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

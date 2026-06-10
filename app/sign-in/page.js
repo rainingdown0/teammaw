@@ -2,41 +2,42 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import LoginField from "@/app/ui/login-field";
-import { signIn } from "next-auth/react";
+import { signInAction } from "@/app/actions/auth";
 
 export default function Page() {
   const [errors, setErrors] = useState({});
   const [isPending, setIsPending] = useState(false);
-  const router = useRouter();
 
   async function handleSubmit(e) {
     e.preventDefault();
     setErrors({});
     setIsPending(true);
 
-    const form = new FormData(e.target);
+    const formData = new FormData(e.target);
 
-    const response = await signIn("credentials", {
-      username: form.get("username"),
-      password: form.get("password"),
-      redirect: false,
-    });
+    try {
+      const result = await signInAction(formData);
 
-    if (response?.error) {
-      // Attach the generic error to the password field
-      setErrors({ password: "Invalid username or password." });
+      if (result?.errors) {
+        if (result.errors.form) {
+          setErrors({ password: result.errors.form });
+        } else {
+          setErrors(result.errors);
+        }
+      }
+    } catch (err) {
+      console.error("Sign in failed:", err);
+    } finally {
       setIsPending(false);
-    } else if (response?.ok) {
-      router.push("/home");
-      router.refresh();
     }
   }
 
   return (
     <div className="mt-16 flex min-h-dvh w-full flex-col items-center justify-start gap-8">
-      <h1 className="text-hero font-extrabold text-primary">SIGN IN</h1>
+      <h1 className="text-hero font-extrabold tracking-tighter text-primary">
+        SIGN IN
+      </h1>
 
       <form
         onSubmit={handleSubmit}
@@ -46,14 +47,14 @@ export default function Page() {
           name="username"
           label="Username"
           placeholder="Enter your username"
-          error={errors?.username}
+          error={errors?.username?.[0]}
         />
         <LoginField
           name="password"
           label="Password"
           placeholder="Enter your password"
           password
-          error={errors?.password}
+          error={errors?.password?.[0]}
         />
 
         <div className="flex w-full items-center justify-center font-medium text-normal">
@@ -66,7 +67,7 @@ export default function Page() {
         <button
           type="submit"
           disabled={isPending}
-          className="flex w-full cursor-pointer items-center justify-center rounded-full bg-primary py-4 font-semibold text-normal text-primary-text transition hover:bg-primary-light disabled:cursor-not-allowed disabled:opacity-70"
+          className="flex w-full cursor-pointer items-center justify-center rounded-full bg-primary py-4 font-semibold text-primary-text transition hover:bg-primary-light disabled:cursor-not-allowed disabled:bg-primary-dark disabled:text-primary-lighter"
         >
           {isPending ? "Signing in..." : "Confirm"}
         </button>

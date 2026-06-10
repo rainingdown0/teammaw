@@ -1383,7 +1383,7 @@
     "form": "Small",
     "types": ["Ghost", "Grass"],
     "abilities": ["Pickup", "Frisk", "Insomnia"],
-    "learnsetId": "gourgeistsmall"
+    "learnsetId": "gourgeist"
   },
   {
     "id": "gourgeistlarge",
@@ -1392,7 +1392,7 @@
     "form": "Large",
     "types": ["Ghost", "Grass"],
     "abilities": ["Pickup", "Frisk", "Insomnia"],
-    "learnsetId": "gourgeistlarge"
+    "learnsetId": "gourgeist"
   },
   {
     "id": "gourgeistsuper",
@@ -1401,7 +1401,7 @@
     "form": "Super",
     "types": ["Ghost", "Grass"],
     "abilities": ["Pickup", "Frisk", "Insomnia"],
-    "learnsetId": "gourgeistsuper"
+    "learnsetId": "gourgeist"
   },
   {
     "id": "avalugg",

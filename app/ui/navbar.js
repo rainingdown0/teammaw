@@ -26,7 +26,7 @@ export default function Navbar({ session }) {
         )}
         {isAdmin && <NavTab name={"Admin"} link={"/admin"} icon={"terminal"} />}
         <NavTab name={"News"} link={"/news"} icon={"megaphone"} />
-        <NavTab name={"Donate"} link={"/donation"} icon={"donation"} />
+        <NavTab name={"Info"} link={"/info"} icon={"info"} />
         <NavTab name={"Settings"} link={"/settings"} icon={"gear"} />
       </div>
     </nav>
@@ -60,11 +60,16 @@ export function NavTab({ name, link, icon }) {
 
 export function NavLogo() {
   return (
-    <Link href={"/home"} className="flex h-fit w-40 font-extrabold">
-      <p className="text-xs leading-0 text-accent">
+    <Link
+      href={"/home"}
+      className="group flex h-fit w-40 font-extrabold transition"
+    >
+      <p className="text-xs leading-0 tracking-tighter text-accent transition group-hover:text-accent-light">
         TEAM
         <br />
-        <span className="text-4xl text-primary">MAW</span>
+        <span className="text-4xl tracking-tighter text-primary transition group-hover:text-primary-light">
+          MAW
+        </span>
       </p>
       <Image
         className="relative right-9 bottom-1.5 h-8 w-8"

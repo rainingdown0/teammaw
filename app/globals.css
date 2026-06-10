@@ -3,6 +3,9 @@
 @theme {
   --font-sans: var(--font-syne), sans-serif;
 
+  --letter-spacing-base: -0.02em;
+  --line-height-base: 1.6;
+
   --text-hero: var(--text-5xl);
   --text-small: var(--text-xs);
   --text-default: var(--text-base);
@@ -15,6 +18,7 @@
   --color-base-base: var(--color-zinc-800);
   --color-base-light: var(--color-zinc-700);
   --color-base-lighter: var(--color-zinc-600);
+  --color-base-lightest: var(--color-zinc-500);
   --color-base-dark: var(--color-zinc-950);
 
   --color-primary: var(--color-pink-600);
@@ -29,29 +33,39 @@
   --color-accent-darker: var(--color-yellow-700);
   --color-accent-text: var(--color-yellow-900);
 
-  --color-normal: var(--color-neutral-200);
+  --color-error: var(--color-rose-500);
+
+  --color-normal: var(--color-taupe-200);
   --color-fighting: var(--color-orange-400);
   --color-flying: var(--color-sky-200);
-  --color-poison: var(--color-purple-400);
-  --color-ground: var(--color-yellow-500);
-  --color-rock: var(--color-olive-400);
+  --color-poison: var(--color-fuchsia-400);
+  --color-ground: var(--color-amber-400);
+  --color-rock: var(--color-olive-300);
   --color-bug: var(--color-lime-300);
-  --color-ghost: var(--color-violet-400);
+  --color-ghost: var(--color-purple-300);
   --color-steel: var(--color-slate-300);
-  --color-fire: var(--color-red-500);
-  --color-water: var(--color-blue-400);
-  --color-grass: var(--color-green-500);
+  --color-fire: var(--color-red-400);
+  --color-water: var(--color-blue-300);
+  --color-grass: var(--color-green-400);
   --color-electric: var(--color-yellow-300);
-  --color-psychic: var(--color-pink-400);
+  --color-psychic: var(--color-rose-300);
   --color-ice: var(--color-cyan-200);
-  --color-dragon: var(--color-indigo-400);
-  --color-dark: var(--color-mauve-400);
-  --color-fairy: var(--color-fuchsia-300);
+  --color-dragon: var(--color-indigo-300);
+  --color-dark: var(--color-mauve-300);
+  --color-fairy: var(--color-pink-300);
 }
 
 @layer base {
   body {
+    letter-spacing: var(--letter-spacing-base);
+    line-height: var(--line-height-base);
     @apply bg-base-background text-base-text antialiased;
+  }
+
+  *:focus-visible {
+    outline: none;
+
+    @apply ring-2 ring-accent ring-offset-2 ring-offset-base-background;
   }
 
   ::selection {

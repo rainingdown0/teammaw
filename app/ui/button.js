@@ -1,6 +1,6 @@
 export default function Button({ text, color, disabled = false }) {
   let className =
-    "flex h-fit w-fit cursor-pointer items-center justify-center rounded-full bg-base px-6 py-4 font-semibold text-base-text transition hover:bg-base-light disabled:bg-base-dark disabled:text-base-lighter";
+    "flex h-fit w-fit cursor-pointer items-center justify-center rounded-full bg-base-base px-6 py-4 font-semibold text-base-text transition hover:bg-base-light disabled:bg-base-dark disabled:text-base-lighter";
 
   switch (color) {
     case "primary":

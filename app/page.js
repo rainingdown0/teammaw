@@ -14,14 +14,19 @@ export default function Page() {
         loading="eager"
       />
       <div className="flex flex-col items-center">
-        <span className="leading-none font-extrabold text-accent">TEAMMAW</span>
-        <h1 className="text-hero leading-none font-extrabold text-primary">
+        <span className="leading-none font-extrabold tracking-tighter text-accent">
+          TEAMMAW
+        </span>
+        <h1 className="text-hero leading-none font-extrabold tracking-tighter text-primary">
           BUILD. SHARE. DISCOVER.
         </h1>
       </div>
-      <p className="font-medium">The Pokémon VGC teambuilding community</p>
-      <Link href={"/sign-in"}>
-        <Button text="Start Building" />
+      <p className="font-medium">The Pokémon VGC team sharing community</p>
+      <Link
+        className="flex h-fit w-fit cursor-pointer items-center justify-center rounded-full bg-base-base px-6 py-4 font-semibold text-base-text transition hover:bg-base-light disabled:bg-base-dark disabled:text-base-lighter"
+        href={"/sign-in"}
+      >
+        Get started
       </Link>
     </div>
   );

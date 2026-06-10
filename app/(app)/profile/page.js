@@ -5,12 +5,21 @@ export default async function Page() {
   const session = await auth();
   const username = session?.user?.username;
 
+  const date = new Date(session.user.createdAt);
+  const formattedDate = date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
+  console.log(session);
+
   return (
     <>
       {session && (
         <>
           <h1 className="text-hero font-bold">{`@${username}`}</h1>
-          <p>Member since {session.user.createdAt}</p>
+          <p>Member since {formattedDate}</p>
         </>
       )}
       {!session && (

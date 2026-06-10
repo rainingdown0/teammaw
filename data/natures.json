@@ -1,0 +1,127 @@
+[
+  {
+    "id": "adamant",
+    "name": "Adamant",
+    "effect": "+Atk, -SpA"
+  },
+  {
+    "id": "bashful",
+    "name": "Bashful",
+    "effect": ""
+  },
+  {
+    "id": "bold",
+    "name": "Bold",
+    "effect": "+Def, -Atk"
+  },
+  {
+    "id": "brave",
+    "name": "Brave",
+    "effect": "+Atk, -Spe"
+  },
+  {
+    "id": "calm",
+    "name": "Calm",
+    "effect": "+SpD, -Atk"
+  },
+  {
+    "id": "careful",
+    "name": "Careful",
+    "effect": "+SpD, -SpA"
+  },
+  {
+    "id": "docile",
+    "name": "Docile",
+    "effect": ""
+  },
+  {
+    "id": "gentle",
+    "name": "Gentle",
+    "effect": "+SpD, -Def"
+  },
+  {
+    "id": "hardy",
+    "name": "Hardy",
+    "effect": ""
+  },
+  {
+    "id": "hasty",
+    "name": "Hasty",
+    "effect": "+Spe, -Def"
+  },
+  {
+    "id": "impish",
+    "name": "Impish",
+    "effect": "+Def, -SpA"
+  },
+  {
+    "id": "jolly",
+    "name": "Jolly",
+    "effect": "+Spe, -SpA"
+  },
+  {
+    "id": "lax",
+    "name": "Lax",
+    "effect": "+Def, -SpD"
+  },
+  {
+    "id": "lonely",
+    "name": "Lonely",
+    "effect": "+Atk, -Def"
+  },
+  {
+    "id": "mild",
+    "name": "Mild",
+    "effect": "+SpA, -Def"
+  },
+  {
+    "id": "modest",
+    "name": "Modest",
+    "effect": "+SpA, -Atk"
+  },
+  {
+    "id": "naive",
+    "name": "Naive",
+    "effect": "+Spe, -SpD"
+  },
+  {
+    "id": "naughty",
+    "name": "Naughty",
+    "effect": "+Atk, -SpD"
+  },
+  {
+    "id": "quiet",
+    "name": "Quiet",
+    "effect": "+SpA, -Spe"
+  },
+  {
+    "id": "quirky",
+    "name": "Quirky",
+    "effect": ""
+  },
+  {
+    "id": "rash",
+    "name": "Rash",
+    "effect": "+SpA, -SpD"
+  },
+  {
+    "id": "relaxed",
+    "name": "Relaxed",
+    "effect": "+Def, -Spe"
+  },
+  {
+    "id": "sassy",
+    "name": "Sassy",
+    "effect": "+SpD, -Spe"
+  },
+  {
+    "id": "serious",
+    "name": "Serious",
+    "effect": ""
+  },
+  {
+    "id": "timid",
+    "name": "Timid",
+    "effect": "+Spe, -Atk"
+  }
+]
