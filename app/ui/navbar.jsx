@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Icon from "./icons";
 import { usePathname } from "next/navigation";
+import { createTeamAction } from "@/app/actions/create-team";
 import clsx from "clsx";
 
 export default function Navbar({ session }) {
@@ -18,7 +19,24 @@ export default function Navbar({ session }) {
         <NavTab name={"Discover"} link={"/discover"} icon={"compass"} />
         <NavTab name={"Profile"} link={"/profile"} icon={"user"} />
         <NavTab name={"My Teams"} link={"/teams"} icon={"box"} />
-        <NavTab name={"Build"} link={"/teams"} icon={"add"} />
+        <div
+          onClick={isLoggedIn ? createTeamAction : null}
+          className={clsx(
+            "group flex items-center gap-3 py-3 text-base-text-darker transition",
+            isLoggedIn
+              ? "cursor-pointer hover:text-base-text-dark"
+              : "cursor-not-allowed",
+          )}
+        >
+          <Icon
+            name="add"
+            color={clsx(
+              "fill-base-text-darker",
+              isLoggedIn ? "group-hover:fill-base-text-dark" : "",
+            )}
+          />
+          <span className="font-semibold">Build</span>
+        </div>
       </div>
       <div className="flex h-fit w-full flex-col gap-4">
         {!isLoggedIn && (
@@ -26,7 +44,7 @@ export default function Navbar({ session }) {
         )}
         {isAdmin && <NavTab name={"Admin"} link={"/admin"} icon={"terminal"} />}
         <NavTab name={"News"} link={"/news"} icon={"megaphone"} />
-        <NavTab name={"Info"} link={"/info"} icon={"info"} />
+        <NavTab name={"About"} link={"/about"} icon={"info"} />
         <NavTab name={"Settings"} link={"/settings"} icon={"gear"} />
       </div>
     </nav>
@@ -40,7 +58,7 @@ export function NavTab({ name, link, icon }) {
       href={link}
       className={clsx(
         "group flex items-center gap-3 py-3 transition",
-        pathname.startsWith(link) && !["Build"].includes(name)
+        pathname.startsWith(link)
           ? "text-base-text"
           : "text-base-text-darker hover:text-base-text-dark",
       )}
@@ -48,7 +66,7 @@ export function NavTab({ name, link, icon }) {
       <Icon
         name={icon}
         color={clsx(
-          pathname.startsWith(link) && !["Build"].includes(name)
+          pathname.startsWith(link)
             ? "fill-base-text"
             : "fill-base-text-darker group-hover:fill-base-text-dark",
         )}

@@ -8,10 +8,7 @@ export default function LoginField({
   password = false,
   error,
 }) {
-  // State to track if the password is currently visible
   const [showPassword, setShowPassword] = useState(false);
-
-  // Determine the correct input type based on the 'password' prop and current state
   const inputType = password ? (showPassword ? "text" : "password") : "text";
 
   return (
@@ -20,7 +17,6 @@ export default function LoginField({
         {label}
       </label>
 
-      {/* Wrapper div set to relative so the button can be positioned absolutely inside it */}
       <div className="relative flex w-full items-center">
         <input
           id={name}
@@ -29,14 +25,12 @@ export default function LoginField({
           placeholder={placeholder}
           autoComplete={password ? "current-password" : "username"}
           suppressHydrationWarning
-          // Replaced px-6 with pl-6 and pr-14 to prevent text from typing underneath the icon
           className="w-full rounded-full border-2 border-base-base py-4 pr-14 pl-6 font-medium transition placeholder:text-base-light hover:border-base-light focus:border-base-text focus:ring-0 focus:outline-none"
         />
 
-        {/* Only render the toggle button if this is a password field */}
         {password && (
           <button
-            type="button" // Important: prevents the button from submitting a form
+            type="button"
             onClick={() => setShowPassword(!showPassword)}
             className="absolute right-4 p-2 text-base-light transition hover:text-base-text focus:outline-none"
             aria-label={showPassword ? "Hide password" : "Show password"}

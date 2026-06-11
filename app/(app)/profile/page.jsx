@@ -5,7 +5,7 @@ export default async function Page() {
   const session = await auth();
   const username = session?.user?.username;
 
-  const date = new Date(session.user.createdAt);
+  const date = new Date(session?.user?.createdAt);
   const formattedDate = date.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
@@ -16,13 +16,12 @@ export default async function Page() {
 
   return (
     <>
-      {session && (
+      {session ? (
         <>
           <h1 className="text-hero font-bold">{`@${username}`}</h1>
           <p>Member since {formattedDate}</p>
         </>
-      )}
-      {!session && (
+      ) : (
         <>
           <h1 className="text-hero font-bold">
             {"Seems like you're not signed in"}

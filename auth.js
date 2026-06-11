@@ -43,6 +43,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
     async jwt({ token, user }) {
       if (user) {
+        token.id = user.id;
         token.username = user.username;
         token.isAdmin = user.isAdmin;
         token.createdAt = user.createdAt;
@@ -52,6 +53,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
     async session({ session, token }) {
       if (token?.username) {
+        session.user.id = token.id;
         session.user.username = token.username;
         session.user.isAdmin = token.isAdmin;
         session.user.createdAt = token.createdAt;

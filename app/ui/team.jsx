@@ -4,6 +4,8 @@ import { TeamSprite } from "@/app/ui/sprite";
 import Icon from "@/app/ui/icons";
 import { getUser } from "@/lib/actions";
 import { useState, useEffect } from "react";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { deleteTeamAction } from "@/app/actions/delete-team";
 import pokemonData from "@/data/pokemon.json";
 import abilityData from "@/data/abilities.json";
 import itemData from "@/data/items.json";
@@ -26,62 +28,21 @@ function getFormName(mon) {
   return `${baseName}-${formName}`;
 }
 
-export function Team({ team }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+export function Team({ team, isDiscover }) {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
 
-  return (
-    <>
-      <div
-        className="flex w-210 cursor-pointer flex-col gap-4 rounded-2xl bg-base-base p-4 transition hover:bg-base-light"
-        onClick={() => setIsModalOpen(true)}
-      >
-        <h2 className="w-full font-bold">{team.name}</h2>
-        <div className="flex w-full gap-2">
-          {team.pokemon.map((mon) => (
-            <TeamSprite
-              key={mon.id}
-              pokemon={mon.pokemonId}
-              item={mon.itemId}
-            />
-          ))}
-        </div>
-        <div className="flex w-full items-center gap-8">
-          <div className="flex w-full items-center gap-4 text-small">
-            <span>{formatData.find((f) => f.id === team.format).name}</span>
-            <span>{team.isPublic ? "Public" : "Private"}</span>
-            <span className={clsx(!team.isLegal ? "text-primary-light" : "")}>
-              {team.isLegal ? "Validated" : "Invalidated"}
-            </span>
-          </div>
+  const autoOpenId = searchParams.get("open");
+  const [isModalOpen, setIsModalOpen] = useState(autoOpenId === team.id);
 
-          <div
-            className="flex items-center gap-4"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <Icon
-              name="import"
-              color="fill-base-text-darker hover:fill-base-text-dark cursor-pointer"
-            />
-            <Icon
-              name="copy"
-              color="fill-base-text-darker hover:fill-base-text-dark cursor-pointer"
-            />
-            <Icon
-              name="trash"
-              color="fill-base-text-darker hover:fill-base-text-dark cursor-pointer"
-            />
-          </div>
-        </div>
-      </div>
+  const handleClose = () => {
+    setIsModalOpen(false);
+    if (autoOpenId === team.id) {
+      router.replace(pathname, { scroll: false });
+    }
+  };
 
-      {isModalOpen && (
-        <TeamDetails team={team} onClose={() => setIsModalOpen(false)} />
-      )}
-    </>
-  );
-}
-
-export function DiscoverTeam({ team }) {
   const [username, setUsername] = useState("Loading...");
 
   useEffect(() => {
@@ -89,28 +50,90 @@ export function DiscoverTeam({ team }) {
       setUsername(`@${user.username}`);
     });
   }, [team]);
-
   return (
-    <div className="flex w-210 flex-col gap-4 rounded-2xl bg-base-base p-4">
-      <div className="flex flex-col">
-        <h2 className="w-full font-bold">{team.name}</h2>
-        <p className="w-full text-base-text-darker">{username}</p>
-      </div>
-      <div className="flex w-full gap-2">
-        {team.pokemon.map((mon) => (
-          <TeamSprite key={mon.id} pokemon={mon.pokemonId} item={mon.itemId} />
-        ))}
-      </div>
-      <div className="flex w-full items-center gap-8">
-        <div className="flex w-full items-center gap-4 text-small">
-          <span>{formatData.find((f) => f.id === team.format).name}</span>
-          <div className="flex cursor-pointer items-center gap-2 rounded-lg p-2 transition hover:bg-base-light">
-            <Icon name="heart" color="fill-base-text" />
-            <span>{team.likes.length}</span>
+    <>
+      <div
+        className="flex w-210 cursor-pointer flex-col gap-4 rounded-2xl bg-base-base p-4"
+        onClick={() => {
+          setIsModalOpen(true);
+        }}
+      >
+        <div className="flex flex-col">
+          <h2 className="w-full font-bold">{team.name}</h2>
+          {isDiscover && (
+            <span className="w-fit max-w-full cursor-pointer truncate text-base-text-darker hover:underline">
+              {username}
+            </span>
+          )}
+        </div>
+
+        <div className="flex w-full gap-2">
+          {team.pokemon ? (
+            team.pokemon.map((mon) => (
+              <TeamSprite
+                key={mon.id}
+                pokemon={mon.pokemonId}
+                item={mon.itemId}
+              />
+            ))
+          ) : (
+            <span className="text-small text-base-text-darker">Empty team</span>
+          )}
+        </div>
+
+        <div className="flex w-full items-center gap-8">
+          <div className="flex w-full items-center gap-4 text-small">
+            <span>{formatData.find((f) => f.id === team.format).name}</span>
+            {isDiscover ? (
+              <div className="flex cursor-pointer items-center gap-2 rounded-lg p-2 transition hover:bg-base-light">
+                <Icon name="heart" color="fill-base-text" />
+                <span>{team.likes.length}</span>
+              </div>
+            ) : (
+              <>
+                <span>{team.isPublic ? "Public" : "Private"}</span>
+                <span
+                  className={clsx(!team.isLegal ? "text-primary-light" : "")}
+                >
+                  {team.isLegal ? "Validated" : "Invalidated"}
+                </span>
+              </>
+            )}
           </div>
+
+          {!isDiscover && (
+            <div
+              className="flex items-center gap-4"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Icon
+                name="import"
+                color="fill-base-text-darker hover:fill-base-text cursor-pointer"
+              />
+              <Icon
+                name="copy"
+                color="fill-base-text-darker hover:fill-base-text cursor-pointer"
+              />
+              <div
+                onClick={(e) => {
+                  e.stopPropagation;
+                  deleteTeamAction(team.id);
+                }}
+              >
+                <Icon
+                  name="trash"
+                  color="fill-base-text-darker hover:fill-base-text cursor-pointer"
+                />
+              </div>
+            </div>
+          )}
         </div>
       </div>
-    </div>
+
+      {isModalOpen && !isDiscover && (
+        <TeamDetails team={team} onClose={handleClose} />
+      )}
+    </>
   );
 }
 
@@ -121,43 +144,50 @@ function TeamDetails({ team, onClose }) {
       onClick={onClose}
     >
       <div
-        className="flex max-h-[95dvh] w-210 flex-col gap-4 overflow-hidden rounded-2xl bg-base-base p-4 shadow-2xl"
+        className="flex h-[90dvh] w-210 flex-col gap-4 overflow-hidden rounded-2xl bg-base-base p-4 shadow-xl shadow-primary-lighter/40"
         onClick={(e) => e.stopPropagation()}
       >
         <header className="flex w-full flex-col gap-2">
           <div className="flex w-full items-center gap-4">
             <div className="flex w-full items-center font-bold">
-              <p className="max-w-full cursor-text rounded-lg p-2 transition hover:bg-base-light">
+              <p className="max-w-full cursor-text truncate rounded-lg p-2 transition hover:bg-base-light">
                 {team.name}
               </p>
             </div>
             <div className="flex gap-4">
               <Icon
                 name="plus"
-                color="fill-base-text-darker hover:fill-base-text-dark cursor-pointer"
+                color="fill-base-text-darker hover:fill-base-text cursor-pointer"
               />
               <Icon
                 name="import"
-                color="fill-base-text-darker hover:fill-base-text-dark cursor-pointer"
+                color="fill-base-text-darker hover:fill-base-text cursor-pointer"
               />
-              <Icon
-                name="trash"
-                color="fill-base-text-darker hover:fill-base-text-dark cursor-pointer"
-              />
+              <div
+                onClick={(e) => {
+                  e.stopPropagation;
+                  deleteTeamAction(team.id);
+                }}
+              >
+                <Icon
+                  name="trash"
+                  color="fill-base-text-darker hover:fill-base-text cursor-pointer"
+                />
+              </div>
               <Icon
                 name="expand"
-                color="fill-base-text-darker hover:fill-base-text-dark cursor-pointer"
+                color="fill-base-text-darker hover:fill-base-text cursor-pointer"
               />
               <div onClick={onClose}>
                 <Icon
                   name="cross"
-                  color="fill-base-text-darker hover:fill-base-text-dark cursor-pointer"
+                  color="fill-base-text-darker hover:fill-base-text cursor-pointer"
                 />
               </div>
             </div>
           </div>
           <div className="flex w-full items-center justify-end gap-8 pl-2">
-            <div className="flex w-fit cursor-default items-center gap-8 text-small font-medium">
+            <div className="flex w-fit items-center gap-8 text-small font-medium">
               {team.isPublic && (
                 <span className="whitespace-nowrap">
                   {team.likes.length} likes
@@ -184,7 +214,7 @@ function TeamDetails({ team, onClose }) {
             </div>
             <div className="flex cursor-text gap-1 rounded-lg px-2 py-1 transition hover:bg-base-light">
               <span className="text-small text-base-text-darker">
-                Replica ID
+                {team.replicaId ? "Replica ID" : "Enter replica ID"}
               </span>
               <span className="text-small font-medium">{team.replicaId}</span>
             </div>
@@ -193,14 +223,29 @@ function TeamDetails({ team, onClose }) {
 
         <div className="flex h-full flex-col gap-8 overflow-y-auto">
           <div className="flex w-full flex-col gap-4">
-            {team.pokemon.map((pokemon) => (
-              <TeamDetailsMon key={pokemon.id} pokemon={pokemon} />
-            ))}
+            {team.pokemon ? (
+              team.pokemon.map((pokemon) => (
+                <TeamDetailsMon
+                  key={pokemon.id}
+                  pokemon={pokemon}
+                  pokemonCount={team.pokemon.length}
+                />
+              ))
+            ) : (
+              <span className="w-full text-center text-base-text-darker">
+                This team is empty
+              </span>
+            )}
           </div>
           <div className="flex w-full flex-col gap-2">
-            <h3 className="cursor-default font-bold">Notes</h3>
-            <p className="flex w-full cursor-text flex-col rounded-2xl bg-base-light p-4 text-wrap transition hover:bg-base-lighter">
-              {team.notes ? team.notes : "Notes"}
+            <h3 className="p-2 font-bold">Notes</h3>
+            <p
+              className={clsx(
+                "flex w-full cursor-text flex-col rounded-2xl bg-base-light p-4 text-wrap transition hover:bg-base-lighter",
+                !team.notes ? "text-base-text-darker" : "",
+              )}
+            >
+              {team.notes ? team.notes : "Tell us more about the team"}
             </p>
           </div>
         </div>
@@ -209,7 +254,7 @@ function TeamDetails({ team, onClose }) {
   );
 }
 
-function TeamDetailsMon({ pokemon }) {
+function TeamDetailsMon({ pokemon, pokemonCount }) {
   const mon = pokemonData.find((p) => p.id === pokemon.pokemonId);
   const evTotal =
     pokemon.evHp +
@@ -225,10 +270,12 @@ function TeamDetailsMon({ pokemon }) {
           {pokemon.nickname ? pokemon.nickname : mon.name}
         </h3>
         <div className="flex items-center gap-4">
-          <Icon
-            name="switch"
-            color="fill-base-text-darker hover:fill-base-text-dark cursor-pointer"
-          />
+          {pokemonCount > 1 && (
+            <Icon
+              name="switch"
+              color="fill-base-text-darker hover:fill-base-text-dark cursor-pointer"
+            />
+          )}
           <Icon
             name="import"
             color="fill-base-text-darker hover:fill-base-text-dark cursor-pointer"
@@ -270,8 +317,9 @@ function TeamDetailsMon({ pokemon }) {
             <span className="cursor-pointer rounded-lg px-2 py-1 text-small font-medium transition hover:bg-base-lighter">
               {`${natureData.find((n) => n.id === pokemon.nature).name} (${natureData.find((n) => n.id === pokemon.nature).effect})`}
             </span>
-            <span className="cursor-default text-small font-medium">{`EV ${evTotal}/66`}</span>
+            <span className="text-small font-medium">{`EV ${evTotal}/66`}</span>
           </div>
+
           <div className="grid h-full w-full grid-cols-2 grid-rows-3 gap-2 rounded-lg bg-base-lighter">
             <div className="group flex cursor-text flex-col justify-center px-2">
               <p className="text-small text-base-text-darker">HP</p>

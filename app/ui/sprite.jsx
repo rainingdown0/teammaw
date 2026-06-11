@@ -6,6 +6,7 @@ import { POKEAPI_VARIANT_IDS } from "@/lib/pokeapi-ids";
 function getSprite(id) {
   return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
 }
+// images from https://github.com/PokeAPI/sprites/tree/master/sprites/pokemon/other/official-artwork
 
 function getVariantKey(mon, isMega, suffix) {
   const baseName = mon.name
