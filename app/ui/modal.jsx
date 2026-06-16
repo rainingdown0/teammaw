@@ -12,7 +12,6 @@ import moveData from "@/data/moves.json";
 import natureData from "@/data/natures.json";
 import formatData from "@/data/formats.json";
 import Button from "./button";
-import { redirect } from "next/navigation";
 
 export function NewsCreateModal({ onClose }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -98,6 +97,7 @@ export function TeamDetailsModal({ team, onClose }) {
   const [isVisible, setIsVisible] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editedName, setEditedName] = useState(team.name);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -121,9 +121,7 @@ export function TeamDetailsModal({ team, onClose }) {
       setEditedName(team.name);
       return;
     }
-    if (editedName !== team.name) {
-      updateTeamName(team.id, editedName);
-    }
+    if (editedName !== team.name) updateTeamName(team.id, editedName);
   };
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -131,6 +129,189 @@ export function TeamDetailsModal({ team, onClose }) {
     } else if (e.key === "Escape") {
       setEditedName(team.name);
       setIsEditing(false);
+    }
+  };
+
+  return (
+    <>
+      {/* modal background */}
+      <div
+        className={clsx(
+          "fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm transition",
+          isVisible ? "opacity-100" : "opacity-0",
+        )}
+        onClick={handleClose}
+      >
+        {/* modal */}
+        <div
+          className={clsx(
+            "flex h-[90dvh] w-210 flex-col gap-4 overflow-hidden rounded-2xl bg-base-base p-4 ring-2 ring-base-light transition-all duration-150",
+            isVisible ? "scale-100 opacity-100" : "scale-0 opacity-0",
+          )}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <header className="flex w-full flex-col gap-2">
+            <div className="flex w-full items-center gap-4">
+              <div className="min-w-0 flex-1 font-bold">
+                {/* team name */}
+                {isEditing ? (
+                  <input
+                    ref={inputRef}
+                    autoFocus
+                    type="text"
+                    maxLength={64}
+                    value={editedName}
+                    onChange={(e) => setEditedName(e.target.value)}
+                    onBlur={handleNameSave}
+                    onKeyDown={handleKeyDown}
+                    className="ring-primary-main w-full rounded-lg bg-base-light p-2 font-bold text-base-text ring-2 outline-none"
+                  />
+                ) : (
+                  <p
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsEditing(true);
+                    }}
+                    className="cursor-text truncate rounded-lg p-2 transition hover:bg-base-light"
+                  >
+                    {editedName}
+                  </p>
+                )}
+              </div>
+              <div className="flex shrink-0 gap-4">
+                {/* add pokemon */}
+                <Icon
+                  name="plus"
+                  color="fill-base-text-darker hover:fill-base-text cursor-pointer"
+                />
+                {/* pokepaste */}
+                <Icon
+                  name="import"
+                  color="fill-base-text-darker hover:fill-base-text cursor-pointer"
+                />
+                {/* delete team */}
+                <div onClick={() => setIsModalOpen(true)}>
+                  <Icon
+                    name="trash"
+                    color="fill-base-text-darker hover:fill-base-text cursor-pointer"
+                  />
+                </div>
+                {/* close modal */}
+                <div onClick={handleClose}>
+                  <Icon
+                    name="cross"
+                    color="fill-base-text-darker hover:fill-base-text cursor-pointer"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="flex w-full items-center justify-end gap-8 pl-2">
+              <div className="flex w-fit items-center gap-8 text-small font-medium">
+                {team.isPublic && (
+                  <span className="whitespace-nowrap">
+                    {team.likes.length} likes
+                  </span>
+                )}
+                <span>{team.isPublic ? "Public" : "Private"}</span>
+                <span
+                  className={clsx(
+                    !team.isLegal
+                      ? "cursor-help text-primary-light hover:underline"
+                      : "",
+                  )}
+                >
+                  {team.isLegal ? "Validated" : "Invalidated"}
+                </span>
+              </div>
+            </div>
+            <div className="flex w-full items-center justify-between py-2">
+              {/* format chooser */}
+              <div className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1 transition hover:bg-base-light">
+                <Icon name="dropdown" color="fill-base-text" />
+                <span className="text-small font-medium">
+                  {formatData.find((f) => f.id === team.format).name}
+                </span>
+              </div>
+              {/* replica id field */}
+              <div className="flex cursor-text gap-1 rounded-lg px-2 py-1 transition hover:bg-base-light">
+                <span className="text-small text-base-text-darker">
+                  {team.replicaId ? "Replica ID" : "Enter replica ID"}
+                </span>
+                <span className="text-small font-medium">{team.replicaId}</span>
+              </div>
+            </div>
+          </header>
+          <div className="flex h-full flex-col gap-8 overflow-y-auto">
+            {/* display pokemons */}
+            <div className="flex w-full flex-col gap-4">
+              {team.pokemon ? (
+                team.pokemon.map((pokemon) => (
+                  <TeamDetailsMon
+                    key={pokemon.id}
+                    pokemon={pokemon}
+                    pokemonCount={team.pokemon.length}
+                  />
+                ))
+              ) : (
+                <span className="w-full text-center text-base-text-darker">
+                  This team is empty
+                </span>
+              )}
+            </div>
+            {/* notes */}
+            <div className="flex w-full flex-col gap-2">
+              <h3 className="p-2 font-bold">Notes</h3>
+              <p
+                className={clsx(
+                  "flex w-full cursor-text flex-col rounded-2xl bg-base-light p-4 text-wrap transition hover:bg-base-lighter",
+                  !team.notes ? "text-base-text-darker" : "",
+                )}
+              >
+                {team.notes ? team.notes : "Tell us more about the team"}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {isModalOpen && (
+        <TeamDeleteConfirmModal
+          team={team}
+          onClose={() => setIsModalOpen(false)}
+          onDeleteSuccess={handleClose}
+        />
+      )}
+    </>
+  );
+}
+
+export function TeamDeleteConfirmModal({ team, onClose, onDeleteSuccess }) {
+  const [isVisible, setIsVisible] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => setIsVisible(true), 10);
+    return () => clearTimeout(timer);
+  }, []);
+  const handleClose = () => {
+    setIsVisible(false);
+    setTimeout(onClose, 150);
+  };
+  const handleDelete = async (e) => {
+    e.stopPropagation();
+    try {
+      await deleteTeam(team.id);
+
+      setIsVisible(false);
+      setTimeout(() => {
+        onClose();
+        if (onDeleteSuccess) onDeleteSuccess();
+      }, 150);
+    } catch (error) {
+      console.error("Failed to delete team:", error);
+      alert("Could not delete team. Please try again.");
+    }
+  };
+  const handleKeyDown = (e) => {
+    if (e.key === "Escape") {
+      handleClose();
     }
   };
 
@@ -144,127 +325,25 @@ export function TeamDetailsModal({ team, onClose }) {
     >
       <div
         className={clsx(
-          "flex h-[90dvh] w-210 flex-col gap-4 overflow-hidden rounded-2xl bg-base-base p-4 ring-2 ring-base-light transition-all",
+          "flex w-[40dvw] flex-col gap-4 overflow-hidden rounded-2xl bg-base-base p-4 ring-2 ring-error transition-all",
           isVisible ? "scale-100 opacity-100" : "scale-0 opacity-0",
         )}
         onClick={(e) => e.stopPropagation()}
+        onKeyDown={handleKeyDown}
       >
-        <header className="flex w-full flex-col gap-2">
-          <div className="flex w-full items-center gap-4">
-            <div className="min-w-0 flex-1 font-bold">
-              {isEditing ? (
-                <input
-                  ref={inputRef}
-                  autoFocus
-                  type="text"
-                  maxLength={64}
-                  value={editedName}
-                  onChange={(e) => setEditedName(e.target.value)}
-                  onBlur={handleNameSave}
-                  onKeyDown={handleKeyDown}
-                  className="ring-primary-main w-full rounded-lg bg-base-light p-2 font-bold text-base-text ring-2 outline-none"
-                />
-              ) : (
-                <p
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsEditing(true);
-                  }}
-                  className="cursor-text truncate rounded-lg p-2 transition hover:bg-base-light"
-                >
-                  {editedName}
-                </p>
-              )}
-            </div>
-            <div className="flex shrink-0 gap-4">
-              <Icon
-                name="plus"
-                color="fill-base-text-darker hover:fill-base-text cursor-pointer"
-              />
-              <Icon
-                name="import"
-                color="fill-base-text-darker hover:fill-base-text cursor-pointer"
-              />
-              <div
-                onClick={(e) => {
-                  e.stopPropagation();
-                  deleteTeam(team.id);
-                }}
-              >
-                <Icon
-                  name="trash"
-                  color="fill-base-text-darker hover:fill-base-text cursor-pointer"
-                />
-              </div>
-              <div onClick={handleClose}>
-                <Icon
-                  name="cross"
-                  color="fill-base-text-darker hover:fill-base-text cursor-pointer"
-                />
-              </div>
-            </div>
+        <div className="flex flex-col gap-8 p-4">
+          <h3 className="text-large font-bold">Delete team</h3>
+          <p className="w-full">{`Are you sure you want to delete ${team.name}? This action cannot be undone.`}</p>
+        </div>
+        <div className="flex w-full items-center justify-end gap-4">
+          <div onClick={handleClose}>
+            <Button text={"Cancel"} />
           </div>
-          <div className="flex w-full items-center justify-end gap-8 pl-2">
-            <div className="flex w-fit items-center gap-8 text-small font-medium">
-              {team.isPublic && (
-                <span className="whitespace-nowrap">
-                  {team.likes.length} likes
-                </span>
-              )}
-              <span>{team.isPublic ? "Public" : "Private"}</span>
-              <span
-                className={clsx(
-                  !team.isLegal
-                    ? "cursor-help text-primary-light hover:underline"
-                    : "",
-                )}
-              >
-                {team.isLegal ? "Validated" : "Invalidated"}
-              </span>
-            </div>
-          </div>
-          <div className="flex w-full items-center justify-between py-2">
-            <div className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1 transition hover:bg-base-light">
-              <Icon name="dropdown" color="fill-base-text" />
-              <span className="text-small font-medium">
-                {formatData.find((f) => f.id === team.format).name}
-              </span>
-            </div>
-            <div className="flex cursor-text gap-1 rounded-lg px-2 py-1 transition hover:bg-base-light">
-              <span className="text-small text-base-text-darker">
-                {team.replicaId ? "Replica ID" : "Enter replica ID"}
-              </span>
-              <span className="text-small font-medium">{team.replicaId}</span>
-            </div>
-          </div>
-        </header>
-
-        <div className="flex h-full flex-col gap-8 overflow-y-auto">
-          <div className="flex w-full flex-col gap-4">
-            {team.pokemon ? (
-              team.pokemon.map((pokemon) => (
-                <TeamDetailsMon
-                  key={pokemon.id}
-                  pokemon={pokemon}
-                  pokemonCount={team.pokemon.length}
-                />
-              ))
-            ) : (
-              <span className="w-full text-center text-base-text-darker">
-                This team is empty
-              </span>
-            )}
-          </div>
-          <div className="flex w-full flex-col gap-2">
-            <h3 className="p-2 font-bold">Notes</h3>
-            <p
-              className={clsx(
-                "flex w-full cursor-text flex-col rounded-2xl bg-base-light p-4 text-wrap transition hover:bg-base-lighter",
-                !team.notes ? "text-base-text-darker" : "",
-              )}
-            >
-              {team.notes ? team.notes : "Tell us more about the team"}
-            </p>
+          <div
+            onClick={handleDelete}
+            className="flex h-fit w-fit cursor-pointer items-center justify-center rounded-full bg-transparent px-6 py-4 font-semibold transition hover:bg-error"
+          >
+            Delete
           </div>
         </div>
       </div>
@@ -274,15 +353,12 @@ export function TeamDetailsModal({ team, onClose }) {
 
 function getFormName(mon) {
   const baseName = mon.name.replace(/\s+/g, "-").replace(/[^a-zA-Z0-9-]/g, "");
-
   if (!mon.form) return baseName;
-
   let formName = mon.form
     .toLowerCase()
     .replace("form", "")
     .trim()
     .replace(/\s+/g, "-");
-
   return `${baseName}-${formName}`;
 }
 
@@ -302,20 +378,24 @@ function TeamDetailsMon({ pokemon, pokemonCount }) {
           {pokemon.nickname ? pokemon.nickname : mon.name}
         </h3>
         <div className="flex items-center gap-4">
+          {/* move slot position */}
           {pokemonCount > 1 && (
             <Icon
               name="switch"
               color="fill-base-text-darker hover:fill-base-text-dark cursor-pointer"
             />
           )}
+          {/* pokepaste */}
           <Icon
             name="import"
             color="fill-base-text-darker hover:fill-base-text-dark cursor-pointer"
           />
+          {/* duplicate pokemon */}
           <Icon
             name="copy"
             color="fill-base-text-darker hover:fill-base-text-dark cursor-pointer"
           />
+          {/* delete pokemon */}
           <Icon
             name="trash"
             color="fill-base-text-darker hover:fill-base-text-dark cursor-pointer"
@@ -340,7 +420,6 @@ function TeamDetailsMon({ pokemon, pokemonCount }) {
         <div className="flex w-full min-w-0 flex-col justify-between">
           {[1, 2, 3, 4].map((n) => {
             const move = pokemon.moves.find((m) => m.slot === n);
-
             return <Move key={n} moveId={move?.moveId || ""} />;
           })}
         </div>

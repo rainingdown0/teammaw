@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Button from "@/app/ui/button";
 import Icon from "@/app/ui/icons";
@@ -25,17 +25,35 @@ export function CreateTeamButton() {
 
 export function DeleteArticleButton({ articleId }) {
   const [isPending, startTransition] = useTransition();
+  const [isConfirming, setIsConfirming] = useState(false);
+
+  useEffect(() => {
+    if (!isConfirming) return;
+    const timer = setTimeout(() => {
+      setIsConfirming(false);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [isConfirming]);
+
   const handleDelete = () => {
-    startTransition(() => {
-      deleteArticle(articleId);
-    });
+    if (isPending) return;
+    if (!isConfirming) {
+      setIsConfirming(true);
+    } else {
+      startTransition(() => {
+        deleteArticle(articleId);
+      });
+    }
   };
+
+  const buttonText = isConfirming ? "Confirm delete?" : "Delete";
+
   return (
     <div
       onClick={handleDelete}
       className={isPending ? "cursor-not-allowed" : ""}
     >
-      <Button disabled={isPending} text={"Delete"} />
+      <Button disabled={isPending} text={buttonText} />
     </div>
   );
 }

@@ -2,11 +2,11 @@
 
 import { TeamSprite } from "./sprite";
 import Icon from "./icons";
-import { TeamDetailsModal } from "./modal";
+import { TeamDetailsModal, TeamDeleteConfirmModal } from "./modal";
 import { getUser } from "@/lib/actions";
 import { useState, useEffect } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { duplicateTeam, deleteTeam } from "@/lib/actions";
+import { duplicateTeam } from "@/lib/actions";
 import formatData from "@/data/formats.json";
 import clsx from "clsx";
 
@@ -17,6 +17,7 @@ export function Team({ team, isDiscover }) {
 
   const autoOpenId = searchParams.get("open");
   const [isModalOpen, setIsModalOpen] = useState(autoOpenId === team.id);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const handleClose = () => {
     setIsModalOpen(false);
@@ -36,9 +37,7 @@ export function Team({ team, isDiscover }) {
     <>
       <div
         className="flex w-210 cursor-pointer flex-col gap-4 rounded-2xl border-b-2 border-transparent bg-base-base p-4 transition hover:border-primary"
-        onClick={() => {
-          setIsModalOpen(true);
-        }}
+        onClick={() => setIsModalOpen(true)}
       >
         <div className="flex flex-col">
           <h2 className="w-full font-bold">{team.name}</h2>
@@ -105,8 +104,8 @@ export function Team({ team, isDiscover }) {
               </div>
               <div
                 onClick={(e) => {
-                  e.stopPropagation;
-                  deleteTeam(team.id);
+                  e.stopPropagation();
+                  setIsDeleteModalOpen(true);
                 }}
               >
                 <Icon
@@ -121,6 +120,12 @@ export function Team({ team, isDiscover }) {
 
       {isModalOpen && !isDiscover && (
         <TeamDetailsModal team={team} onClose={handleClose} />
+      )}
+      {isDeleteModalOpen && !isDiscover && (
+        <TeamDeleteConfirmModal
+          team={team}
+          onClose={() => setIsDeleteModalOpen(false)}
+        />
       )}
     </>
   );
