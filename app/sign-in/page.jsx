@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import LoginField from "@/app/ui/login-field";
-import { signInAction } from "@/app/actions/auth";
+import { signInAction } from "@/lib/actions";
 
 export default function Page() {
   const [errors, setErrors] = useState({});
@@ -50,6 +50,12 @@ export default function Page() {
           error={errors?.username?.[0]}
         />
         <LoginField
+          name="email"
+          label="Email"
+          placeholder="Enter your email"
+          error={errors?.email?.[0]}
+        />
+        <LoginField
           name="password"
           label="Password"
           placeholder="Enter your password"
@@ -69,7 +75,7 @@ export default function Page() {
           disabled={isPending}
           className="flex w-full cursor-pointer items-center justify-center rounded-full bg-primary py-4 font-semibold text-primary-text transition hover:bg-primary-light disabled:cursor-not-allowed disabled:bg-primary-dark disabled:text-primary-lighter"
         >
-          {isPending ? "Signing in..." : "Confirm"}
+          Confirm
         </button>
       </form>
     </div>

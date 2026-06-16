@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import LoginField from "@/app/ui/login-field";
-import { signUpAction } from "@/app/actions/auth";
+import { signUpAction } from "@/lib/actions";
 
 export default function Page() {
   const [errors, setErrors] = useState({});
@@ -31,8 +31,8 @@ export default function Page() {
 
       if (result?.errors) {
         setErrors(result.errors);
-      } else if (result?.error) {
-        setErrors({ username: [result.error] });
+      } else if (result?.errors) {
+        setErrors({ username: [result.errors] });
       }
     } catch (err) {
       console.error("Server Action crashed completely:", err);
@@ -56,6 +56,12 @@ export default function Page() {
           label="Username"
           placeholder="Set your username"
           error={errors?.username?.[0]}
+        />
+        <LoginField
+          name="email"
+          label="Email"
+          placeholder="Set your email"
+          error={errors?.email?.[0]}
         />
         <LoginField
           name="password"
@@ -84,7 +90,7 @@ export default function Page() {
           disabled={isPending}
           className="flex w-full cursor-pointer items-center justify-center rounded-full bg-primary py-4 font-semibold text-primary-text transition hover:bg-primary-light disabled:cursor-not-allowed disabled:bg-primary-dark disabled:text-primary-lighter"
         >
-          {isPending ? "Creating account..." : "Create account"}
+          Create account
         </button>
       </form>
     </div>

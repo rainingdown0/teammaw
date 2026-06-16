@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Changelog - Teammaw",
+  title: "News - Teammaw",
 };
 
 export default function Layout({ children }) {

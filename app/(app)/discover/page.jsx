@@ -1,12 +1,11 @@
 import { Team } from "@/app/ui/team";
-import MOCKTEAMS from "@/data/MOCKTEAMS.json";
 
 export default function Page() {
   return (
-    <>
-      {MOCKTEAMS.filter((team) => team.isPublic).map((team) => (
+    <div className="flex h-full flex-col gap-4 overflow-scroll pb-32">
+      {/* {MOCKTEAMS.filter((team) => team.isPublic).map((team) => (
         <Team key={team.id} team={team} isDiscover={true} />
-      ))}
-    </>
+      ))} */}
+    </div>
   );
 }

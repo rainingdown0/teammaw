@@ -1,8 +1,10 @@
-import { auth } from "@/auth";
+"use client";
+
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 
-export default async function Page() {
-  const session = await auth();
+export default function Page() {
+  const { data: session } = useSession();
   const username = session?.user?.username;
 
   const date = new Date(session?.user?.createdAt);

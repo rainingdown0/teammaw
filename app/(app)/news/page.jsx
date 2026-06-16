@@ -1,29 +1,37 @@
-import { auth } from "@/auth";
-import ChangelogCard from "@/app/ui/news-card";
-import Button from "@/app/ui/button";
+"use client";
 
-export default async function Page() {
-  const session = await auth();
+import { useSession } from "next-auth/react";
+import { NewsList } from "@/app/ui/news";
+import Button from "@/app/ui/button";
+import { NewsCreateModal } from "@/app/ui/modal";
+import { useState } from "react";
+
+export default function Page() {
+  const { data: session, status } = useSession();
   const isAdmin = session?.user?.isAdmin || false;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  if (status === "loading")
+    return (
+      <span className="flex h-full w-full items-center justify-center text-center text-base-text-darker">
+        {"Loading articles..."}
+      </span>
+    );
 
   return (
     <>
       <div className="sticky top-0">
-        {isAdmin && <Button text={"Write new"} />}
+        <div
+          className="flex w-full justify-end"
+          onClick={() => setIsModalOpen(true)}
+        >
+          {/* <div className="flex w-fit items-center gap-8"></div> */}
+          {isAdmin && <Button text={"Write new"} />}
+        </div>
       </div>
-      <div className="flex min-h-0 flex-1 flex-col items-center gap-8 overflow-y-scroll">
-        <ChangelogCard
-          title={"random bs instead of actual announcement"}
-          content={"this is text content"}
-          date={"May 22, 2026"}
-        />
-        <ChangelogCard
-          title={"Announcement"}
-          content={"this is text content"}
-          date={"May 19, 2026"}
-        />
-        <Button text={"Load More"} color={"ghost"} />
-      </div>
+      <NewsList />
+
+      {isModalOpen && <NewsCreateModal onClose={() => setIsModalOpen(false)} />}
     </>
   );
 }

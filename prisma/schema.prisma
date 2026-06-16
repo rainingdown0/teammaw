@@ -1,5 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
+// pnpx prisma migrate dev
 
 generator client {
   provider = "prisma-client-js"
@@ -12,24 +13,25 @@ datasource db {
 model User {
   id        String   @id @default(cuid())
   username  String   @unique @db.VarChar(30)
-  password  String
+  email     String   @unique @db.VarChar(255)
+  password  String   @db.VarChar(255)
   isAdmin   Boolean  @default(false)
   createdAt DateTime @default(now())
 
   teams      Team[]
-  changelogs Changelog[]
+  changelogs Article[]
   likes      TeamLike[]
 }
 
 model Team {
   id        String   @id @default(cuid())
   userId    String
-  replicaId String? // optional Champions team ID
-  name      String
-  notes     String?
+  replicaId String?  @db.VarChar(10)
+  name      String   @db.VarChar(64)
+  notes     String?  @db.Text
   isPublic  Boolean  @default(false)
   isLegal   Boolean  @default(false)
-  format    String   @default("m-a")
+  format    String   @default("m-a") @db.VarChar(20)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -42,12 +44,12 @@ model TeamPokemon {
   id        String  @id @default(cuid())
   teamId    String
   slot      Int // 1-6
-  pokemonId String
-  nickname  String?
-  teraType  String? // nullable until Tera returns
-  abilityId String
-  itemId    String?
-  nature    String
+  pokemonId String  @db.VarChar(50)
+  nickname  String? @db.VarChar(18)
+  teraType  String? @db.VarChar(15)
+  abilityId String  @db.VarChar(50)
+  itemId    String? @db.VarChar(50)
+  nature    String  @db.VarChar(15)
   evHp      Int // min 0 max 32
   evAtk     Int
   evDef     Int
@@ -65,7 +67,7 @@ model TeamPokemonMove {
   id            String @id @default(cuid())
   teamPokemonId String
   slot          Int // 1-4
-  moveId        String
+  moveId        String @db.VarChar(50)
 
   teamPokemon TeamPokemon @relation(fields: [teamPokemonId], references: [id], onDelete: Cascade)
 
@@ -83,11 +85,11 @@ model TeamLike {
   @@unique([teamId, userId]) // prevents a user liking the same team twice
 }
 
-model Changelog {
+model Article {
   id        String   @id @default(cuid())
   userId    String
-  title     String
-  content   String
+  title     String   @db.VarChar(150)
+  content   String   @db.Text
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

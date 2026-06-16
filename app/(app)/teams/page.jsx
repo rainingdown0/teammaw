@@ -1,5 +1,5 @@
 import { Team } from "@/app/ui/team";
-import { CreateTeamButton } from "@/app/ui/create-team-button";
+import { CreateTeamButton } from "@/app/ui/util-button";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
@@ -20,11 +20,11 @@ export default async function Page() {
             <div></div>
             <CreateTeamButton />
           </div>
-          <div className="flex h-full flex-col gap-4 overflow-scroll">
+          <div className="flex h-full flex-col gap-4 overflow-scroll pb-32">
             {teams.length > 0 ? (
               teams.map((team) => <Team key={team.id} team={team} />)
             ) : (
-              <span className="mb-32 flex h-full w-full items-center justify-center text-center text-base-text-darker">
+              <span className="flex h-full w-full items-center justify-center text-center text-base-text-darker">
                 {"You don't have any teams"}
               </span>
             )}

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Icon from "./icons";
 import { usePathname } from "next/navigation";
-import { createTeamAction } from "@/app/actions/create-team";
+import { createTeam } from "@/lib/actions";
 import clsx from "clsx";
 
 export default function Navbar({ session }) {
@@ -20,7 +20,7 @@ export default function Navbar({ session }) {
         <NavTab name={"Profile"} link={"/profile"} icon={"user"} />
         <NavTab name={"My Teams"} link={"/teams"} icon={"box"} />
         <div
-          onClick={isLoggedIn ? createTeamAction : null}
+          onClick={isLoggedIn ? createTeam : null}
           className={clsx(
             "group flex items-center gap-3 py-3 text-base-text-darker transition",
             isLoggedIn
