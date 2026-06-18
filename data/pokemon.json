@@ -5,7 +5,7 @@
     "name": "Venusaur",
     "form": null,
     "types": ["Grass", "Poison"],
-    "abilities": ["overgrow", "chlorophyll"],
+    "abilities": ["Overgrow", "Chlorophyll"],
     "learnsetId": "venusaur"
   },
   {
@@ -14,7 +14,7 @@
     "name": "Charizard",
     "form": null,
     "types": ["Fire", "Flying"],
-    "abilities": ["blaze", "solarpower"],
+    "abilities": ["Blaze", "Solar Power"],
     "learnsetId": "charizard"
   },
   {
@@ -23,7 +23,7 @@
     "name": "Blastoise",
     "form": null,
     "types": ["Water"],
-    "abilities": ["torrent", "raindish"],
+    "abilities": ["Torrent", "Rain Dish"],
     "learnsetId": "blastoise"
   },
   {
@@ -32,7 +32,7 @@
     "name": "Beedrill",
     "form": null,
     "types": ["Bug", "Poison"],
-    "abilities": ["swarm", "sniper"],
+    "abilities": ["Swarm", "Sniper"],
     "learnsetId": "beedrill"
   },
   {
@@ -41,7 +41,7 @@
     "name": "Pidgeot",
     "form": null,
     "types": ["Normal", "Flying"],
-    "abilities": ["keeneye", "tangledfeet", "bigpecks"],
+    "abilities": ["Keen Eye", "Tangled Feet", "Big Pecks"],
     "learnsetId": "pidgeot"
   },
   {
@@ -50,7 +50,7 @@
     "name": "Arbok",
     "form": null,
     "types": ["Poison"],
-    "abilities": ["intimidate", "shedskin", "unnerve"],
+    "abilities": ["Intimidate", "Shed Skin", "Unnerve"],
     "learnsetId": "arbok"
   },
   {
@@ -59,7 +59,7 @@
     "name": "Pikachu",
     "form": null,
     "types": ["Electric"],
-    "abilities": ["static", "lightningrod"],
+    "abilities": ["Static", "Lightning Rod"],
     "learnsetId": "pikachu"
   },
   {
@@ -68,7 +68,7 @@
     "name": "Raichu",
     "form": null,
     "types": ["Electric"],
-    "abilities": ["static", "lightningrod"],
+    "abilities": ["Static", "Lightning Rod"],
     "learnsetId": "raichu"
   },
   {
@@ -77,7 +77,7 @@
     "name": "Raichu",
     "form": "Alola",
     "types": ["Electric", "Psychic"],
-    "abilities": ["surgesurfer"],
+    "abilities": ["Surge Surfer"],
     "learnsetId": "raichualola"
   },
   {
@@ -86,7 +86,7 @@
     "name": "Clefable",
     "form": null,
     "types": ["Fairy"],
-    "abilities": ["cutecharm", "magicguard", "unaware"],
+    "abilities": ["Cute Charm", "Magic Guard", "Unaware"],
     "learnsetId": "clefable"
   },
   {
@@ -95,7 +95,7 @@
     "name": "Ninetales",
     "form": null,
     "types": ["Fire"],
-    "abilities": ["flashfire", "drought"],
+    "abilities": ["Flash Fire", "Drought"],
     "learnsetId": "ninetales"
   },
   {
@@ -104,8 +104,17 @@
     "name": "Ninetales",
     "form": "Alola",
     "types": ["Ice", "Fairy"],
-    "abilities": ["snowcloak", "snowwarning"],
+    "abilities": ["Snow Cloak", "Snow Warning"],
     "learnsetId": "ninetalesalola"
+  },
+  {
+    "id": "vileplume",
+    "dexNumber": 45,
+    "name": "Vileplume",
+    "form": null,
+    "types": ["Grass", "Poison"],
+    "abilities": ["Chlorophyll", "Effect Spore"],
+    "learnsetId": "vileplume"
   },
   {
     "id": "arcanine",
@@ -113,7 +122,7 @@
     "name": "Arcanine",
     "form": null,
     "types": ["Fire"],
-    "abilities": ["intimidate", "flashfire", "justified"],
+    "abilities": ["Intimidate", "Flash Fire", "Justified"],
     "learnsetId": "arcanine"
   },
   {
@@ -122,7 +131,7 @@
     "name": "Arcanine",
     "form": "Hisui",
     "types": ["Fire", "Rock"],
-    "abilities": ["intimidate", "flashfire", "rockhead"],
+    "abilities": ["Intimidate", "Flash Fire", "Rock Head"],
     "learnsetId": "arcaninehisui"
   },
   {
@@ -131,7 +140,7 @@
     "name": "Alakazam",
     "form": null,
     "types": ["Psychic"],
-    "abilities": ["synchronize", "innerfocus", "magicguard"],
+    "abilities": ["Synchronize", "Inner Focus", "Magic Guard"],
     "learnsetId": "alakazam"
   },
   {
@@ -140,7 +149,7 @@
     "name": "Machamp",
     "form": null,
     "types": ["Fighting"],
-    "abilities": ["guts", "noguard", "steadfast"],
+    "abilities": ["Guts", "No Guard", "Steadfast"],
     "learnsetId": "machamp"
   },
   {
@@ -149,7 +158,7 @@
     "name": "Victreebel",
     "form": null,
     "types": ["Grass", "Poison"],
-    "abilities": ["chlorophyll", "gluttony"],
+    "abilities": ["Chlorophyll", "Gluttony"],
     "learnsetId": "victreebel"
   },
   {
@@ -158,7 +167,7 @@
     "name": "Slowbro",
     "form": null,
     "types": ["Water", "Psychic"],
-    "abilities": ["oblivious", "owntempo", "regenerator"],
+    "abilities": ["Oblivious", "Own Tempo", "Regenerator"],
     "learnsetId": "slowbro"
   },
   {
@@ -167,7 +176,7 @@
     "name": "Slowbro",
     "form": "Galar",
     "types": ["Poison", "Psychic"],
-    "abilities": ["quickdraw", "owntempo", "regenerator"],
+    "abilities": ["Quick Draw", "Own Tempo", "Regenerator"],
     "learnsetId": "slowbrogalar"
   },
   {
@@ -176,7 +185,7 @@
     "name": "Gengar",
     "form": null,
     "types": ["Ghost", "Poison"],
-    "abilities": ["cursedbody"],
+    "abilities": ["Cursed Body"],
     "learnsetId": "gengar"
   },
   {
@@ -185,7 +194,7 @@
     "name": "Kangaskhan",
     "form": null,
     "types": ["Normal"],
-    "abilities": ["earlybird", "scrappy", "innerfocus"],
+    "abilities": ["Early Bird", "Scrappy", "Inner Focus"],
     "learnsetId": "kangaskhan"
   },
   {
@@ -194,7 +203,7 @@
     "name": "Starmie",
     "form": null,
     "types": ["Water", "Psychic"],
-    "abilities": ["illuminate", "naturalcure", "analytic"],
+    "abilities": ["Illuminate", "Natural Cure", "Analytic"],
     "learnsetId": "starmie"
   },
   {
@@ -203,7 +212,7 @@
     "name": "Pinsir",
     "form": null,
     "types": ["Bug"],
-    "abilities": ["hypercutter", "moldbreaker", "moxie"],
+    "abilities": ["Hyper Cutter", "Mold Breaker", "Moxie"],
     "learnsetId": "pinsir"
   },
   {
@@ -212,7 +221,7 @@
     "name": "Tauros",
     "form": null,
     "types": ["Normal"],
-    "abilities": ["intimidate", "angerpoint", "sheerforce"],
+    "abilities": ["Intimidate", "Anger Point", "Sheer Force"],
     "learnsetId": "tauros"
   },
   {
@@ -221,7 +230,7 @@
     "name": "Tauros",
     "form": "Paldea-Combat",
     "types": ["Fighting"],
-    "abilities": ["intimidate", "angerpoint", "cudchew"],
+    "abilities": ["Intimidate", "Anger Point", "Cud Chew"],
     "learnsetId": "taurospaldeacombat"
   },
   {
@@ -230,7 +239,7 @@
     "name": "Tauros",
     "form": "Paldea-Blaze",
     "types": ["Fighting", "Fire"],
-    "abilities": ["intimidate", "angerpoint", "cudchew"],
+    "abilities": ["Intimidate", "Anger Point", "Cud Chew"],
     "learnsetId": "taurospaldeablaze"
   },
   {
@@ -239,7 +248,7 @@
     "name": "Tauros",
     "form": "Paldea-Aqua",
     "types": ["Fighting", "Water"],
-    "abilities": ["intimidate", "angerpoint", "cudchew"],
+    "abilities": ["Intimidate", "Anger Point", "Cud Chew"],
     "learnsetId": "taurospaldeaaqua"
   },
   {
@@ -248,7 +257,7 @@
     "name": "Gyarados",
     "form": null,
     "types": ["Water", "Flying"],
-    "abilities": ["intimidate", "moxie"],
+    "abilities": ["Intimidate", "Moxie"],
     "learnsetId": "gyarados"
   },
   {
@@ -257,7 +266,7 @@
     "name": "Ditto",
     "form": null,
     "types": ["Normal"],
-    "abilities": ["limber", "imposter"],
+    "abilities": ["Limber", "Imposter"],
     "learnsetId": "ditto"
   },
   {
@@ -266,7 +275,7 @@
     "name": "Vaporeon",
     "form": null,
     "types": ["Water"],
-    "abilities": ["waterabsorb", "hydration"],
+    "abilities": ["Water Absorb", "Hydration"],
     "learnsetId": "vaporeon"
   },
   {
@@ -275,7 +284,7 @@
     "name": "Jolteon",
     "form": null,
     "types": ["Electric"],
-    "abilities": ["voltabsorb", "quickfeet"],
+    "abilities": ["Volt Absorb", "Quick Feet"],
     "learnsetId": "jolteon"
   },
   {
@@ -284,7 +293,7 @@
     "name": "Flareon",
     "form": null,
     "types": ["Fire"],
-    "abilities": ["flashfire", "guts"],
+    "abilities": ["Flash Fire", "Guts"],
     "learnsetId": "flareon"
   },
   {
@@ -293,7 +302,7 @@
     "name": "Aerodactyl",
     "form": null,
     "types": ["Rock", "Flying"],
-    "abilities": ["rockhead", "pressure", "unnerve"],
+    "abilities": ["Rock Head", "Pressure", "Unnerve"],
     "learnsetId": "aerodactyl"
   },
   {
@@ -302,7 +311,7 @@
     "name": "Snorlax",
     "form": null,
     "types": ["Normal"],
-    "abilities": ["immunity", "thickfat", "gluttony"],
+    "abilities": ["Immunity", "Thick Fat", "Gluttony"],
     "learnsetId": "snorlax"
   },
   {
@@ -311,7 +320,7 @@
     "name": "Dragonite",
     "form": null,
     "types": ["Dragon", "Flying"],
-    "abilities": ["innerfocus", "multiscale"],
+    "abilities": ["Inner Focus", "Multiscale"],
     "learnsetId": "dragonite"
   },
   {
@@ -320,7 +329,7 @@
     "name": "Meganium",
     "form": null,
     "types": ["Grass"],
-    "abilities": ["overgrow", "leafguard"],
+    "abilities": ["Overgrow", "Leaf Guard"],
     "learnsetId": "meganium"
   },
   {
@@ -329,7 +338,7 @@
     "name": "Typhlosion",
     "form": null,
     "types": ["Fire"],
-    "abilities": ["blaze", "flashfire"],
+    "abilities": ["Blaze", "Flash Fire"],
     "learnsetId": "typhlosion"
   },
   {
@@ -338,7 +347,7 @@
     "name": "Typhlosion",
     "form": "Hisui",
     "types": ["Fire", "Ghost"],
-    "abilities": ["blaze", "frisk"],
+    "abilities": ["Blaze", "Frisk"],
     "learnsetId": "typhlosionhisui"
   },
   {
@@ -347,7 +356,7 @@
     "name": "Feraligatr",
     "form": null,
     "types": ["Water"],
-    "abilities": ["torrent", "sheerforce"],
+    "abilities": ["Torrent", "Sheer Force"],
     "learnsetId": "feraligatr"
   },
   {
@@ -356,7 +365,7 @@
     "name": "Ariados",
     "form": null,
     "types": ["Bug", "Poison"],
-    "abilities": ["swarm", "insomnia", "sniper"],
+    "abilities": ["Swarm", "Insomnia", "Sniper"],
     "learnsetId": "ariados"
   },
   {
@@ -365,7 +374,7 @@
     "name": "Ampharos",
     "form": null,
     "types": ["Electric"],
-    "abilities": ["static", "plus"],
+    "abilities": ["Static", "Plus"],
     "learnsetId": "ampharos"
   },
   {
@@ -374,7 +383,7 @@
     "name": "Azumarill",
     "form": null,
     "types": ["Water", "Fairy"],
-    "abilities": ["thickfat", "hugepower", "sapsipper"],
+    "abilities": ["Thick Fat", "Huge Power", "Sap Sipper"],
     "learnsetId": "azumarill"
   },
   {
@@ -383,7 +392,7 @@
     "name": "Politoed",
     "form": null,
     "types": ["Water"],
-    "abilities": ["waterabsorb", "damp", "drizzle"],
+    "abilities": ["Water Absorb", "Damp", "Drizzle"],
     "learnsetId": "politoed"
   },
   {
@@ -392,7 +401,7 @@
     "name": "Espeon",
     "form": null,
     "types": ["Psychic"],
-    "abilities": ["synchronize", "magicbounce"],
+    "abilities": ["Synchronize", "Magic Bounce"],
     "learnsetId": "espeon"
   },
   {
@@ -401,7 +410,7 @@
     "name": "Umbreon",
     "form": null,
     "types": ["Dark"],
-    "abilities": ["synchronize", "innerfocus"],
+    "abilities": ["Synchronize", "Inner Focus"],
     "learnsetId": "umbreon"
   },
   {
@@ -410,7 +419,7 @@
     "name": "Slowking",
     "form": null,
     "types": ["Water", "Psychic"],
-    "abilities": ["oblivious", "owntempo", "regenerator"],
+    "abilities": ["Oblivious", "Own Tempo", "Regenerator"],
     "learnsetId": "slowking"
   },
   {
@@ -419,7 +428,7 @@
     "name": "Slowking",
     "form": "Galar",
     "types": ["Poison", "Psychic"],
-    "abilities": ["curiousmedicine", "owntempo", "regenerator"],
+    "abilities": ["Curious Medicine", "Own Tempo", "Regenerator"],
     "learnsetId": "slowkinggalar"
   },
   {
@@ -428,7 +437,7 @@
     "name": "Forretress",
     "form": null,
     "types": ["Bug", "Steel"],
-    "abilities": ["sturdy", "overcoat"],
+    "abilities": ["Sturdy", "Overcoat"],
     "learnsetId": "forretress"
   },
   {
@@ -437,8 +446,17 @@
     "name": "Steelix",
     "form": null,
     "types": ["Steel", "Ground"],
-    "abilities": ["rockhead", "sturdy", "sheerforce"],
+    "abilities": ["Rock Head", "Sturdy", "Sheer Force"],
     "learnsetId": "steelix"
+  },
+  {
+    "id": "qwilfish",
+    "dexNumber": 211,
+    "name": "Qwilfish",
+    "form": null,
+    "types": ["Water", "Poison"],
+    "abilities": ["Poison Point", "Swift Swim", "Intimidate"],
+    "learnsetId": ""
   },
   {
     "id": "scizor",
@@ -446,7 +464,7 @@
     "name": "Scizor",
     "form": null,
     "types": ["Bug", "Steel"],
-    "abilities": ["swarm", "technician", "lightmetal"],
+    "abilities": ["Swarm", "Technician", "Light Metal"],
     "learnsetId": "scizor"
   },
   {
@@ -455,7 +473,7 @@
     "name": "Heracross",
     "form": null,
     "types": ["Bug", "Fighting"],
-    "abilities": ["swarm", "guts", "moxie"],
+    "abilities": ["Swarm", "Guts", "Moxie"],
     "learnsetId": "heracross"
   },
   {
@@ -464,7 +482,7 @@
     "name": "Skarmory",
     "form": null,
     "types": ["Steel", "Flying"],
-    "abilities": ["keeneye", "sturdy", "weakarmor"],
+    "abilities": ["Keen Eye", "Sturdy", "Weak Armor"],
     "learnsetId": "skarmory"
   },
   {
@@ -473,7 +491,7 @@
     "name": "Houndoom",
     "form": null,
     "types": ["Dark", "Fire"],
-    "abilities": ["earlybird", "flashfire", "unnerve"],
+    "abilities": ["Early Bird", "Flash Fire", "Unnerve"],
     "learnsetId": "houndoom"
   },
   {
@@ -482,8 +500,35 @@
     "name": "Tyranitar",
     "form": null,
     "types": ["Rock", "Dark"],
-    "abilities": ["sandstream", "unnerve"],
+    "abilities": ["Sand Stream", "Unnerve"],
     "learnsetId": "tyranitar"
+  },
+  {
+    "id": "sceptile",
+    "dexNumber": 254,
+    "name": "Sceptile",
+    "form": null,
+    "types": ["Grass"],
+    "abilities": ["Overgrow", "Unburden"],
+    "learnsetId": "sceptile"
+  },
+  {
+    "id": "blaziken",
+    "dexNumber": 257,
+    "name": "Blaziken",
+    "form": null,
+    "types": ["Fire", "Fighting"],
+    "abilities": ["Blaze", "Speed Boost"],
+    "learnsetId": "blaziken"
+  },
+  {
+    "id": "swampert",
+    "dexNumber": 260,
+    "name": "Swampert",
+    "form": null,
+    "types": ["Water", "Ground"],
+    "abilities": ["Torrent", "Damp"],
+    "learnsetId": ""
   },
   {
     "id": "pelipper",
@@ -491,7 +536,7 @@
     "name": "Pelipper",
     "form": null,
     "types": ["Water", "Flying"],
-    "abilities": ["keeneye", "drizzle", "raindish"],
+    "abilities": ["Keen Eye", "Drizzle", "Rain Dish"],
     "learnsetId": "pelipper"
   },
   {
@@ -500,7 +545,7 @@
     "name": "Gardevoir",
     "form": null,
     "types": ["Psychic", "Fairy"],
-    "abilities": ["synchronize", "trace", "telepathy"],
+    "abilities": ["Synchronize", "Trace", "Telepathy"],
     "learnsetId": "gardevoir"
   },
   {
@@ -509,8 +554,17 @@
     "name": "Sableye",
     "form": null,
     "types": ["Dark", "Ghost"],
-    "abilities": ["keeneye", "stall", "prankster"],
+    "abilities": ["Keen Eye", "Stall", "Prankster"],
     "learnsetId": "sableye"
+  },
+  {
+    "id": "mawile",
+    "dexNumber": 303,
+    "name": "Mawile",
+    "form": null,
+    "types": ["Steel", "Fairy"],
+    "abilities": ["Hyper Cutter", "Intimidate", "Sheer Force"],
+    "learnsetId": "mawile"
   },
   {
     "id": "aggron",
@@ -518,7 +572,7 @@
     "name": "Aggron",
     "form": null,
     "types": ["Steel", "Rock"],
-    "abilities": ["sturdy", "rockhead", "heavymetal"],
+    "abilities": ["Sturdy", "Rock Head", "Heavy Metal"],
     "learnsetId": "aggron"
   },
   {
@@ -527,7 +581,7 @@
     "name": "Medicham",
     "form": null,
     "types": ["Fighting", "Psychic"],
-    "abilities": ["purepower", "telepathy"],
+    "abilities": ["Pure Power", "Telepathy"],
     "learnsetId": "medicham"
   },
   {
@@ -536,7 +590,7 @@
     "name": "Manectric",
     "form": null,
     "types": ["Electric"],
-    "abilities": ["static", "lightningrod", "minus"],
+    "abilities": ["Static", "Lightning Rod", "Minus"],
     "learnsetId": "manectric"
   },
   {
@@ -545,7 +599,7 @@
     "name": "Sharpedo",
     "form": null,
     "types": ["Water", "Dark"],
-    "abilities": ["roughskin", "speedboost"],
+    "abilities": ["Rough Skin", "Speed Boost"],
     "learnsetId": "sharpedo"
   },
   {
@@ -554,7 +608,7 @@
     "name": "Camerupt",
     "form": null,
     "types": ["Fire", "Ground"],
-    "abilities": ["magmaarmor", "solidrock", "angerpoint"],
+    "abilities": ["Magma Armor", "Solid Rock", "Anger Point"],
     "learnsetId": "camerupt"
   },
   {
@@ -563,7 +617,7 @@
     "name": "Torkoal",
     "form": null,
     "types": ["Fire"],
-    "abilities": ["whitesmoke", "drought", "shellarmor"],
+    "abilities": ["White Smoke", "Drought", "Shell Armor"],
     "learnsetId": "torkoal"
   },
   {
@@ -572,7 +626,7 @@
     "name": "Altaria",
     "form": null,
     "types": ["Dragon", "Flying"],
-    "abilities": ["naturalcure", "cloudnine"],
+    "abilities": ["Natural Cure", "Cloud Nine"],
     "learnsetId": "altaria"
   },
   {
@@ -581,7 +635,7 @@
     "name": "Milotic",
     "form": null,
     "types": ["Water"],
-    "abilities": ["marvelscale", "competitive", "cutecharm"],
+    "abilities": ["Marvel Scale", "Competitive", "Cute Charm"],
     "learnsetId": "milotic"
   },
   {
@@ -590,7 +644,7 @@
     "name": "Castform",
     "form": null,
     "types": ["Normal"],
-    "abilities": ["forecast"],
+    "abilities": ["Forecast"],
     "learnsetId": "castform"
   },
   {
@@ -599,7 +653,7 @@
     "name": "Banette",
     "form": null,
     "types": ["Ghost"],
-    "abilities": ["insomnia", "frisk", "cursedbody"],
+    "abilities": ["Insomnia", "Frisk", "Cursed Body"],
     "learnsetId": "banette"
   },
   {
@@ -608,7 +662,7 @@
     "name": "Chimecho",
     "form": null,
     "types": ["Psychic"],
-    "abilities": ["levitate"],
+    "abilities": ["Levitate"],
     "learnsetId": "chimecho"
   },
   {
@@ -617,7 +671,7 @@
     "name": "Absol",
     "form": null,
     "types": ["Dark"],
-    "abilities": ["pressure", "superluck", "justified"],
+    "abilities": ["Pressure", "Super Luck", "Justified"],
     "learnsetId": "absol"
   },
   {
@@ -626,8 +680,17 @@
     "name": "Glalie",
     "form": null,
     "types": ["Ice"],
-    "abilities": ["innerfocus", "icebody", "moody"],
+    "abilities": ["Inner Focus", "Ice Body", "Moody"],
     "learnsetId": "glalie"
+  },
+  {
+    "id": "metagross",
+    "dexNumber": 376,
+    "name": "Metagross",
+    "form": null,
+    "types": ["Steel", "Psychic"],
+    "abilities": ["Clear Body", "Light Metal"],
+    "learnsetId": "metagross"
   },
   {
     "id": "torterra",
@@ -635,7 +698,7 @@
     "name": "Torterra",
     "form": null,
     "types": ["Grass", "Ground"],
-    "abilities": ["overgrow", "shellarmor"],
+    "abilities": ["Overgrow", "Shell Armor"],
     "learnsetId": "torterra"
   },
   {
@@ -644,7 +707,7 @@
     "name": "Infernape",
     "form": null,
     "types": ["Fire", "Fighting"],
-    "abilities": ["blaze", "ironfist"],
+    "abilities": ["Blaze", "Iron Fist"],
     "learnsetId": "infernape"
   },
   {
@@ -653,8 +716,17 @@
     "name": "Empoleon",
     "form": null,
     "types": ["Water", "Steel"],
-    "abilities": ["torrent", "competitive"],
+    "abilities": ["Torrent", "Competitive"],
     "learnsetId": "empoleon"
+  },
+  {
+    "id": "staraptor",
+    "dexNumber": 398,
+    "name": "Staraptor",
+    "form": null,
+    "types": ["Normal", "Flying"],
+    "abilities": ["Intimidate", "Reckless"],
+    "learnsetId": "staraptor"
   },
   {
     "id": "luxray",
@@ -662,7 +734,7 @@
     "name": "Luxray",
     "form": null,
     "types": ["Electric"],
-    "abilities": ["rivalry", "intimidate", "guts"],
+    "abilities": ["Rivalry", "Intimidate", "Guts"],
     "learnsetId": "luxray"
   },
   {
@@ -671,7 +743,7 @@
     "name": "Roserade",
     "form": null,
     "types": ["Grass", "Poison"],
-    "abilities": ["naturalcure", "poisonpoint", "technician"],
+    "abilities": ["Natural Cure", "Poison Point", "Technician"],
     "learnsetId": "roserade"
   },
   {
@@ -680,7 +752,7 @@
     "name": "Rampardos",
     "form": null,
     "types": ["Rock"],
-    "abilities": ["moldbreaker", "sheerforce"],
+    "abilities": ["Mold Breaker", "Sheer Force"],
     "learnsetId": "rampardos"
   },
   {
@@ -689,7 +761,7 @@
     "name": "Bastiodon",
     "form": null,
     "types": ["Rock", "Steel"],
-    "abilities": ["sturdy", "soundproof"],
+    "abilities": ["Sturdy", "Soundproof"],
     "learnsetId": "bastiodon"
   },
   {
@@ -698,7 +770,7 @@
     "name": "Lopunny",
     "form": null,
     "types": ["Normal"],
-    "abilities": ["cutecharm", "klutz", "limber"],
+    "abilities": ["Cute Charm", "Klutz", "Limber"],
     "learnsetId": "lopunny"
   },
   {
@@ -707,7 +779,7 @@
     "name": "Spiritomb",
     "form": null,
     "types": ["Ghost", "Dark"],
-    "abilities": ["pressure", "infiltrator"],
+    "abilities": ["Pressure", "Infiltrator"],
     "learnsetId": "spiritomb"
   },
   {
@@ -716,7 +788,7 @@
     "name": "Garchomp",
     "form": null,
     "types": ["Dragon", "Ground"],
-    "abilities": ["sandveil", "roughskin"],
+    "abilities": ["Sand Veil", "Rough Skin"],
     "learnsetId": "garchomp"
   },
   {
@@ -725,7 +797,7 @@
     "name": "Lucario",
     "form": null,
     "types": ["Fighting", "Steel"],
-    "abilities": ["steadfast", "innerfocus", "justified"],
+    "abilities": ["Steadfast", "Inner Focus", "Justified"],
     "learnsetId": "lucario"
   },
   {
@@ -734,7 +806,7 @@
     "name": "Hippowdon",
     "form": null,
     "types": ["Ground"],
-    "abilities": ["sandstream", "sandforce"],
+    "abilities": ["Sand Stream", "Sand Force"],
     "learnsetId": "hippowdon"
   },
   {
@@ -743,7 +815,7 @@
     "name": "Toxicroak",
     "form": null,
     "types": ["Poison", "Fighting"],
-    "abilities": ["anticipation", "dryskin", "poisontouch"],
+    "abilities": ["Anticipation", "Dry Skin", "Poison Touch"],
     "learnsetId": "toxicroak"
   },
   {
@@ -752,7 +824,7 @@
     "name": "Abomasnow",
     "form": null,
     "types": ["Grass", "Ice"],
-    "abilities": ["snowwarning", "soundproof"],
+    "abilities": ["Snow Warning", "Soundproof"],
     "learnsetId": "abomasnow"
   },
   {
@@ -761,7 +833,7 @@
     "name": "Weavile",
     "form": null,
     "types": ["Dark", "Ice"],
-    "abilities": ["pressure", "pickpocket"],
+    "abilities": ["Pressure", "Pickpocket"],
     "learnsetId": "weavile"
   },
   {
@@ -770,7 +842,7 @@
     "name": "Rhyperior",
     "form": null,
     "types": ["Ground", "Rock"],
-    "abilities": ["lightningrod", "solidrock", "reckless"],
+    "abilities": ["Lightning Rod", "Solid Rock", "Reckless"],
     "learnsetId": "rhyperior"
   },
   {
@@ -779,7 +851,7 @@
     "name": "Leafeon",
     "form": null,
     "types": ["Grass"],
-    "abilities": ["leafguard", "chlorophyll"],
+    "abilities": ["Leaf Guard", "Chlorophyll"],
     "learnsetId": "leafeon"
   },
   {
@@ -788,7 +860,7 @@
     "name": "Glaceon",
     "form": null,
     "types": ["Ice"],
-    "abilities": ["snowcloak", "icebody"],
+    "abilities": ["Snow Cloak", "Ice Body"],
     "learnsetId": "glaceon"
   },
   {
@@ -797,7 +869,7 @@
     "name": "Gliscor",
     "form": null,
     "types": ["Ground", "Flying"],
-    "abilities": ["hypercutter", "sandveil", "poisonheal"],
+    "abilities": ["Hyper Cutter", "Sand Veil", "Poison Heal"],
     "learnsetId": "gliscor"
   },
   {
@@ -806,7 +878,7 @@
     "name": "Mamoswine",
     "form": null,
     "types": ["Ice", "Ground"],
-    "abilities": ["oblivious", "snowcloak", "thickfat"],
+    "abilities": ["Oblivious", "Snow Cloak", "Thick Fat"],
     "learnsetId": "mamoswine"
   },
   {
@@ -815,7 +887,7 @@
     "name": "Gallade",
     "form": null,
     "types": ["Psychic", "Fighting"],
-    "abilities": ["steadfast", "sharpness", "justified"],
+    "abilities": ["Steadfast", "Sharpness", "Justified"],
     "learnsetId": "gallade"
   },
   {
@@ -824,7 +896,7 @@
     "name": "Froslass",
     "form": null,
     "types": ["Ice", "Ghost"],
-    "abilities": ["snowcloak", "cursedbody"],
+    "abilities": ["Snow Cloak", "Cursed Body"],
     "learnsetId": "froslass"
   },
   {
@@ -833,7 +905,7 @@
     "name": "Rotom",
     "form": null,
     "types": ["Electric", "Ghost"],
-    "abilities": ["levitate"],
+    "abilities": ["Levitate"],
     "learnsetId": "rotom"
   },
   {
@@ -842,7 +914,7 @@
     "name": "Rotom",
     "form": "Heat",
     "types": ["Electric", "Fire"],
-    "abilities": ["levitate"],
+    "abilities": ["Levitate"],
     "learnsetId": "rotomheat"
   },
   {
@@ -851,7 +923,7 @@
     "name": "Rotom",
     "form": "Wash",
     "types": ["Electric", "Water"],
-    "abilities": ["levitate"],
+    "abilities": ["Levitate"],
     "learnsetId": "rotomwash"
   },
   {
@@ -860,7 +932,7 @@
     "name": "Rotom",
     "form": "Frost",
     "types": ["Electric", "Ice"],
-    "abilities": ["levitate"],
+    "abilities": ["Levitate"],
     "learnsetId": "rotomfrost"
   },
   {
@@ -869,7 +941,7 @@
     "name": "Rotom",
     "form": "Fan",
     "types": ["Electric", "Flying"],
-    "abilities": ["levitate"],
+    "abilities": ["Levitate"],
     "learnsetId": "rotomfan"
   },
   {
@@ -878,7 +950,7 @@
     "name": "Rotom",
     "form": "Mow",
     "types": ["Electric", "Grass"],
-    "abilities": ["levitate"],
+    "abilities": ["Levitate"],
     "learnsetId": "rotommow"
   },
   {
@@ -887,7 +959,7 @@
     "name": "Serperior",
     "form": null,
     "types": ["Grass"],
-    "abilities": ["overgrow", "contrary"],
+    "abilities": ["Overgrow", "Contrary"],
     "learnsetId": "serperior"
   },
   {
@@ -896,7 +968,7 @@
     "name": "Emboar",
     "form": null,
     "types": ["Fire", "Fighting"],
-    "abilities": ["blaze", "reckless"],
+    "abilities": ["Blaze", "Reckless"],
     "learnsetId": "emboar"
   },
   {
@@ -905,7 +977,7 @@
     "name": "Samurott",
     "form": null,
     "types": ["Water"],
-    "abilities": ["torrent", "shellarmor"],
+    "abilities": ["Torrent", "Shell Armor"],
     "learnsetId": "samurott"
   },
   {
@@ -914,7 +986,7 @@
     "name": "Samurott",
     "form": "Hisui",
     "types": ["Water", "Dark"],
-    "abilities": ["torrent", "sharpness"],
+    "abilities": ["Torrent", "Sharpness"],
     "learnsetId": "samurotthisui"
   },
   {
@@ -923,7 +995,7 @@
     "name": "Watchog",
     "form": null,
     "types": ["Normal"],
-    "abilities": ["illuminate", "keeneye", "analytic"],
+    "abilities": ["Illuminate", "Keen Eye", "Analytic"],
     "learnsetId": "watchog"
   },
   {
@@ -932,7 +1004,7 @@
     "name": "Liepard",
     "form": null,
     "types": ["Dark"],
-    "abilities": ["limber", "unburden", "prankster"],
+    "abilities": ["Limber", "Unburden", "Prankster"],
     "learnsetId": "liepard"
   },
   {
@@ -941,7 +1013,7 @@
     "name": "Simisage",
     "form": null,
     "types": ["Grass"],
-    "abilities": ["gluttony", "overgrow"],
+    "abilities": ["Gluttony", "Overgrow"],
     "learnsetId": "simisage"
   },
   {
@@ -950,7 +1022,7 @@
     "name": "Simisear",
     "form": null,
     "types": ["Fire"],
-    "abilities": ["gluttony", "blaze"],
+    "abilities": ["Gluttony", "Blaze"],
     "learnsetId": "simisear"
   },
   {
@@ -959,8 +1031,17 @@
     "name": "Simipour",
     "form": null,
     "types": ["Water"],
-    "abilities": ["gluttony", "torrent"],
+    "abilities": ["Gluttony", "Torrent"],
     "learnsetId": "simipour"
+  },
+  {
+    "id": "musharna",
+    "dexNumber": 518,
+    "name": "Musharna",
+    "form": null,
+    "types": ["Psychic"],
+    "abilities": ["Forewarn", "Synchronize", "Telepathy"],
+    "learnsetId": "musharna"
   },
   {
     "id": "excadrill",
@@ -968,7 +1049,7 @@
     "name": "Excadrill",
     "form": null,
     "types": ["Ground", "Steel"],
-    "abilities": ["sandrush", "sandforce", "moldbreaker"],
+    "abilities": ["Sand Rush", "Sand Force", "Mold Breaker"],
     "learnsetId": "excadrill"
   },
   {
@@ -977,7 +1058,7 @@
     "name": "Audino",
     "form": null,
     "types": ["Normal"],
-    "abilities": ["healer", "regenerator", "klutz"],
+    "abilities": ["Healer", "Regenerator", "Klutz"],
     "learnsetId": "audino"
   },
   {
@@ -986,8 +1067,17 @@
     "name": "Conkeldurr",
     "form": null,
     "types": ["Fighting"],
-    "abilities": ["guts", "sheerforce", "ironfist"],
+    "abilities": ["Guts", "Sheer Force", "Iron Fist"],
     "learnsetId": "conkeldurr"
+  },
+  {
+    "id": "scolipede",
+    "dexNumber": 545,
+    "name": "Scolipede",
+    "form": null,
+    "types": ["Bug", "Poison"],
+    "abilities": ["Poison Point", "Swarm", "Speed Boost"],
+    "learnsetId": "scolipede"
   },
   {
     "id": "whimsicott",
@@ -995,7 +1085,7 @@
     "name": "Whimsicott",
     "form": null,
     "types": ["Grass", "Fairy"],
-    "abilities": ["prankster", "infiltrator", "chlorophyll"],
+    "abilities": ["Prankster", "Infiltrator", "Chlorophyll"],
     "learnsetId": "whimsicott"
   },
   {
@@ -1004,8 +1094,17 @@
     "name": "Krookodile",
     "form": null,
     "types": ["Ground", "Dark"],
-    "abilities": ["intimidate", "moxie", "angerpoint"],
+    "abilities": ["Intimidate", "Moxie", "Anger Point"],
     "learnsetId": "krookodile"
+  },
+  {
+    "id": "scrafty",
+    "dexNumber": 560,
+    "name": "Scrafty",
+    "form": null,
+    "types": ["Dark", "Fighting"],
+    "abilities": ["Shed Skin", "Moxie", "Intimidate"],
+    "learnsetId": "scrafty"
   },
   {
     "id": "cofagrigus",
@@ -1013,7 +1112,7 @@
     "name": "Cofagrigus",
     "form": null,
     "types": ["Ghost"],
-    "abilities": ["mummy"],
+    "abilities": ["Mummy"],
     "learnsetId": "cofagrigus"
   },
   {
@@ -1022,7 +1121,7 @@
     "name": "Garbodor",
     "form": null,
     "types": ["Poison"],
-    "abilities": ["stench", "weakarmor", "aftermath"],
+    "abilities": ["Stench", "Weak Armor", "Aftermath"],
     "learnsetId": "garbodor"
   },
   {
@@ -1031,7 +1130,7 @@
     "name": "Zoroark",
     "form": null,
     "types": ["Dark"],
-    "abilities": ["illusion"],
+    "abilities": ["Illusion"],
     "learnsetId": "zoroark"
   },
   {
@@ -1040,7 +1139,7 @@
     "name": "Zoroark",
     "form": "Hisui",
     "types": ["Normal", "Ghost"],
-    "abilities": ["illusion"],
+    "abilities": ["Illusion"],
     "learnsetId": "zoroarkhisui"
   },
   {
@@ -1049,7 +1148,7 @@
     "name": "Reuniclus",
     "form": null,
     "types": ["Psychic"],
-    "abilities": ["overcoat", "magicguard", "regenerator"],
+    "abilities": ["Overcoat", "Magic Guard", "Regenerator"],
     "learnsetId": "reuniclus"
   },
   {
@@ -1058,7 +1157,7 @@
     "name": "Vanilluxe",
     "form": null,
     "types": ["Ice"],
-    "abilities": ["icebody", "snowwarning", "weakarmor"],
+    "abilities": ["Ice Body", "Snow Warning", "Weak Armor"],
     "learnsetId": "vanilluxe"
   },
   {
@@ -1067,8 +1166,17 @@
     "name": "Emolga",
     "form": null,
     "types": ["Electric", "Flying"],
-    "abilities": ["static", "motordrive"],
+    "abilities": ["Static", "Motor Drive"],
     "learnsetId": "emolga"
+  },
+  {
+    "id": "eelektross",
+    "dexNumber": 604,
+    "name": "Eelektross",
+    "form": null,
+    "types": ["Electric"],
+    "abilities": ["Levitate"],
+    "learnsetId": "eelektross"
   },
   {
     "id": "chandelure",
@@ -1076,7 +1184,7 @@
     "name": "Chandelure",
     "form": null,
     "types": ["Ghost", "Fire"],
-    "abilities": ["flashfire", "flamebody", "infiltrator"],
+    "abilities": ["Flash Fire", "Flame Body", "Infiltrator"],
     "learnsetId": "chandelure"
   },
   {
@@ -1085,7 +1193,7 @@
     "name": "Beartic",
     "form": null,
     "types": ["Ice"],
-    "abilities": ["snowcloak", "slushrush", "swiftswim"],
+    "abilities": ["Snow Cloak", "Slush Rush", "Swift Swim"],
     "learnsetId": "beartic"
   },
   {
@@ -1094,7 +1202,7 @@
     "name": "Stunfisk",
     "form": null,
     "types": ["Ground", "Electric"],
-    "abilities": ["static", "limber", "sandveil"],
+    "abilities": ["Static", "Limber", "Sand Veil"],
     "learnsetId": "stunfisk"
   },
   {
@@ -1103,7 +1211,7 @@
     "name": "Stunfisk",
     "form": "Galar",
     "types": ["Ground", "Steel"],
-    "abilities": ["mimicry"],
+    "abilities": ["Mimicry"],
     "learnsetId": "stunfiskgalar"
   },
   {
@@ -1112,7 +1220,7 @@
     "name": "Golurk",
     "form": null,
     "types": ["Ground", "Ghost"],
-    "abilities": ["ironfist", "klutz", "noguard"],
+    "abilities": ["Iron Fist", "Klutz", "No Guard"],
     "learnsetId": "golurk"
   },
   {
@@ -1121,7 +1229,7 @@
     "name": "Hydreigon",
     "form": null,
     "types": ["Dark", "Dragon"],
-    "abilities": ["levitate"],
+    "abilities": ["Levitate"],
     "learnsetId": "hydreigon"
   },
   {
@@ -1130,7 +1238,7 @@
     "name": "Volcarona",
     "form": null,
     "types": ["Bug", "Fire"],
-    "abilities": ["flamebody", "swarm"],
+    "abilities": ["Flame Body", "Swarm"],
     "learnsetId": "volcarona"
   },
   {
@@ -1139,7 +1247,7 @@
     "name": "Chesnaught",
     "form": null,
     "types": ["Grass", "Fighting"],
-    "abilities": ["overgrow", "bulletproof"],
+    "abilities": ["Overgrow", "Bulletproof"],
     "learnsetId": "chesnaught"
   },
   {
@@ -1148,7 +1256,7 @@
     "name": "Delphox",
     "form": null,
     "types": ["Fire", "Psychic"],
-    "abilities": ["blaze", "magician"],
+    "abilities": ["Blaze", "Magician"],
     "learnsetId": "delphox"
   },
   {
@@ -1157,7 +1265,7 @@
     "name": "Greninja",
     "form": null,
     "types": ["Water", "Dark"],
-    "abilities": ["torrent", "protean"],
+    "abilities": ["Torrent", "Protean"],
     "learnsetId": "greninja"
   },
   {
@@ -1166,7 +1274,7 @@
     "name": "Diggersby",
     "form": null,
     "types": ["Normal", "Ground"],
-    "abilities": ["pickup", "cheekpouch", "hugepower"],
+    "abilities": ["Pickup", "Cheek Pouch", "Huge Power"],
     "learnsetId": "diggersby"
   },
   {
@@ -1175,7 +1283,7 @@
     "name": "Talonflame",
     "form": null,
     "types": ["Fire", "Flying"],
-    "abilities": ["flamebody", "galewings"],
+    "abilities": ["Flame Body", "Gale Wings"],
     "learnsetId": "talonflame"
   },
   {
@@ -1184,8 +1292,17 @@
     "name": "Vivillon",
     "form": null,
     "types": ["Bug", "Flying"],
-    "abilities": ["shielddust", "compoundeyes", "friendguard"],
+    "abilities": ["Shield Dust", "Compound Eyes", "Friend Guard"],
     "learnsetId": "vivillon"
+  },
+  {
+    "id": "pyroar",
+    "dexNumber": 668,
+    "name": "Pyroar",
+    "form": null,
+    "types": ["Fire", "Normal"],
+    "abilities": ["Rivalry", "Unnerve", "Moxie"],
+    "learnsetId": "pyroar"
   },
   {
     "id": "floetteeternal",
@@ -1193,7 +1310,7 @@
     "name": "Floette",
     "form": "Eternal",
     "types": ["Fairy"],
-    "abilities": ["flowerveil", "symbiosis"],
+    "abilities": ["Flower Veil", "Symbiosis"],
     "learnsetId": "floetteeternal"
   },
   {
@@ -1202,7 +1319,7 @@
     "name": "Florges",
     "form": null,
     "types": ["Fairy"],
-    "abilities": ["flowerveil", "symbiosis"],
+    "abilities": ["Flower Veil", "Symbiosis"],
     "learnsetId": "florges"
   },
   {
@@ -1211,7 +1328,7 @@
     "name": "Pangoro",
     "form": null,
     "types": ["Fighting", "Dark"],
-    "abilities": ["ironfist", "moldbreaker", "scrappy"],
+    "abilities": ["Iron Fist", "Mold Breaker", "Scrappy"],
     "learnsetId": "pangoro"
   },
   {
@@ -1220,7 +1337,7 @@
     "name": "Furfrou",
     "form": null,
     "types": ["Normal"],
-    "abilities": ["furcoat"],
+    "abilities": ["Fur Coat"],
     "learnsetId": "furfrou"
   },
   {
@@ -1229,7 +1346,7 @@
     "name": "Meowstic",
     "form": null,
     "types": ["Psychic"],
-    "abilities": ["keeneye", "infiltrator", "prankster"],
+    "abilities": ["Keen Eye", "Infiltrator", "Prankster"],
     "learnsetId": "meowstic"
   },
   {
@@ -1238,7 +1355,7 @@
     "name": "Meowstic",
     "form": "F",
     "types": ["Psychic"],
-    "abilities": ["keeneye", "infiltrator", "competitive"],
+    "abilities": ["Keen Eye", "Infiltrator", "Competitive"],
     "learnsetId": "meowsticf"
   },
   {
@@ -1247,7 +1364,7 @@
     "name": "Aegislash",
     "form": null,
     "types": ["Steel", "Ghost"],
-    "abilities": ["stancechange"],
+    "abilities": ["Stance Change"],
     "learnsetId": "aegislash"
   },
   {
@@ -1256,7 +1373,7 @@
     "name": "Aromatisse",
     "form": null,
     "types": ["Fairy"],
-    "abilities": ["healer", "aromaveil"],
+    "abilities": ["Healer", "Aroma Veil"],
     "learnsetId": "aromatisse"
   },
   {
@@ -1265,8 +1382,35 @@
     "name": "Slurpuff",
     "form": null,
     "types": ["Fairy"],
-    "abilities": ["sweetveil", "unburden"],
+    "abilities": ["Sweet Veil", "Unburden"],
     "learnsetId": "slurpuff"
+  },
+  {
+    "id": "malamar",
+    "dexNumber": 687,
+    "name": "Malamar",
+    "form": null,
+    "types": ["Dark", "Psychic"],
+    "abilities": ["Contrary", "Suction Cups", "Infiltrator"],
+    "learnsetId": "malamar"
+  },
+  {
+    "id": "barbaracle",
+    "dexNumber": 689,
+    "name": "Barbaracle",
+    "form": null,
+    "types": ["Rock", "Water"],
+    "abilities": ["Sniper", "Tough Claws", "Pickpocket"],
+    "learnsetId": "barbaracle"
+  },
+  {
+    "id": "dragalge",
+    "dexNumber": 691,
+    "name": "Dragalge",
+    "form": null,
+    "types": ["Poison", "Dragon"],
+    "abilities": ["Poison Point", "Poison Touch", "Adaptability"],
+    "learnsetId": "dragalge"
   },
   {
     "id": "clawitzer",
@@ -1274,7 +1418,7 @@
     "name": "Clawitzer",
     "form": null,
     "types": ["Water"],
-    "abilities": ["megalauncher"],
+    "abilities": ["Mega Launcher"],
     "learnsetId": "clawitzer"
   },
   {
@@ -1283,7 +1427,7 @@
     "name": "Heliolisk",
     "form": null,
     "types": ["Electric", "Normal"],
-    "abilities": ["dryskin", "sandveil", "solarpower"],
+    "abilities": ["Dry Skin", "Sand Veil", "Solar Power"],
     "learnsetId": "heliolisk"
   },
   {
@@ -1292,7 +1436,7 @@
     "name": "Tyrantrum",
     "form": null,
     "types": ["Rock", "Dragon"],
-    "abilities": ["strongjaw", "rockhead"],
+    "abilities": ["Strong Jaw", "Rock Head"],
     "learnsetId": "tyrantrum"
   },
   {
@@ -1301,7 +1445,7 @@
     "name": "Aurorus",
     "form": null,
     "types": ["Rock", "Ice"],
-    "abilities": ["refrigerate", "snowwarning"],
+    "abilities": ["Refrigerate", "Snow Warning"],
     "learnsetId": "aurorus"
   },
   {
@@ -1310,7 +1454,7 @@
     "name": "Sylveon",
     "form": null,
     "types": ["Fairy"],
-    "abilities": ["cutecharm", "pixilate"],
+    "abilities": ["Cute Charm", "Pixilate"],
     "learnsetId": "sylveon"
   },
   {
@@ -1319,7 +1463,7 @@
     "name": "Hawlucha",
     "form": null,
     "types": ["Fighting", "Flying"],
-    "abilities": ["limber", "unburden", "moldbreaker"],
+    "abilities": ["Limber", "Unburden", "Mold Breaker"],
     "learnsetId": "hawlucha"
   },
   {
@@ -1328,7 +1472,7 @@
     "name": "Dedenne",
     "form": null,
     "types": ["Electric", "Fairy"],
-    "abilities": ["cheekpouch", "pickup", "plus"],
+    "abilities": ["Cheek Pouch", "Pickup", "Plus"],
     "learnsetId": "dedenne"
   },
   {
@@ -1337,7 +1481,7 @@
     "name": "Goodra",
     "form": null,
     "types": ["Dragon"],
-    "abilities": ["sapsipper", "hydration", "gooey"],
+    "abilities": ["Sap Sipper", "Hydration", "Gooey"],
     "learnsetId": "goodra"
   },
   {
@@ -1346,7 +1490,7 @@
     "name": "Goodra",
     "form": "Hisui",
     "types": ["Steel", "Dragon"],
-    "abilities": ["sapsipper", "shellarmor", "gooey"],
+    "abilities": ["Sap Sipper", "Shell Armor", "Gooey"],
     "learnsetId": "goodrahisui"
   },
   {
@@ -1355,7 +1499,7 @@
     "name": "Klefki",
     "form": null,
     "types": ["Steel", "Fairy"],
-    "abilities": ["prankster", "magician"],
+    "abilities": ["Prankster", "Magician"],
     "learnsetId": "klefki"
   },
   {
@@ -1364,7 +1508,7 @@
     "name": "Trevenant",
     "form": null,
     "types": ["Ghost", "Grass"],
-    "abilities": ["naturalcure", "frisk", "harvest"],
+    "abilities": ["Natural Cure", "Frisk", "Harvest"],
     "learnsetId": "trevenant"
   },
   {
@@ -1373,7 +1517,7 @@
     "name": "Gourgeist",
     "form": null,
     "types": ["Ghost", "Grass"],
-    "abilities": ["pickup", "frisk", "insomnia"],
+    "abilities": ["Pickup", "Frisk", "Insomnia"],
     "learnsetId": "gourgeist"
   },
   {
@@ -1382,7 +1526,7 @@
     "name": "Gourgeist",
     "form": "Small",
     "types": ["Ghost", "Grass"],
-    "abilities": ["pickup", "frisk", "insomnia"],
+    "abilities": ["Pickup", "Frisk", "Insomnia"],
     "learnsetId": "gourgeist"
   },
   {
@@ -1391,7 +1535,7 @@
     "name": "Gourgeist",
     "form": "Large",
     "types": ["Ghost", "Grass"],
-    "abilities": ["pickup", "frisk", "insomnia"],
+    "abilities": ["Pickup", "Frisk", "Insomnia"],
     "learnsetId": "gourgeist"
   },
   {
@@ -1400,7 +1544,7 @@
     "name": "Gourgeist",
     "form": "Super",
     "types": ["Ghost", "Grass"],
-    "abilities": ["pickup", "frisk", "insomnia"],
+    "abilities": ["Pickup", "Frisk", "Insomnia"],
     "learnsetId": "gourgeist"
   },
   {
@@ -1409,7 +1553,7 @@
     "name": "Avalugg",
     "form": null,
     "types": ["Ice"],
-    "abilities": ["owntempo", "icebody", "sturdy"],
+    "abilities": ["Own Tempo", "Ice Body", "Sturdy"],
     "learnsetId": "avalugg"
   },
   {
@@ -1418,7 +1562,7 @@
     "name": "Avalugg",
     "form": "Hisui",
     "types": ["Ice", "Rock"],
-    "abilities": ["strongjaw", "icebody", "sturdy"],
+    "abilities": ["Strong Jaw", "Ice Body", "Sturdy"],
     "learnsetId": "avalugghisui"
   },
   {
@@ -1427,7 +1571,7 @@
     "name": "Noivern",
     "form": null,
     "types": ["Flying", "Dragon"],
-    "abilities": ["frisk", "infiltrator", "telepathy"],
+    "abilities": ["Frisk", "Infiltrator", "Telepathy"],
     "learnsetId": "noivern"
   },
   {
@@ -1436,7 +1580,7 @@
     "name": "Decidueye",
     "form": null,
     "types": ["Grass", "Ghost"],
-    "abilities": ["overgrow", "longreach"],
+    "abilities": ["Overgrow", "Long Reach"],
     "learnsetId": "decidueye"
   },
   {
@@ -1445,7 +1589,7 @@
     "name": "Decidueye",
     "form": "Hisui",
     "types": ["Grass", "Fighting"],
-    "abilities": ["overgrow", "scrappy"],
+    "abilities": ["Overgrow", "Scrappy"],
     "learnsetId": "decidueyehisui"
   },
   {
@@ -1454,7 +1598,7 @@
     "name": "Incineroar",
     "form": null,
     "types": ["Fire", "Dark"],
-    "abilities": ["blaze", "intimidate"],
+    "abilities": ["Blaze", "Intimidate"],
     "learnsetId": "incineroar"
   },
   {
@@ -1463,7 +1607,7 @@
     "name": "Primarina",
     "form": null,
     "types": ["Water", "Fairy"],
-    "abilities": ["torrent", "liquidvoice"],
+    "abilities": ["Torrent", "Liquid Voice"],
     "learnsetId": "primarina"
   },
   {
@@ -1472,7 +1616,7 @@
     "name": "Toucannon",
     "form": null,
     "types": ["Normal", "Flying"],
-    "abilities": ["keeneye", "skilllink", "sheerforce"],
+    "abilities": ["Keen Eye", "Skill Link", "Sheer Force"],
     "learnsetId": "toucannon"
   },
   {
@@ -1481,7 +1625,7 @@
     "name": "Crabominable",
     "form": null,
     "types": ["Fighting", "Ice"],
-    "abilities": ["hypercutter", "ironfist", "angerpoint"],
+    "abilities": ["Hyper Cutter", "Iron Fist", "Anger Point"],
     "learnsetId": "crabominable"
   },
   {
@@ -1490,7 +1634,7 @@
     "name": "Lycanroc",
     "form": null,
     "types": ["Rock"],
-    "abilities": ["keeneye", "sandrush", "steadfast"],
+    "abilities": ["Keen Eye", "Sand Rush", "Steadfast"],
     "learnsetId": "lycanroc"
   },
   {
@@ -1499,7 +1643,7 @@
     "name": "Lycanroc",
     "form": "Midnight",
     "types": ["Rock"],
-    "abilities": ["keeneye", "vitalspirit", "noguard"],
+    "abilities": ["Keen Eye", "Vital Spirit", "No Guard"],
     "learnsetId": "lycanrocmidnight"
   },
   {
@@ -1508,7 +1652,7 @@
     "name": "Lycanroc",
     "form": "Dusk",
     "types": ["Rock"],
-    "abilities": ["toughclaws"],
+    "abilities": ["Tough Claws"],
     "learnsetId": "lycanrocdusk"
   },
   {
@@ -1517,7 +1661,7 @@
     "name": "Toxapex",
     "form": null,
     "types": ["Poison", "Water"],
-    "abilities": ["merciless", "limber", "regenerator"],
+    "abilities": ["Merciless", "Limber", "Regenerator"],
     "learnsetId": "toxapex"
   },
   {
@@ -1526,7 +1670,7 @@
     "name": "Mudsdale",
     "form": null,
     "types": ["Ground"],
-    "abilities": ["owntempo", "stamina", "innerfocus"],
+    "abilities": ["Own Tempo", "Stamina", "Inner Focus"],
     "learnsetId": "mudsdale"
   },
   {
@@ -1535,7 +1679,7 @@
     "name": "Araquanid",
     "form": null,
     "types": ["Water", "Bug"],
-    "abilities": ["waterbubble", "waterabsorb"],
+    "abilities": ["Water Bubble", "Water Absorb"],
     "learnsetId": "araquanid"
   },
   {
@@ -1544,7 +1688,7 @@
     "name": "Salazzle",
     "form": null,
     "types": ["Poison", "Fire"],
-    "abilities": ["corrosion", "oblivious"],
+    "abilities": ["Corrosion", "Oblivious"],
     "learnsetId": "salazzle"
   },
   {
@@ -1553,7 +1697,7 @@
     "name": "Tsareena",
     "form": null,
     "types": ["Grass"],
-    "abilities": ["leafguard", "queenlymajesty", "sweetveil"],
+    "abilities": ["Leaf Guard", "Queenly Majesty", "Sweet Veil"],
     "learnsetId": "tsareena"
   },
   {
@@ -1562,7 +1706,7 @@
     "name": "Oranguru",
     "form": null,
     "types": ["Normal", "Psychic"],
-    "abilities": ["innerfocus", "telepathy", "symbiosis"],
+    "abilities": ["Inner Focus", "Telepathy", "Symbiosis"],
     "learnsetId": "oranguru"
   },
   {
@@ -1571,7 +1715,7 @@
     "name": "Passimian",
     "form": null,
     "types": ["Fighting"],
-    "abilities": ["receiver", "defiant"],
+    "abilities": ["Receiver", "Defiant"],
     "learnsetId": "passimian"
   },
   {
@@ -1580,7 +1724,7 @@
     "name": "Mimikyu",
     "form": null,
     "types": ["Ghost", "Fairy"],
-    "abilities": ["disguise"],
+    "abilities": ["Disguise"],
     "learnsetId": "mimikyu"
   },
   {
@@ -1589,7 +1733,7 @@
     "name": "Drampa",
     "form": null,
     "types": ["Normal", "Dragon"],
-    "abilities": ["berserk", "sapsipper", "cloudnine"],
+    "abilities": ["Berserk", "Sap Sipper", "Cloud Nine"],
     "learnsetId": "drampa"
   },
   {
@@ -1598,7 +1742,7 @@
     "name": "Kommo-o",
     "form": null,
     "types": ["Dragon", "Fighting"],
-    "abilities": ["bulletproof", "soundproof", "overcoat"],
+    "abilities": ["Bulletproof", "Soundproof", "Overcoat"],
     "learnsetId": "kommoo"
   },
   {
@@ -1607,7 +1751,7 @@
     "name": "Corviknight",
     "form": null,
     "types": ["Flying", "Steel"],
-    "abilities": ["pressure", "unnerve", "mirrorarmor"],
+    "abilities": ["Pressure", "Unnerve", "Mirror Armor"],
     "learnsetId": "corviknight"
   },
   {
@@ -1616,7 +1760,7 @@
     "name": "Flapple",
     "form": null,
     "types": ["Grass", "Dragon"],
-    "abilities": ["ripen", "gluttony", "hustle"],
+    "abilities": ["Ripen", "Gluttony", "Hustle"],
     "learnsetId": "flapple"
   },
   {
@@ -1625,7 +1769,7 @@
     "name": "Appletun",
     "form": null,
     "types": ["Grass", "Dragon"],
-    "abilities": ["ripen", "gluttony", "thickfat"],
+    "abilities": ["Ripen", "Gluttony", "Thick Fat"],
     "learnsetId": "appletun"
   },
   {
@@ -1634,7 +1778,7 @@
     "name": "Sandaconda",
     "form": null,
     "types": ["Ground"],
-    "abilities": ["sandspit", "shedskin", "sandveil"],
+    "abilities": ["Sand Spit", "Shed Skin", "Sand Veil"],
     "learnsetId": "sandaconda"
   },
   {
@@ -1643,7 +1787,7 @@
     "name": "Polteageist",
     "form": null,
     "types": ["Ghost"],
-    "abilities": ["weakarmor", "cursedbody"],
+    "abilities": ["Weak Armor", "Cursed Body"],
     "learnsetId": "polteageist"
   },
   {
@@ -1652,8 +1796,17 @@
     "name": "Hatterene",
     "form": null,
     "types": ["Psychic", "Fairy"],
-    "abilities": ["healer", "anticipation", "magicbounce"],
+    "abilities": ["Healer", "Anticipation", "Magic Bounce"],
     "learnsetId": "hatterene"
+  },
+  {
+    "id": "grimmsnarl",
+    "dexNumber": 861,
+    "name": "Grimmsnarl",
+    "form": null,
+    "types": ["Dark", "Fairy"],
+    "abilities": ["Prankster", "Frisk", "Pickpocket"],
+    "learnsetId": "grimmsnarl"
   },
   {
     "id": "mrrime",
@@ -1661,7 +1814,7 @@
     "name": "Mr. Rime",
     "form": null,
     "types": ["Ice", "Psychic"],
-    "abilities": ["tangledfeet", "screencleaner", "icebody"],
+    "abilities": ["Tangled Feet", "Screen Cleaner", "Ice Body"],
     "learnsetId": "mrrime"
   },
   {
@@ -1670,7 +1823,7 @@
     "name": "Runerigus",
     "form": null,
     "types": ["Ground", "Ghost"],
-    "abilities": ["wanderingspirit"],
+    "abilities": ["Wandering Spirit"],
     "learnsetId": "runerigus"
   },
   {
@@ -1679,8 +1832,17 @@
     "name": "Alcremie",
     "form": null,
     "types": ["Fairy"],
-    "abilities": ["sweetveil", "aromaveil"],
+    "abilities": ["Sweet Veil", "Aroma Veil"],
     "learnsetId": "alcremie"
+  },
+  {
+    "id": "falinks",
+    "dexNumber": 870,
+    "name": "Falinks",
+    "form": null,
+    "types": ["Fighting"],
+    "abilities": ["Battle Armor", "Defiant"],
+    "learnsetId": "falinks"
   },
   {
     "id": "morpeko",
@@ -1688,7 +1850,7 @@
     "name": "Morpeko",
     "form": null,
     "types": ["Electric", "Dark"],
-    "abilities": ["hungerswitch"],
+    "abilities": ["Hunger Switch"],
     "learnsetId": "morpeko"
   },
   {
@@ -1697,7 +1859,7 @@
     "name": "Dragapult",
     "form": null,
     "types": ["Dragon", "Ghost"],
-    "abilities": ["clearbody", "infiltrator", "cursedbody"],
+    "abilities": ["Clear Body", "Infiltrator", "Cursed Body"],
     "learnsetId": "dragapult"
   },
   {
@@ -1706,7 +1868,7 @@
     "name": "Wyrdeer",
     "form": null,
     "types": ["Normal", "Psychic"],
-    "abilities": ["intimidate", "frisk", "sapsipper"],
+    "abilities": ["Intimidate", "Frisk", "Sap Sipper"],
     "learnsetId": "wyrdeer"
   },
   {
@@ -1715,7 +1877,7 @@
     "name": "Kleavor",
     "form": null,
     "types": ["Bug", "Rock"],
-    "abilities": ["swarm", "sheerforce", "sharpness"],
+    "abilities": ["Swarm", "Sheer Force", "Sharpness"],
     "learnsetId": "kleavor"
   },
   {
@@ -1724,7 +1886,7 @@
     "name": "Basculegion",
     "form": null,
     "types": ["Water", "Ghost"],
-    "abilities": ["swiftswim", "adaptability", "moldbreaker"],
+    "abilities": ["Swift Swim", "Adaptability", "Mold Breaker"],
     "learnsetId": "basculegion"
   },
   {
@@ -1733,7 +1895,7 @@
     "name": "Basculegion",
     "form": "F",
     "types": ["Water", "Ghost"],
-    "abilities": ["swiftswim", "adaptability", "moldbreaker"],
+    "abilities": ["Swift Swim", "Adaptability", "Mold Breaker"],
     "learnsetId": "basculegionf"
   },
   {
@@ -1742,8 +1904,17 @@
     "name": "Sneasler",
     "form": null,
     "types": ["Fighting", "Poison"],
-    "abilities": ["pressure", "unburden", "poisontouch"],
+    "abilities": ["Pressure", "Unburden", "Poison Touch"],
     "learnsetId": "sneasler"
+  },
+  {
+    "id": "overqwil",
+    "dexNumber": 904,
+    "name": "Overqwil",
+    "form": null,
+    "types": ["Dark", "Poison"],
+    "abilities": ["Poison Point", "Swift Swim", "Intimidate"],
+    "learnsetId": "overqwil"
   },
   {
     "id": "meowscarada",
@@ -1751,7 +1922,7 @@
     "name": "Meowscarada",
     "form": null,
     "types": ["Grass", "Dark"],
-    "abilities": ["overgrow", "protean"],
+    "abilities": ["Overgrow", "Protean"],
     "learnsetId": "meowscarada"
   },
   {
@@ -1760,7 +1931,7 @@
     "name": "Skeledirge",
     "form": null,
     "types": ["Fire", "Ghost"],
-    "abilities": ["blaze", "unaware"],
+    "abilities": ["Blaze", "Unaware"],
     "learnsetId": "skeledirge"
   },
   {
@@ -1769,7 +1940,7 @@
     "name": "Quaquaval",
     "form": null,
     "types": ["Water", "Fighting"],
-    "abilities": ["torrent", "moxie"],
+    "abilities": ["Torrent", "Moxie"],
     "learnsetId": "quaquaval"
   },
   {
@@ -1778,7 +1949,7 @@
     "name": "Maushold",
     "form": null,
     "types": ["Normal"],
-    "abilities": ["friendguard", "cheekpouch", "technician"],
+    "abilities": ["Friend Guard", "Cheek Pouch", "Technician"],
     "learnsetId": "maushold"
   },
   {
@@ -1787,7 +1958,7 @@
     "name": "Garganacl",
     "form": null,
     "types": ["Rock"],
-    "abilities": ["purifyingsalt", "sturdy", "clearbody"],
+    "abilities": ["Purifying Salt", "Sturdy", "Clear Body"],
     "learnsetId": "garganacl"
   },
   {
@@ -1796,7 +1967,7 @@
     "name": "Armarouge",
     "form": null,
     "types": ["Fire", "Psychic"],
-    "abilities": ["flashfire", "weakarmor"],
+    "abilities": ["Flash Fire", "Weak Armor"],
     "learnsetId": "armarouge"
   },
   {
@@ -1805,7 +1976,7 @@
     "name": "Ceruledge",
     "form": null,
     "types": ["Fire", "Ghost"],
-    "abilities": ["flashfire", "weakarmor"],
+    "abilities": ["Flash Fire", "Weak Armor"],
     "learnsetId": "ceruledge"
   },
   {
@@ -1814,7 +1985,7 @@
     "name": "Bellibolt",
     "form": null,
     "types": ["Electric"],
-    "abilities": ["electromorphosis", "static", "damp"],
+    "abilities": ["Electromorphosis", "Static", "Damp"],
     "learnsetId": "bellibolt"
   },
   {
@@ -1823,7 +1994,7 @@
     "name": "Scovillain",
     "form": null,
     "types": ["Grass", "Fire"],
-    "abilities": ["chlorophyll", "insomnia", "moody"],
+    "abilities": ["Chlorophyll", "Insomnia", "Moody"],
     "learnsetId": "scovillain"
   },
   {
@@ -1832,7 +2003,7 @@
     "name": "Espathra",
     "form": null,
     "types": ["Psychic"],
-    "abilities": ["opportunist", "frisk", "speedboost"],
+    "abilities": ["Opportunist", "Frisk", "Speed Boost"],
     "learnsetId": "espathra"
   },
   {
@@ -1841,7 +2012,7 @@
     "name": "Tinkaton",
     "form": null,
     "types": ["Fairy", "Steel"],
-    "abilities": ["moldbreaker", "owntempo", "pickpocket"],
+    "abilities": ["Mold Breaker", "Own Tempo", "Pickpocket"],
     "learnsetId": "tinkaton"
   },
   {
@@ -1850,7 +2021,7 @@
     "name": "Palafin",
     "form": null,
     "types": ["Water"],
-    "abilities": ["zerotohero"],
+    "abilities": ["Zero to Hero"],
     "learnsetId": "palafin"
   },
   {
@@ -1859,7 +2030,7 @@
     "name": "Orthworm",
     "form": null,
     "types": ["Steel"],
-    "abilities": ["eartheater", "sandveil"],
+    "abilities": ["Earth Eater", "Sand Veil"],
     "learnsetId": "orthworm"
   },
   {
@@ -1868,8 +2039,26 @@
     "name": "Glimmora",
     "form": null,
     "types": ["Rock", "Poison"],
-    "abilities": ["toxicdebris", "corrosion"],
+    "abilities": ["Toxic Debris", "Corrosion"],
     "learnsetId": "glimmora"
+  },
+  {
+    "id": "houndstone",
+    "dexNumber": 972,
+    "name": "Houndstone",
+    "form": null,
+    "types": ["Ghost"],
+    "abilities": ["Sand Rush", "Fluffy"],
+    "learnsetId": "houndstone"
+  },
+  {
+    "id": "annihilape",
+    "dexNumber": 979,
+    "name": "Annihilape",
+    "form": null,
+    "types": ["Fighting", "Ghost"],
+    "abilities": ["Vital Spirit", "Inner Focus", "Defiant"],
+    "learnsetId": "annihilape"
   },
   {
     "id": "farigiraf",
@@ -1877,7 +2066,7 @@
     "name": "Farigiraf",
     "form": null,
     "types": ["Normal", "Psychic"],
-    "abilities": ["cudchew", "armortail", "sapsipper"],
+    "abilities": ["Cud Chew", "Armor Tail", "Sap Sipper"],
     "learnsetId": "farigiraf"
   },
   {
@@ -1886,8 +2075,17 @@
     "name": "Kingambit",
     "form": null,
     "types": ["Dark", "Steel"],
-    "abilities": ["defiant", "supremeoverlord", "pressure"],
+    "abilities": ["Defiant", "Supreme Overlord", "Pressure"],
     "learnsetId": "kingambit"
+  },
+  {
+    "id": "gholdengo",
+    "dexNumber": 1000,
+    "name": "Gholdengo",
+    "form": null,
+    "types": ["Steel", "Ghost"],
+    "abilities": ["Good as Gold"],
+    "learnsetId": "gholdengo"
   },
   {
     "id": "sinistcha",
@@ -1895,7 +2093,7 @@
     "name": "Sinistcha",
     "form": null,
     "types": ["Grass", "Ghost"],
-    "abilities": ["hospitality", "heatproof"],
+    "abilities": ["Hospitality", "Heatproof"],
     "learnsetId": "sinistcha"
   },
   {
@@ -1904,7 +2102,7 @@
     "name": "Archaludon",
     "form": null,
     "types": ["Steel", "Dragon"],
-    "abilities": ["stamina", "sturdy", "stalwart"],
+    "abilities": ["Stamina", "Sturdy", "Stalwart"],
     "learnsetId": "archaludon"
   },
   {
@@ -1913,7 +2111,7 @@
     "name": "Hydrapple",
     "form": null,
     "types": ["Grass", "Dragon"],
-    "abilities": ["supersweetsyrup", "regenerator", "stickyhold"],
+    "abilities": ["Supersweet Syrup", "Regenerator", "Sticky Hold"],
     "learnsetId": "hydrapple"
   }
 ]

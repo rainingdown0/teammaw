@@ -31,7 +31,7 @@ export function DeleteArticleButton({ articleId }) {
     if (!isConfirming) return;
     const timer = setTimeout(() => {
       setIsConfirming(false);
-    }, 3000);
+    }, 1500);
     return () => clearTimeout(timer);
   }, [isConfirming]);
 
@@ -46,7 +46,7 @@ export function DeleteArticleButton({ articleId }) {
     }
   };
 
-  const buttonText = isConfirming ? "Confirm delete?" : "Delete";
+  const buttonText = isConfirming ? "Are you sure?" : "Delete";
 
   return (
     <div

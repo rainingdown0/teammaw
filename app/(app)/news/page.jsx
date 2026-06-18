@@ -22,7 +22,7 @@ export default function Page() {
     <>
       <div className="sticky top-0">
         <div
-          className="flex w-full justify-end"
+          className="flex h-full w-full justify-end"
           onClick={() => setIsModalOpen(true)}
         >
           {/* <div className="flex w-fit items-center gap-8"></div> */}

@@ -32,7 +32,7 @@ function getVariantKey(mon, isMega, suffix) {
   return `${baseName}-${formName}`;
 }
 
-export function TeamSprite({ pokemon, item }) {
+export function TeamSprite({ pokemon, item, size = 128 }) {
   const mon = pokemonData.find((p) => p.id === pokemon);
   if (!mon) return null;
 
@@ -49,11 +49,11 @@ export function TeamSprite({ pokemon, item }) {
 
   return (
     <Image
-      className="h-32 w-32 object-contain"
+      className={`h-[${size}] w-[${size}] object-contain`}
       src={src}
       alt={`${mon.name}${mon.form ? ` (${mon.form})` : ""}${isMega ? ` ${stoneConfig.suffix.toUpperCase()}` : ""}`}
-      width={128}
-      height={128}
+      width={size}
+      height={size}
       priority
     />
   );

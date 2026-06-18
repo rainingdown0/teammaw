@@ -9,7 +9,16 @@ export default async function Page() {
   const teams = session?.user?.id
     ? await prisma.team.findMany({
         where: { userId: session.user.id },
-        orderBy: { createdAt: "desc" }, // Shows newest teams at the top
+        select: {
+          id: true,
+          userId: true,
+          name: true,
+          isPublic: true,
+          isLegal: true,
+          format: true,
+          pokemon: true,
+        },
+        orderBy: { createdAt: "desc" },
       })
     : [];
   return (

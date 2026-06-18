@@ -24,7 +24,7 @@ export function NewsList() {
   }, []);
 
   return (
-    <div className="flex h-full flex-col gap-4">
+    <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-scroll">
       {isLoading ? (
         <span className="mb-32 flex h-full w-full items-center justify-center text-center text-base-text-darker">
           {"Loading articles..."}
