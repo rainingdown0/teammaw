@@ -2,8 +2,8 @@
 
 import { useState, useTransition, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Button from "@/app/ui/button";
-import Icon from "@/app/ui/icons";
+import Button from "./button";
+import Icon from "./icons";
 import { createTeam, deleteArticle } from "@/lib/actions";
 
 export function CreateTeamButton() {
@@ -46,7 +46,7 @@ export function DeleteArticleButton({ articleId }) {
     }
   };
 
-  const buttonText = isConfirming ? "Are you sure?" : "Delete";
+  const buttonText = isConfirming ? "Delete?" : "Delete";
 
   return (
     <div

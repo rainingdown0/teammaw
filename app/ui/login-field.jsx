@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Icon from "@/app/ui/icons";
+import Icon from "./icons";
 
 export default function LoginField({
   name,

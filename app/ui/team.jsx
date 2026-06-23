@@ -9,6 +9,7 @@ import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { duplicateTeam } from "@/lib/actions";
 import formatData from "@/data/formats.json";
 import clsx from "clsx";
+import { createPortal } from "react-dom";
 
 export function Team({ team, isDiscover }) {
   const searchParams = useSearchParams();
@@ -34,7 +35,7 @@ export function Team({ team, isDiscover }) {
   return (
     <>
       <div
-        className="flex w-210 cursor-pointer flex-col gap-4 rounded-2xl border-b-2 border-transparent bg-base-base p-4 transition hover:border-primary"
+        className="flex w-210 flex-col gap-4 rounded-2xl border-b-2 border-transparent bg-base-base p-4 transition hover:border-primary"
         onClick={() => setIsModalOpen(true)}
       >
         <div className="flex flex-col">
@@ -50,13 +51,15 @@ export function Team({ team, isDiscover }) {
         {/* display pokemon */}
         <div className="flex w-full gap-2">
           {team.pokemon ? (
-            team.pokemon.map((mon) => (
-              <TeamSprite
-                key={mon.id}
-                pokemon={mon.pokemonId}
-                item={mon.itemId}
-              />
-            ))
+            [...team.pokemon]
+              .sort((a, b) => a.slot - b.slot)
+              .map((pokemon) => (
+                <TeamSprite
+                  key={pokemon.id}
+                  pokemon={pokemon.pokemonId}
+                  item={pokemon.item}
+                />
+              ))
           ) : (
             <span className="text-small text-base-text-darker">Empty team</span>
           )}
@@ -123,19 +126,24 @@ export function Team({ team, isDiscover }) {
         </div>
       </div>
       {/* modals  */}
-      {isModalOpen && (
-        <TeamDetailsModal
-          team={team}
-          onClose={handleClose}
-          isDiscover={isDiscover}
-        />
-      )}
-      {isDeleteModalOpen && !isDiscover && (
-        <TeamDeleteConfirmModal
-          team={team}
-          onClose={() => setIsDeleteModalOpen(false)}
-        />
-      )}
+      {isModalOpen &&
+        createPortal(
+          <TeamDetailsModal
+            team={team}
+            onClose={handleClose}
+            isDiscover={isDiscover}
+          />,
+          document.body,
+        )}
+      {isDeleteModalOpen &&
+        !isDiscover &&
+        createPortal(
+          <TeamDeleteConfirmModal
+            team={team}
+            onClose={() => setIsDeleteModalOpen(false)}
+          />,
+          document.body,
+        )}
     </>
   );
 }

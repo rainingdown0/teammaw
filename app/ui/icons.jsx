@@ -1,3 +1,5 @@
+// https://www.untitledui.com/free-icons
+
 export default function Icon({ name, color = "fill-slate-50" }) {
   const icons = {
     home: (

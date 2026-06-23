@@ -48,7 +48,7 @@ export default async function Page({ params }) {
             <header className="flex h-fit w-full flex-col gap-2">
               <h1 className="w-full text-hero font-bold">{article.title}</h1>
               <span>{formattedDate}</span>
-              <span className="w-full cursor-pointer text-base-text-darker hover:underline">{`@${username}`}</span>
+              <span className="w-full cursor-pointer font-medium text-base-text-darker hover:underline">{`@${username}`}</span>
             </header>
             <p className="h-fit w-full">{article.content}</p>
           </>

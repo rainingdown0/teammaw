@@ -1521,33 +1521,6 @@
     "learnsetId": "gourgeist"
   },
   {
-    "id": "gourgeistsmall",
-    "dexNumber": 711,
-    "name": "Gourgeist",
-    "form": "Small",
-    "types": ["Ghost", "Grass"],
-    "abilities": ["Pickup", "Frisk", "Insomnia"],
-    "learnsetId": "gourgeist"
-  },
-  {
-    "id": "gourgeistlarge",
-    "dexNumber": 711,
-    "name": "Gourgeist",
-    "form": "Large",
-    "types": ["Ghost", "Grass"],
-    "abilities": ["Pickup", "Frisk", "Insomnia"],
-    "learnsetId": "gourgeist"
-  },
-  {
-    "id": "gourgeistsuper",
-    "dexNumber": 711,
-    "name": "Gourgeist",
-    "form": "Super",
-    "types": ["Ghost", "Grass"],
-    "abilities": ["Pickup", "Frisk", "Insomnia"],
-    "learnsetId": "gourgeist"
-  },
-  {
     "id": "avalugg",
     "dexNumber": 713,
     "name": "Avalugg",

@@ -26,7 +26,17 @@ export default async function Page() {
       {session ? (
         <>
           <div className="sticky top-0 flex w-full items-center justify-between">
-            <div></div>
+            <div className="flex min-w-0 flex-1 items-center gap-8">
+              <span className="cursor-pointer font-bold text-base-text-darker transition hover:text-base-text-dark">
+                All teams
+              </span>
+              <span className="cursor-pointer font-bold text-base-text-darker transition hover:text-base-text-dark">
+                Local teams
+              </span>
+              <span className="cursor-pointer font-bold text-base-text-darker transition hover:text-base-text-dark">
+                Server teams
+              </span>
+            </div>
             <CreateTeamButton />
           </div>
           <div className="flex h-full flex-col gap-4 overflow-scroll pb-32">

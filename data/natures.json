@@ -1,127 +1,102 @@
 [
   {
     "id": "adamant",
-    "name": "Adamant",
-    "effect": "+Atk, -SpA"
+    "name": "Adamant (+Atk, -SpA)"
   },
   {
     "id": "bashful",
-    "name": "Bashful",
-    "effect": ""
+    "name": "Bashful"
   },
   {
     "id": "bold",
-    "name": "Bold",
-    "effect": "+Def, -Atk"
+    "name": "Bold (+Def, -Atk)"
   },
   {
     "id": "brave",
-    "name": "Brave",
-    "effect": "+Atk, -Spe"
+    "name": "Brave (+Atk, -Spe)"
   },
   {
     "id": "calm",
-    "name": "Calm",
-    "effect": "+SpD, -Atk"
+    "name": "Calm (+SpD, -Atk)"
   },
   {
     "id": "careful",
-    "name": "Careful",
-    "effect": "+SpD, -SpA"
+    "name": "Careful (+SpD, -SpA)"
   },
   {
     "id": "docile",
-    "name": "Docile",
-    "effect": ""
+    "name": "Docile"
   },
   {
     "id": "gentle",
-    "name": "Gentle",
-    "effect": "+SpD, -Def"
+    "name": "Gentle (+SpD, -Def)"
   },
   {
     "id": "hardy",
-    "name": "Hardy",
-    "effect": ""
+    "name": "Hardy"
   },
   {
     "id": "hasty",
-    "name": "Hasty",
-    "effect": "+Spe, -Def"
+    "name": "Hasty (+Spe, -Def)"
   },
   {
     "id": "impish",
-    "name": "Impish",
-    "effect": "+Def, -SpA"
+    "name": "Impish (+Def, -SpA)"
   },
   {
     "id": "jolly",
-    "name": "Jolly",
-    "effect": "+Spe, -SpA"
+    "name": "Jolly (+Spe, -SpA)"
   },
   {
     "id": "lax",
-    "name": "Lax",
-    "effect": "+Def, -SpD"
+    "name": "Lax (+Def, -SpD)"
   },
   {
     "id": "lonely",
-    "name": "Lonely",
-    "effect": "+Atk, -Def"
+    "name": "Lonely (+Atk, -Def)"
   },
   {
     "id": "mild",
-    "name": "Mild",
-    "effect": "+SpA, -Def"
+    "name": "Mild (+SpA, -Def)"
   },
   {
     "id": "modest",
-    "name": "Modest",
-    "effect": "+SpA, -Atk"
+    "name": "Modest (+SpA, -Atk)"
   },
   {
     "id": "naive",
-    "name": "Naive",
-    "effect": "+Spe, -SpD"
+    "name": "Naive (+Spe, -SpD)"
   },
   {
     "id": "naughty",
-    "name": "Naughty",
-    "effect": "+Atk, -SpD"
+    "name": "Naughty (+Atk, -SpD)"
   },
   {
     "id": "quiet",
-    "name": "Quiet",
-    "effect": "+SpA, -Spe"
+    "name": "Quiet (+SpA, -Spe)"
   },
   {
     "id": "quirky",
-    "name": "Quirky",
-    "effect": ""
+    "name": "Quirky"
   },
   {
     "id": "rash",
-    "name": "Rash",
-    "effect": "+SpA, -SpD"
+    "name": "Rash (+SpA, -SpD)"
   },
   {
     "id": "relaxed",
-    "name": "Relaxed",
-    "effect": "+Def, -Spe"
+    "name": "Relaxed (+Def, -Spe)"
   },
   {
     "id": "sassy",
-    "name": "Sassy",
-    "effect": "+SpD, -Spe"
+    "name": "Sassy (+SpD, -Spe)"
   },
   {
     "id": "serious",
-    "name": "Serious",
-    "effect": ""
+    "name": "Serious"
   },
   {
     "id": "timid",
-    "name": "Timid",
-    "effect": "+Spe, -Atk"
+    "name": "Timid (+Spe, -Atk)"
   }
 ]

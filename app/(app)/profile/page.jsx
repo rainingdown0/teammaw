@@ -14,8 +14,6 @@ export default function Page() {
     day: "numeric",
   });
 
-  console.log(session);
-
   return (
     <>
       {session ? (
