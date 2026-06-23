@@ -164,6 +164,7 @@ function SaveChangesConfirmModal({ onSave, onDiscard, onClose }) {
 export function TeamDetailsModal({ team, onClose, isDiscover }) {
   const [isVisible, setIsVisible] = useState(false);
   const [teamData, setTeamData] = useState(null);
+  const [displayTeam, setDisplayTeam] = useState(team);
   const [isEditingName, setIsEditingName] = useState(false);
   const [editedName, setEditedName] = useState(team.name);
   const [isEditingCode, setIsEditingCode] = useState(false);
@@ -173,6 +174,7 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
   const [isSaveConfirmationOpen, setIsSaveConfirmationOpen] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
   const [tempChanges, setTempChanges] = useState({});
+  const [originalTeam] = useState(team);
   const inputRef = useRef(null);
   useEffect(() => {
     async function fetchData() {
@@ -211,6 +213,7 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
     setIsVisible(false);
     setEditedName(team.name);
     setEditedCode(team.replicaId || "");
+    setDisplayTeam(originalTeam);
     setTimeout(onClose, 150);
   };
 
@@ -223,12 +226,35 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
       if (teamData && editedCode !== teamData.replicaId) {
         await updateTeamCode(team.id, editedCode);
       }
+
+      // Handle pokemon additions/removals
+      for (const pokemon of displayTeam.pokemon) {
+        const originalPokemon = originalTeam.pokemon?.find(
+          (p) => p.id === pokemon.id
+        );
+        if (!originalPokemon) {
+          // New pokemon added
+          await createTeamPokemon(team.id, pokemon.pokemonId);
+        }
+      }
+
+      // Check for removed pokemon
+      for (const originalPokemon of originalTeam.pokemon) {
+        const stillExists = displayTeam.pokemon?.find(
+          (p) => p.id === originalPokemon.id
+        );
+        if (!stillExists) {
+          await deleteTeamPokemon(originalPokemon);
+        }
+      }
+
+      // Handle pokemon attribute changes
       if (Object.keys(tempChanges).length > 0) {
         for (const [key, value] of Object.entries(tempChanges)) {
           const [pokemonId, changeType, ...rest] = key.split(":");
-          const pokemon = team.pokemon?.find((p) => p.id === pokemonId) || {
-            id: pokemonId,
-          };
+          const pokemon = displayTeam.pokemon?.find((p) => p.id === pokemonId);
+          if (!pokemon) continue;
+
           if (changeType === "ability") {
             await updateTeamPokemon("ability", pokemon, value);
           } else if (changeType === "nature") {
@@ -474,16 +500,22 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
           <div className="flex h-full flex-col gap-8 overflow-y-auto">
             {/* display pokemons */}
             <div className="flex w-full flex-col gap-4">
-              {team.pokemon ? (
-                [...team.pokemon]
+              {displayTeam.pokemon ? (
+                [...displayTeam.pokemon]
                   .sort((a, b) => a.slot - b.slot)
                   .map((pokemon) => (
                     <TeamDetailsMon
                       key={pokemon.id}
-                      team={team}
+                     team={displayTeam}
                       pokemon={pokemon}
-                      pokemonCount={team.pokemon.length}
+                     pokemonCount={displayTeam.pokemon.length}
                       onAbilityChange={(ability) => {
+                       setDisplayTeam((prev) => ({
+                         ...prev,
+                         pokemon: prev.pokemon.map((p) =>
+                           p.id === pokemon.id ? { ...p, ability } : p
+                         ),
+                       }));
                        setTempChanges((prev) => ({
                          ...prev,
                          [`${pokemon.id}:ability`]: ability,
@@ -491,6 +523,12 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
                        setHasChanges(true);
                      }}
                      onNatureChange={(nature) => {
+                       setDisplayTeam((prev) => ({
+                         ...prev,
+                         pokemon: prev.pokemon.map((p) =>
+                           p.id === pokemon.id ? { ...p, nature } : p
+                         ),
+                       }));
                        setTempChanges((prev) => ({
                          ...prev,
                          [`${pokemon.id}:nature`]: nature,
@@ -498,6 +536,12 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
                        setHasChanges(true);
                      }}
                      onItemChange={(item) => {
+                       setDisplayTeam((prev) => ({
+                         ...prev,
+                         pokemon: prev.pokemon.map((p) =>
+                           p.id === pokemon.id ? { ...p, item } : p
+                         ),
+                       }));
                        setTempChanges((prev) => ({
                          ...prev,
                          [`${pokemon.id}:item`]: item,
@@ -505,13 +549,20 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
                        setHasChanges(true);
                      }}
                      onEvChange={(evType, evValue) => {
+                       const evKey = `ev${evType}`;
+                       setDisplayTeam((prev) => ({
+                         ...prev,
+                         pokemon: prev.pokemon.map((p) =>
+                           p.id === pokemon.id ? { ...p, [evKey]: evValue } : p
+                         ),
+                       }));
                        setTempChanges((prev) => ({
                          ...prev,
                          [`${pokemon.id}:ev:${evType}`]: evValue,
                        }));
                        setHasChanges(true);
                      }}
-                    />
+                   />
                   ))
               ) : (
                 <span className="w-full text-center text-base-text-darker">
@@ -554,12 +605,34 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
       {isSelectModalOpen &&
         createPortal(
           <TeamSelectItemsModal
-            team={team}
+           team={displayTeam}
             type={"pokemon"}
             onClose={() => setIsSelectModalOpen(false)}
-          />,
-          document.body,
-        )}
+           onCreateSuccess={(pokemonId) => {
+             const mon = pokemonData.find((p) => p.id === pokemonId);
+             const newPokemon = {
+               id: `temp-${Date.now()}`,
+               pokemonId,
+               ability: mon.abilities[0],
+               nature: "hardy",
+               item: "",
+               slot: displayTeam.pokemon.length + 1,
+               evHp: 0,
+               evAtk: 0,
+               evDef: 0,
+               evSpa: 0,
+               evSpd: 0,
+               evSpe: 0,
+             };
+             setDisplayTeam((prev) => ({
+               ...prev,
+               pokemon: [...prev.pokemon, newPokemon],
+             }));
+             setHasChanges(true);
+           }}
+         />,
+         document.body,
+       )}
       {isSaveConfirmationOpen &&
         createPortal(
           <SaveChangesConfirmModal
@@ -755,9 +828,11 @@ function TeamDetailsMon({ team, pokemon, pokemonCount, isDiscover, onAbilityChan
             pokemon={pokemon}
             type={modalType}
             onClose={() => setIsModalOpen(false)}
-            onChangeSuccess={(item) => {
+            onChangeSuccess={(selectedData) => {
               if (modalType === "item" && onItemChange) {
-                onItemChange(item);
+                onItemChange(selectedData);
+              } else if (modalType === "pokemonChange" && onItemChange) {
+                onItemChange(selectedData);
               }
             }}
           />,
@@ -789,35 +864,23 @@ function TeamSelectItemsModal({
     setIsVisible(false);
     setTimeout(onClose, 150);
   };
-  const handleCreate = async (e, mon) => {
+  const handleCreate = (e, mon) => {
     e.stopPropagation();
-    try {
-      await createTeamPokemon(team.id, mon);
-      setIsVisible(false);
-      setTimeout(() => {
-        onClose();
-        if (onCreateSuccess) onCreateSuccess();
-      }, 150);
-    } catch (error) {
-      console.error("Failed to add Pokémon:", error);
-      alert("Could not add Pokémon. Please try again.");
-    }
+    setIsVisible(false);
+    setTimeout(() => {
+      onClose();
+      if (onCreateSuccess) onCreateSuccess(mon);
+    }, 150);
   };
-  const handleChange = async (e, mon, pokemonId) => {
+  const handleChange = (e, mon, pokemonId) => {
     e.stopPropagation();
-    try {
-      await changeTeamPokemon(mon, pokemonId);
-      setIsVisible(false);
-      setTimeout(() => {
-        onClose();
-        if (onChangeSuccess) onChangeSuccess();
-      }, 150);
-    } catch (error) {
-      console.error("Failed to change Pokémon:", error);
-      alert("Could not change Pokémon. Please try again.");
-    }
+    setIsVisible(false);
+    setTimeout(() => {
+      onClose();
+      if (onChangeSuccess) onChangeSuccess(pokemonId);
+    }, 150);
   };
-  const handleItemUpdate = async (e, mon, item) => {
+  const handleItemUpdate = (e, mon, item) => {
     e.stopPropagation();
     setIsVisible(false);
     setTimeout(() => {
