@@ -101,6 +101,66 @@ export function NewsCreateModal({ onClose }) {
   );
 }
 
+function SaveChangesConfirmModal({ onSave, onDiscard, onClose }) {
+  const [isVisible, setIsVisible] = useState(false);
+
+  const handleClose = () => {
+    setIsVisible(false);
+    setTimeout(onClose, 150);
+  };
+
+  const handleSave = () => {
+    setIsVisible(false);
+    setTimeout(onSave, 150);
+  };
+
+  const handleDiscard = () => {
+    setIsVisible(false);
+    setTimeout(onDiscard, 150);
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsVisible(true), 10);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <div
+      className={clsx(
+        "fixed inset-0 z-50 flex items-center justify-center bg-base-background/80 backdrop-blur-sm transition",
+        isVisible ? "opacity-100" : "opacity-0",
+      )}
+      onClick={handleClose}
+    >
+      <div
+        className={clsx(
+          "flex w-[40dvw] min-w-lg flex-col gap-4 overflow-hidden rounded-2xl bg-base-base p-4 ring-2 ring-base-light transition-all",
+          isVisible ? "scale-100 opacity-100" : "scale-0 opacity-0",
+        )}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex flex-col gap-8 p-4">
+          <h3 className="text-large font-bold">Save Changes?</h3>
+          <p className="w-full">
+            You have unsaved changes. Would you like to save them before closing?
+          </p>
+        </div>
+        <div className="flex w-full items-center justify-end gap-4">
+          <div onClick={handleDiscard}>
+            <Button text={"Discard"} />
+          </div>
+          <div
+            onClick={handleSave}
+            className="flex h-fit w-fit cursor-pointer items-center justify-center rounded-full bg-primary px-6 py-4 font-semibold text-primary-text transition hover:bg-primary-light"
+          >
+            Save
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function TeamDetailsModal({ team, onClose, isDiscover }) {
   const [isVisible, setIsVisible] = useState(false);
   const [teamData, setTeamData] = useState(null);
@@ -110,6 +170,9 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
   const [editedCode, setEditedCode] = useState(team.replicaId || "");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
+  const [isSaveConfirmationOpen, setIsSaveConfirmationOpen] = useState(false);
+  const [hasChanges, setHasChanges] = useState(false);
+  const [tempChanges, setTempChanges] = useState({});
   const inputRef = useRef(null);
   useEffect(() => {
     async function fetchData() {
@@ -135,31 +198,77 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
   }, []);
 
   const handleClose = () => {
+    if (hasChanges) {
+      setIsSaveConfirmationOpen(true);
+    } else {
+      setIsVisible(false);
+      setTimeout(onClose, 150);
+    }
+  };
+
+  const handleDiscardChanges = () => {
+    setIsSaveConfirmationOpen(false);
     setIsVisible(false);
+    setEditedName(team.name);
+    setEditedCode(team.replicaId || "");
     setTimeout(onClose, 150);
   };
-  const handleNameSave = async () => {
+
+  const handleSaveChanges = async () => {
+    setIsSaveConfirmationOpen(false);
+    try {
+      if (editedName !== team.name && editedName.trim() !== "") {
+        await updateTeamName(team.id, editedName);
+      }
+      if (teamData && editedCode !== teamData.replicaId) {
+        await updateTeamCode(team.id, editedCode);
+      }
+      if (Object.keys(tempChanges).length > 0) {
+        for (const [key, value] of Object.entries(tempChanges)) {
+          const [pokemonId, changeType, ...rest] = key.split(":");
+          const pokemon = team.pokemon?.find((p) => p.id === pokemonId) || {
+            id: pokemonId,
+          };
+          if (changeType === "ability") {
+            await updateTeamPokemon("ability", pokemon, value);
+          } else if (changeType === "nature") {
+            await updateTeamPokemon("nature", pokemon, value);
+          } else if (changeType === "item") {
+            await updateTeamPokemon("item", pokemon, value);
+          } else if (changeType === "ev") {
+            const evType = rest.join(":");
+            await updateTeamPokemonEv(evType, pokemon, value);
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Failed to save changes:", error);
+      alert("Failed to save some changes. Please try again.");
+      return;
+    }
+
+    setIsVisible(false);
+    setTempChanges({});
+    setHasChanges(false);
+    setTimeout(onClose, 150);
+  };
+
+  const handleNameSave = () => {
     setIsEditingName(false);
     if (editedName.trim() === "") {
       setEditedName(team.name);
       return;
     }
     if (editedName !== team.name) {
-      try {
-        const result = await updateTeamName(team.id, editedName);
-        if (!result?.success) throw new Error("Server failed to update");
-      } catch (error) {
-        console.error("Failed:", error);
-        setEditedName(team.name);
-        alert("Failed to save team name. Please try again.");
-      }
+      setHasChanges(true);
     }
   };
-  const handleCodeSave = async () => {
+
+  const handleCodeSave = () => {
     setIsEditingCode(false);
     if (teamData && editedCode !== teamData.replicaId) {
       setTeamData((prev) => (prev ? { ...prev, replicaId: editedCode } : null));
-      await updateTeamCode(team.id, editedCode);
+      setHasChanges(true);
     }
   };
 
@@ -374,6 +483,34 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
                       team={team}
                       pokemon={pokemon}
                       pokemonCount={team.pokemon.length}
+                      onAbilityChange={(ability) => {
+                       setTempChanges((prev) => ({
+                         ...prev,
+                         [`${pokemon.id}:ability`]: ability,
+                       }));
+                       setHasChanges(true);
+                     }}
+                     onNatureChange={(nature) => {
+                       setTempChanges((prev) => ({
+                         ...prev,
+                         [`${pokemon.id}:nature`]: nature,
+                       }));
+                       setHasChanges(true);
+                     }}
+                     onItemChange={(item) => {
+                       setTempChanges((prev) => ({
+                         ...prev,
+                         [`${pokemon.id}:item`]: item,
+                       }));
+                       setHasChanges(true);
+                     }}
+                     onEvChange={(evType, evValue) => {
+                       setTempChanges((prev) => ({
+                         ...prev,
+                         [`${pokemon.id}:ev:${evType}`]: evValue,
+                       }));
+                       setHasChanges(true);
+                     }}
                     />
                   ))
               ) : (
@@ -423,11 +560,20 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
           />,
           document.body,
         )}
+      {isSaveConfirmationOpen &&
+        createPortal(
+          <SaveChangesConfirmModal
+            onSave={handleSaveChanges}
+            onDiscard={handleDiscardChanges}
+            onClose={() => setIsSaveConfirmationOpen(false)}
+          />,
+          document.body,
+        )}
     </>
   );
 }
 
-function TeamDetailsMon({ team, pokemon, pokemonCount, isDiscover }) {
+function TeamDetailsMon({ team, pokemon, pokemonCount, isDiscover, onAbilityChange, onNatureChange, onItemChange, onEvChange }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState(null);
   function openModal(type) {
@@ -446,10 +592,12 @@ function TeamDetailsMon({ team, pokemon, pokemonCount, isDiscover }) {
       .replace(/\s+/g, "-");
     return `${baseName}-${formName}`;
   }
-  const handleNatureSelect = async (nature) =>
-    await updateTeamPokemon("nature", pokemon, nature);
-  const handleAbilitySelect = async (ability) =>
-    await updateTeamPokemon("ability", pokemon, ability);
+  const handleNatureSelect = (nature) => {
+    if (onNatureChange) onNatureChange(nature);
+  };
+  const handleAbilitySelect = (ability) => {
+    if (onAbilityChange) onAbilityChange(ability);
+  };
   const mon = pokemonData.find((p) => p.id === pokemon.pokemonId);
   const [moves, setMoves] = useState([]);
   const evTotal =
@@ -590,12 +738,12 @@ function TeamDetailsMon({ team, pokemon, pokemonCount, isDiscover }) {
             </div>
             {/* ev */}
             <div className="grid h-full w-full grid-cols-2 grid-rows-3 gap-2 rounded-lg bg-base-lighter">
-              <Ev pokemon={pokemon} type={"HP"} isDiscover={isDiscover} />
-              <Ev pokemon={pokemon} type={"Atk"} isDiscover={isDiscover} />
-              <Ev pokemon={pokemon} type={"Def"} isDiscover={isDiscover} />
-              <Ev pokemon={pokemon} type={"SpA"} isDiscover={isDiscover} />
-              <Ev pokemon={pokemon} type={"SpD"} isDiscover={isDiscover} />
-              <Ev pokemon={pokemon} type={"Spe"} isDiscover={isDiscover} />
+              <Ev pokemon={pokemon} type={"HP"} isDiscover={isDiscover} onEvChange={onEvChange} />
+              <Ev pokemon={pokemon} type={"Atk"} isDiscover={isDiscover} onEvChange={onEvChange} />
+              <Ev pokemon={pokemon} type={"Def"} isDiscover={isDiscover} onEvChange={onEvChange} />
+              <Ev pokemon={pokemon} type={"SpA"} isDiscover={isDiscover} onEvChange={onEvChange} />
+              <Ev pokemon={pokemon} type={"SpD"} isDiscover={isDiscover} onEvChange={onEvChange} />
+              <Ev pokemon={pokemon} type={"Spe"} isDiscover={isDiscover} onEvChange={onEvChange} />
             </div>
           </div>
         </div>
@@ -607,6 +755,11 @@ function TeamDetailsMon({ team, pokemon, pokemonCount, isDiscover }) {
             pokemon={pokemon}
             type={modalType}
             onClose={() => setIsModalOpen(false)}
+            onChangeSuccess={(item) => {
+              if (modalType === "item" && onItemChange) {
+                onItemChange(item);
+              }
+            }}
           />,
           document.body,
         )}
@@ -666,17 +819,11 @@ function TeamSelectItemsModal({
   };
   const handleItemUpdate = async (e, mon, item) => {
     e.stopPropagation();
-    try {
-      await updateTeamPokemon("item", mon, item);
-      setIsVisible(false);
-      setTimeout(() => {
-        onClose();
-        if (onChangeSuccess) onChangeSuccess();
-      }, 150);
-    } catch (error) {
-      console.error("Failed to update item:", error);
-      alert("Could not update item. Please try again.");
-    }
+    setIsVisible(false);
+    setTimeout(() => {
+      onClose();
+      if (onChangeSuccess) onChangeSuccess(item);
+    }, 150);
   };
 
   useEffect(() => {
@@ -965,7 +1112,7 @@ function Move({ moveId, isDiscover }) {
   );
 }
 
-export function Ev({ pokemon, type, isDiscover, onEvSave }) {
+export function Ev({ pokemon, type, isDiscover, onEvChange }) {
   const evValues = {
     HP: pokemon.evHp || 0,
     Atk: pokemon.evAtk || 0,
@@ -1006,18 +1153,12 @@ export function Ev({ pokemon, type, isDiscover, onEvSave }) {
       setEditValue(numValue.toString());
     }
   };
-  const handleSave = async () => {
+  const handleSave = () => {
     setIsEditing(false);
     let finalValue = editValue === "" ? 0 : parseInt(editValue, 10);
     if (finalValue !== currentEv) {
-      try {
-        updateTeamPokemonEv(type, pokemon, finalValue);
-        if (onEvSave) {
-          await onEvSave(type, finalValue);
-        }
-      } catch (error) {
-        console.error("Failed to save EV:", error);
-        setEditValue(currentEv.toString());
+      if (onEvChange) {
+        onEvChange(type, finalValue);
       }
     } else {
       setEditValue(finalValue.toString());
