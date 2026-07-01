@@ -35,23 +35,23 @@
 
   --color-error: var(--color-rose-500);
 
-  --color-normal: var(--color-taupe-200);
+  --color-normal: var(--color-gray-200);
   --color-fighting: var(--color-orange-400);
   --color-flying: var(--color-sky-200);
-  --color-poison: var(--color-fuchsia-400);
+  --color-poison: var(--color-purple-400);
   --color-ground: var(--color-amber-400);
-  --color-rock: var(--color-olive-300);
-  --color-bug: var(--color-lime-300);
-  --color-ghost: var(--color-purple-300);
+  --color-rock: var(--color-stone-300);
+  --color-bug: var(--color-lime-400);
+  --color-ghost: var(--color-violet-300);
   --color-steel: var(--color-slate-300);
   --color-fire: var(--color-red-400);
-  --color-water: var(--color-blue-300);
-  --color-grass: var(--color-green-400);
+  --color-water: var(--color-blue-400);
+  --color-grass: var(--color-emerald-400);
   --color-electric: var(--color-yellow-300);
   --color-psychic: var(--color-rose-300);
   --color-ice: var(--color-cyan-200);
-  --color-dragon: var(--color-indigo-300);
-  --color-dark: var(--color-mauve-300);
+  --color-dragon: var(--color-indigo-400);
+  --color-dark: var(--color-zinc-300);
   --color-fairy: var(--color-pink-300);
 }
 

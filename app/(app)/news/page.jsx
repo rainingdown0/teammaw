@@ -3,7 +3,7 @@
 import { useSession } from "next-auth/react";
 import { NewsList } from "@/app/ui/news";
 import Button from "@/app/ui/button";
-import { NewsCreateModal } from "@/app/ui/modal";
+import NewsCreateModal from "@/app/ui/modals/news-create-modal";
 import { useState } from "react";
 
 export default function Page() {

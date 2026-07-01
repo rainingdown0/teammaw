@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { getNews } from "@/lib/actions";
+import { getNews } from "@/lib/actions/news-actions";
 
 export function NewsList() {
   const [articles, setArticles] = useState([]);

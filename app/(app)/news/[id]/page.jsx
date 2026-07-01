@@ -1,7 +1,7 @@
 import Button from "@/app/ui/button";
 import { GoBackButton, DeleteArticleButton } from "@/app/ui/util-button";
 import { prisma } from "@/lib/prisma";
-import { getUser } from "@/lib/actions";
+import { getUser } from "@/lib/actions/auth-actions";
 import clsx from "clsx";
 import { auth } from "@/auth";
 

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Icon from "./icons";
 import { usePathname } from "next/navigation";
-import { createTeam } from "@/lib/actions";
+import { createTeam } from "@/lib/actions/team-actions";
 import clsx from "clsx";
 
 export default function Navbar({ session }) {

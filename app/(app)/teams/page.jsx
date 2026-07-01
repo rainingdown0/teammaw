@@ -12,11 +12,38 @@ export default async function Page() {
         select: {
           id: true,
           userId: true,
+          replicaId: true,
           name: true,
+          notes: true,
           isPublic: true,
           isLegal: true,
           format: true,
-          pokemon: true,
+          createdAt: true,
+          updatedAt: true,
+          likes: true, // <-- ADD THIS to display likes in the modal header
+          pokemon: {
+            select: {
+              id: true,
+              pokemonId: true, // <-- ADD all the missing stat fields below
+              nickname: true,
+              ability: true,
+              nature: true,
+              item: true,
+              slot: true,
+              evHp: true,
+              evAtk: true,
+              evDef: true,
+              evSpa: true,
+              evSpd: true,
+              evSpe: true,
+              moves: {
+                select: {
+                  moveId: true,
+                  slot: true,
+                },
+              },
+            },
+          },
         },
         orderBy: { createdAt: "desc" },
       })

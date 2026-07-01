@@ -4,7 +4,8 @@ import { useState, useTransition, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Button from "./button";
 import Icon from "./icons";
-import { createTeam, deleteArticle } from "@/lib/actions";
+import { createTeam } from "@/lib/actions/team-actions";
+import { deleteArticle } from "@/lib/actions/news-actions";
 
 export function CreateTeamButton() {
   const [isPending, startTransition] = useTransition();

@@ -2,11 +2,11 @@
 
 import { TeamSprite } from "./sprite";
 import Icon from "./icons";
-import { TeamDetailsModal, TeamDeleteConfirmModal } from "./modal";
-import { getUser } from "@/lib/actions";
+import { TeamDetailsModal, TeamDeleteConfirmModal } from "./modals/team-modal";
+import { getUser } from "@/lib/actions/auth-actions";
 import { useState, useEffect } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { duplicateTeam } from "@/lib/actions";
+import { duplicateTeam } from "@/lib/actions/team-actions";
 import formatData from "@/data/formats.json";
 import clsx from "clsx";
 import { createPortal } from "react-dom";

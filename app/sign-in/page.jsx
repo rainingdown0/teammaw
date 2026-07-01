@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import LoginField from "@/app/ui/login-field";
-import { signInAction } from "@/lib/actions";
+import { signInAction } from "@/lib/actions/auth-actions";
 
 export default function Page() {
   const [errors, setErrors] = useState({});

@@ -2,104 +2,16 @@
 
 import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import Icon from "./icons";
-import { TeamSprite } from "./sprite";
+import Icon from "../icons";
+import { TeamSprite } from "../sprite";
 import clsx from "clsx";
-import {
-  createArticle,
-  getTeamData,
-  getPokemonMoves,
-  deleteTeam,
-  updateTeamName,
-  updateTeamCode,
-  createTeamPokemon,
-  changeTeamPokemon,
-  updateTeamPokemon,
-  deleteTeamPokemon,
-  updateTeamPokemonEv,
-} from "@/lib/actions";
+import { deleteTeam, updateTeam } from "@/lib/actions/team-actions";
 import pokemonData from "@/data/pokemon.json";
 import moveData from "@/data/moves.json";
 import learnsetData from "@/data/learnsets.json";
 import natureData from "@/data/natures.json";
 import formatData from "@/data/formats.json";
-import Button from "./button";
-
-export function NewsCreateModal({ onClose }) {
-  const [isVisible, setIsVisible] = useState(false);
-  const [isPending, setIsPending] = useState(false);
-  useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), 10);
-    return () => clearTimeout(timer);
-  }, []);
-
-  const handleClose = () => {
-    setIsVisible(false);
-    setTimeout(onClose, 150);
-  };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsPending(true);
-
-    const formData = new FormData(e.target);
-    const result = await createArticle(formData);
-    setIsPending(false);
-
-    if (result?.error) {
-      alert(result.error);
-    } else {
-      handleClose();
-    }
-  };
-  return (
-    <div
-      className={clsx(
-        "fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm transition",
-        isVisible ? "opacity-100" : "opacity-0",
-      )}
-    >
-      <form
-        onSubmit={handleSubmit}
-        className={clsx(
-          "flex h-[90dvh] w-210 flex-col gap-4 overflow-hidden rounded-2xl bg-base-base p-4 ring-2 ring-base-light transition-all",
-          isVisible ? "scale-100 opacity-100" : "scale-0 opacity-0",
-        )}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <header className="w-full">
-          <input
-            className="flex w-full items-center rounded-2xl p-4 text-large font-semibold transition placeholder:text-base-text-darker hover:bg-base-light focus:bg-base-light"
-            name="title"
-            type="text"
-            maxLength={150}
-            placeholder="Title"
-            required
-          />
-        </header>
-        <div className="h-full w-full">
-          <textarea
-            className="h-full w-full resize-none rounded-2xl p-4 text-start transition outline-none placeholder:text-base-text-darker hover:bg-base-light focus:bg-base-light"
-            name="content"
-            placeholder="Content"
-            required
-          />
-        </div>
-        <div className="flex w-full items-center justify-end gap-4">
-          <div onClick={handleClose}>
-            <Button text={"Cancel"} />
-          </div>
-          <button
-            type="submit"
-            disabled={isPending}
-            className="flex h-fit w-fit cursor-pointer items-center justify-center rounded-full bg-primary px-6 py-4 font-semibold text-primary-text transition hover:bg-primary-light disabled:bg-primary-dark disabled:text-primary-lighter"
-          >
-            Publish
-          </button>
-        </div>
-      </form>
-    </div>
-  );
-}
+import Button from "../button";
 
 function SaveChangesConfirmModal({ onSave, onDiscard, onClose }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -108,12 +20,10 @@ function SaveChangesConfirmModal({ onSave, onDiscard, onClose }) {
     setIsVisible(false);
     setTimeout(onClose, 150);
   };
-
   const handleSave = () => {
     setIsVisible(false);
     setTimeout(onSave, 150);
   };
-
   const handleDiscard = () => {
     setIsVisible(false);
     setTimeout(onDiscard, 150);
@@ -140,9 +50,10 @@ function SaveChangesConfirmModal({ onSave, onDiscard, onClose }) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex flex-col gap-8 p-4">
-          <h3 className="text-large font-bold">Save Changes?</h3>
+          <h3 className="text-large font-bold">Save Changes</h3>
           <p className="w-full">
-            You have unsaved changes. Would you like to save them before closing?
+            You have unsaved changes. Would you like to save them before
+            closing?
           </p>
         </div>
         <div className="flex w-full items-center justify-end gap-4">
@@ -163,7 +74,6 @@ function SaveChangesConfirmModal({ onSave, onDiscard, onClose }) {
 
 export function TeamDetailsModal({ team, onClose, isDiscover }) {
   const [isVisible, setIsVisible] = useState(false);
-  const [teamData, setTeamData] = useState(null);
   const [displayTeam, setDisplayTeam] = useState(team);
   const [isEditingName, setIsEditingName] = useState(false);
   const [editedName, setEditedName] = useState(team.name);
@@ -173,32 +83,24 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
   const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
   const [isSaveConfirmationOpen, setIsSaveConfirmationOpen] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
-  const [tempChanges, setTempChanges] = useState({});
   const [originalTeam] = useState(team);
   const inputRef = useRef(null);
-  useEffect(() => {
-    async function fetchData() {
-      if (team.id) {
-        const data = await getTeamData({ id: team.id });
-        setTeamData(data);
-        if (data?.replicaId) {
-          setEditedCode(data.replicaId);
-        }
-      }
-    }
-    fetchData();
-  }, [team.id]);
+
+  // 1. AUTO-FOCUS INPUT
   useEffect(() => {
     if (isEditingName && inputRef.current) {
       inputRef.current.focus();
       inputRef.current.select();
     }
   }, [isEditingName]);
+
+  // 2. ANIMATION TRIGGER
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 10);
     return () => clearTimeout(timer);
   }, []);
 
+  // 3. CLOSE HANDLER
   const handleClose = () => {
     if (hasChanges) {
       setIsSaveConfirmationOpen(true);
@@ -208,6 +110,7 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
     }
   };
 
+  // 4. DISCARD HANDLER
   const handleDiscardChanges = () => {
     setIsSaveConfirmationOpen(false);
     setIsVisible(false);
@@ -217,68 +120,28 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
     setTimeout(onClose, 150);
   };
 
+  // 5. BATCH SAVE HANDLER
   const handleSaveChanges = async () => {
     setIsSaveConfirmationOpen(false);
     try {
-      if (editedName !== team.name && editedName.trim() !== "") {
-        await updateTeamName(team.id, editedName);
-      }
-      if (teamData && editedCode !== teamData.replicaId) {
-        await updateTeamCode(team.id, editedCode);
-      }
-
-      // Handle pokemon additions/removals
-      for (const pokemon of displayTeam.pokemon) {
-        const originalPokemon = originalTeam.pokemon?.find(
-          (p) => p.id === pokemon.id
-        );
-        if (!originalPokemon) {
-          // New pokemon added
-          await createTeamPokemon(team.id, pokemon.pokemonId);
-        }
-      }
-
-      // Check for removed pokemon
-      for (const originalPokemon of originalTeam.pokemon) {
-        const stillExists = displayTeam.pokemon?.find(
-          (p) => p.id === originalPokemon.id
-        );
-        if (!stillExists) {
-          await deleteTeamPokemon(originalPokemon);
-        }
-      }
-
-      // Handle pokemon attribute changes
-      if (Object.keys(tempChanges).length > 0) {
-        for (const [key, value] of Object.entries(tempChanges)) {
-          const [pokemonId, changeType, ...rest] = key.split(":");
-          const pokemon = displayTeam.pokemon?.find((p) => p.id === pokemonId);
-          if (!pokemon) continue;
-
-          if (changeType === "ability") {
-            await updateTeamPokemon("ability", pokemon, value);
-          } else if (changeType === "nature") {
-            await updateTeamPokemon("nature", pokemon, value);
-          } else if (changeType === "item") {
-            await updateTeamPokemon("item", pokemon, value);
-          } else if (changeType === "ev") {
-            const evType = rest.join(":");
-            await updateTeamPokemonEv(evType, pokemon, value);
-          }
-        }
-      }
+      const payload = {
+        name: editedName,
+        replicaId: editedCode,
+        pokemon: displayTeam.pokemon,
+      };
+      const response = await updateTeam(team.id, payload);
+      if (!response.success) throw new Error(response.error);
     } catch (error) {
       console.error("Failed to save changes:", error);
-      alert("Failed to save some changes. Please try again.");
+      alert("Failed to save your team. Please try again.");
       return;
     }
-
     setIsVisible(false);
-    setTempChanges({});
     setHasChanges(false);
     setTimeout(onClose, 150);
   };
 
+  // 6. INPUT BLUR HANDLERS
   const handleNameSave = () => {
     setIsEditingName(false);
     if (editedName.trim() === "") {
@@ -292,27 +155,13 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
 
   const handleCodeSave = () => {
     setIsEditingCode(false);
-    if (teamData && editedCode !== teamData.replicaId) {
-      setTeamData((prev) => (prev ? { ...prev, replicaId: editedCode } : null));
+    if (editedCode !== team.replicaId) {
       setHasChanges(true);
     }
   };
 
-  useEffect(() => {
-    async function fetchData() {
-      if (team.id) {
-        const data = await getTeamData({ id: team.id });
-        setTeamData(data);
-        if (data?.replicaId) {
-          setEditedCode(data.replicaId);
-        }
-      }
-    }
-    fetchData();
-  }, [team.id]);
   return (
     <>
-      {/* modal background */}
       <div
         className={clsx(
           "fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm transition",
@@ -320,14 +169,10 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
         )}
         onMouseDown={(e) => {
           if (e.target !== e.currentTarget) return;
-
-          if (isEditingName || isEditingCode) {
-            return;
-          }
+          if (isEditingName || isEditingCode) return;
           handleClose();
         }}
       >
-        {/* modal */}
         <div
           className={clsx(
             "flex h-[90dvh] w-210 flex-col gap-4 overflow-hidden rounded-2xl bg-base-base p-4 ring-2 ring-base-light transition-all duration-150",
@@ -338,7 +183,6 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
           <header className="flex w-full flex-col gap-2">
             <div className="flex w-full items-center gap-4">
               <div className="min-w-0 flex-1 font-semibold">
-                {/* team name */}
                 {isEditingName ? (
                   <input
                     ref={inputRef}
@@ -349,9 +193,8 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
                     onChange={(e) => setEditedName(e.target.value)}
                     onBlur={handleNameSave}
                     onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        handleNameSave();
-                      } else if (e.key === "Escape") {
+                      if (e.key === "Enter") handleNameSave();
+                      else if (e.key === "Escape") {
                         setEditedName(team.name);
                         setIsEditingName(false);
                       }
@@ -371,7 +214,6 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
                 )}
               </div>
               <div className="flex shrink-0 gap-4">
-                {/* add pokemon in editor */}
                 {!isDiscover && team.pokemon.length < 6 && (
                   <div onClick={() => setIsSelectModalOpen(true)}>
                     <Icon
@@ -380,12 +222,10 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
                     />
                   </div>
                 )}
-                {/* pokepaste */}
                 <Icon
                   name="import"
                   color="fill-base-text-darker hover:fill-base-text cursor-pointer"
                 />
-                {/* delete team in editor */}
                 {!isDiscover && (
                   <div onClick={() => setIsModalOpen(true)}>
                     <Icon
@@ -394,14 +234,12 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
                     />
                   </div>
                 )}
-                {/* full page in discover page */}
                 {isDiscover && (
                   <Icon
                     name="expand"
                     color="fill-base-text-darker hover:fill-base-text cursor-pointer"
                   />
                 )}
-                {/* close modal */}
                 <div onClick={handleClose}>
                   <Icon
                     name="cross"
@@ -414,7 +252,7 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
               <div className="flex w-fit items-center gap-8 text-small font-medium">
                 {team.isPublic && (
                   <span className="whitespace-nowrap">
-                    {teamData ? `${teamData.likes.length} likes` : "Loading..."}
+                    {team.likes ? `${team.likes.length} likes` : "0 likes"}
                   </span>
                 )}
                 <span>{team.isPublic ? "Public" : "Private"}</span>
@@ -430,30 +268,20 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
               </div>
             </div>
             <div className="flex w-full items-center justify-between py-2">
-              {/* format */}
               {!isDiscover ? (
-                // format selector in editor
                 <DropDown
                   type={"format"}
                   current={formatData.find((f) => f.id === team.format).name}
                   onSelect={null}
                 />
               ) : (
-                // <div className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1 pr-3 transition hover:bg-base-light">
-                //   <Icon name="dropdown" color="fill-base-text" />
-                //   <span className="text-small font-medium">
-                //     {formatData.find((f) => f.id === team.format).name}
-                //   </span>
-                // </div>
-                // display format in discover page
                 <span className="text-small font-medium">
                   {formatData.find((f) => f.id === team.format).name}
                 </span>
               )}
-              {/* replica id */}
               <div
                 onClick={() => {
-                  setEditedCode(teamData?.replicaId || "");
+                  setEditedCode(team.replicaId || "");
                   setIsEditingCode(true);
                 }}
                 className={clsx(
@@ -464,19 +292,11 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
                 <span className="text-small text-base-text-darker">
                   Replica ID
                 </span>
-                {/* display replica id */}
-                {teamData ? (
-                  <>
-                    {teamData.replicaId && !isEditingCode && (
-                      <span className="text-small font-medium">
-                        {teamData.replicaId}
-                      </span>
-                    )}
-                  </>
-                ) : (
-                  <span className="text-small font-medium">Loading...</span>
+                {team.replicaId && !isEditingCode && (
+                  <span className="text-small font-medium">
+                    {team.replicaId}
+                  </span>
                 )}
-                {/* replica id editor */}
                 {isEditingCode && (
                   <input
                     autoFocus
@@ -498,7 +318,6 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
             </div>
           </header>
           <div className="flex h-full flex-col gap-8 overflow-y-auto">
-            {/* display pokemons */}
             <div className="flex w-full flex-col gap-4">
               {displayTeam.pokemon ? (
                 [...displayTeam.pokemon]
@@ -506,63 +325,119 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
                   .map((pokemon) => (
                     <TeamDetailsMon
                       key={pokemon.id}
-                     team={displayTeam}
+                      team={displayTeam}
                       pokemon={pokemon}
-                     pokemonCount={displayTeam.pokemon.length}
+                      pokemonCount={displayTeam.pokemon.length}
+                      isDiscover={isDiscover}
                       onAbilityChange={(ability) => {
-                       setDisplayTeam((prev) => ({
-                         ...prev,
-                         pokemon: prev.pokemon.map((p) =>
-                           p.id === pokemon.id ? { ...p, ability } : p
-                         ),
-                       }));
-                       setTempChanges((prev) => ({
-                         ...prev,
-                         [`${pokemon.id}:ability`]: ability,
-                       }));
-                       setHasChanges(true);
-                     }}
-                     onNatureChange={(nature) => {
-                       setDisplayTeam((prev) => ({
-                         ...prev,
-                         pokemon: prev.pokemon.map((p) =>
-                           p.id === pokemon.id ? { ...p, nature } : p
-                         ),
-                       }));
-                       setTempChanges((prev) => ({
-                         ...prev,
-                         [`${pokemon.id}:nature`]: nature,
-                       }));
-                       setHasChanges(true);
-                     }}
-                     onItemChange={(item) => {
-                       setDisplayTeam((prev) => ({
-                         ...prev,
-                         pokemon: prev.pokemon.map((p) =>
-                           p.id === pokemon.id ? { ...p, item } : p
-                         ),
-                       }));
-                       setTempChanges((prev) => ({
-                         ...prev,
-                         [`${pokemon.id}:item`]: item,
-                       }));
-                       setHasChanges(true);
-                     }}
-                     onEvChange={(evType, evValue) => {
-                       const evKey = `ev${evType}`;
-                       setDisplayTeam((prev) => ({
-                         ...prev,
-                         pokemon: prev.pokemon.map((p) =>
-                           p.id === pokemon.id ? { ...p, [evKey]: evValue } : p
-                         ),
-                       }));
-                       setTempChanges((prev) => ({
-                         ...prev,
-                         [`${pokemon.id}:ev:${evType}`]: evValue,
-                       }));
-                       setHasChanges(true);
-                     }}
-                   />
+                        setDisplayTeam((prev) => ({
+                          ...prev,
+                          pokemon: prev.pokemon.map((p) =>
+                            p.id === pokemon.id ? { ...p, ability } : p,
+                          ),
+                        }));
+                        setHasChanges(true);
+                      }}
+                      onNatureChange={(nature) => {
+                        setDisplayTeam((prev) => ({
+                          ...prev,
+                          pokemon: prev.pokemon.map((p) =>
+                            p.id === pokemon.id ? { ...p, nature } : p,
+                          ),
+                        }));
+                        setHasChanges(true);
+                      }}
+                      onItemChange={(item) => {
+                        setDisplayTeam((prev) => ({
+                          ...prev,
+                          pokemon: prev.pokemon.map((p) =>
+                            p.id === pokemon.id ? { ...p, item } : p,
+                          ),
+                        }));
+                        setHasChanges(true);
+                      }}
+                      onEvChange={(evType, evValue) => {
+                        const typeMapping = {
+                          HP: "Hp",
+                          Atk: "Atk",
+                          Def: "Def",
+                          SpA: "Spa",
+                          SpD: "Spd",
+                          Spe: "Spe",
+                        };
+                        const normalizedType = typeMapping[evType] || evType;
+                        const evKey = `ev${normalizedType}`;
+                        setDisplayTeam((prev) => ({
+                          ...prev,
+                          pokemon: prev.pokemon.map((p) =>
+                            p.id === pokemon.id
+                              ? { ...p, [evKey]: Number(evValue) }
+                              : p,
+                          ),
+                        }));
+                        setHasChanges(true);
+                      }}
+                      onPokemonDelete={() => {
+                        setDisplayTeam((prev) => {
+                          const remainingPokemon = prev.pokemon.filter(
+                            (p) => p.id !== pokemon.id,
+                          );
+                          const sortedRemaining = remainingPokemon.sort(
+                            (a, b) => a.slot - b.slot,
+                          );
+                          const reindexedPokemon = sortedRemaining.map(
+                            (p, index) => ({ ...p, slot: index + 1 }),
+                          );
+                          return { ...prev, pokemon: reindexedPokemon };
+                        });
+                        setHasChanges(true);
+                      }}
+                      onPokemonChange={(newPokemonId) => {
+                        const monInfo = pokemonData.find(
+                          (p) => p.id === newPokemonId,
+                        );
+                        setDisplayTeam((prev) => ({
+                          ...prev,
+                          pokemon: prev.pokemon.map((p) =>
+                            p.id === pokemon.id
+                              ? {
+                                  ...p,
+                                  pokemonId: newPokemonId,
+                                  ability: monInfo?.abilities[0] || p.ability,
+                                }
+                              : p,
+                          ),
+                        }));
+                        setHasChanges(true);
+                      }}
+                      onSlotChange={(newSlot) => {
+                        setDisplayTeam((prev) => {
+                          const roster = [...prev.pokemon].sort(
+                            (a, b) => a.slot - b.slot,
+                          );
+                          const oldIndex = roster.findIndex(
+                            (p) => p.id === pokemon.id,
+                          );
+                          const [movedPokemon] = roster.splice(oldIndex, 1);
+                          roster.splice(newSlot - 1, 0, movedPokemon);
+                          const reindexedRoster = roster.map((p, index) => ({
+                            ...p,
+                            slot: index + 1,
+                          }));
+                          return { ...prev, pokemon: reindexedRoster };
+                        });
+                        setHasChanges(true);
+                      }}
+                      onMoveChange={(newMoves) => {
+                        setDisplayTeam((prev) => ({
+                          ...prev,
+                          pokemon: prev.pokemon.map((p) =>
+                            p.id === pokemon.id ? { ...p, moves: newMoves } : p,
+                          ),
+                        }));
+                        setHasChanges(true);
+                      }}
+                    />
                   ))
               ) : (
                 <span className="w-full text-center text-base-text-darker">
@@ -570,25 +445,16 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
                 </span>
               )}
             </div>
-            {/* notes */}
             <div className="flex w-full flex-col gap-2">
               <h3 className="p-2 font-bold">Notes</h3>
-              {teamData ? (
-                <p
-                  className={clsx(
-                    "flex w-full cursor-text flex-col rounded-2xl bg-base-light p-4 text-wrap transition hover:bg-base-lighter",
-                    !teamData.notes ? "text-base-text-darker" : "",
-                  )}
-                >
-                  {teamData.notes
-                    ? teamData.notes
-                    : "Tell us more about the team"}
-                </p>
-              ) : (
-                <p className="flex w-full cursor-text flex-col rounded-2xl bg-base-light p-4 text-wrap text-base-text-darker">
-                  Loading...
-                </p>
-              )}
+              <p
+                className={clsx(
+                  "flex w-full cursor-text flex-col rounded-2xl bg-base-light p-4 text-wrap transition hover:bg-base-lighter",
+                  !team.notes ? "text-base-text-darker" : "",
+                )}
+              >
+                {team.notes ? team.notes : "Tell us more about the team"}
+              </p>
             </div>
           </div>
         </div>
@@ -605,34 +471,35 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
       {isSelectModalOpen &&
         createPortal(
           <TeamSelectItemsModal
-           team={displayTeam}
+            team={displayTeam}
             type={"pokemon"}
             onClose={() => setIsSelectModalOpen(false)}
-           onCreateSuccess={(pokemonId) => {
-             const mon = pokemonData.find((p) => p.id === pokemonId);
-             const newPokemon = {
-               id: `temp-${Date.now()}`,
-               pokemonId,
-               ability: mon.abilities[0],
-               nature: "hardy",
-               item: "",
-               slot: displayTeam.pokemon.length + 1,
-               evHp: 0,
-               evAtk: 0,
-               evDef: 0,
-               evSpa: 0,
-               evSpd: 0,
-               evSpe: 0,
-             };
-             setDisplayTeam((prev) => ({
-               ...prev,
-               pokemon: [...prev.pokemon, newPokemon],
-             }));
-             setHasChanges(true);
-           }}
-         />,
-         document.body,
-       )}
+            onCreateSuccess={(pokemonId) => {
+              const mon = pokemonData.find((p) => p.id === pokemonId);
+              const newPokemon = {
+                id: `temp-${Date.now()}`,
+                pokemonId,
+                nickname: mon.name,
+                ability: mon.abilities[0],
+                nature: "hardy",
+                item: "",
+                slot: displayTeam.pokemon.length + 1,
+                evHp: 0,
+                evAtk: 0,
+                evDef: 0,
+                evSpa: 0,
+                evSpd: 0,
+                evSpe: 0,
+              };
+              setDisplayTeam((prev) => ({
+                ...prev,
+                pokemon: [...prev.pokemon, newPokemon],
+              }));
+              setHasChanges(true);
+            }}
+          />,
+          document.body,
+        )}
       {isSaveConfirmationOpen &&
         createPortal(
           <SaveChangesConfirmModal
@@ -646,13 +513,30 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
   );
 }
 
-function TeamDetailsMon({ team, pokemon, pokemonCount, isDiscover, onAbilityChange, onNatureChange, onItemChange, onEvChange }) {
+function TeamDetailsMon({
+  team,
+  pokemon,
+  pokemonCount,
+  isDiscover,
+  onAbilityChange,
+  onNatureChange,
+  onItemChange,
+  onEvChange,
+  onPokemonDelete,
+  onPokemonChange,
+  onSlotChange,
+  onMoveChange,
+}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState(null);
-  function openModal(type) {
+  const [activeMoveSlot, setActiveMoveSlot] = useState(null);
+
+  function openModal(type, slot = null) {
     setModalType(type);
+    setActiveMoveSlot(slot);
     setIsModalOpen(true);
   }
+
   function getFormName(mon) {
     const baseName = mon.name
       .replace(/\s+/g, "-")
@@ -665,14 +549,18 @@ function TeamDetailsMon({ team, pokemon, pokemonCount, isDiscover, onAbilityChan
       .replace(/\s+/g, "-");
     return `${baseName}-${formName}`;
   }
+
   const handleNatureSelect = (nature) => {
     if (onNatureChange) onNatureChange(nature);
   };
   const handleAbilitySelect = (ability) => {
     if (onAbilityChange) onAbilityChange(ability);
   };
+
   const mon = pokemonData.find((p) => p.id === pokemon.pokemonId);
-  const [moves, setMoves] = useState([]);
+
+  const moves = pokemon.moves || [];
+
   const evTotal =
     pokemon.evHp +
     pokemon.evAtk +
@@ -680,15 +568,13 @@ function TeamDetailsMon({ team, pokemon, pokemonCount, isDiscover, onAbilityChan
     pokemon.evSpa +
     pokemon.evSpd +
     pokemon.evSpe;
-  useEffect(() => {
-    async function fetchData() {
-      if (mon) {
-        const data = await getPokemonMoves(mon);
-        setMoves(data);
-      }
-    }
-    fetchData();
-  }, [mon]);
+
+  const pokemonLearnsetIds = learnsetData[pokemon.pokemonId] || [];
+  const availableMoves = pokemonLearnsetIds.map((moveId) => {
+    const mData = moveData.find((m) => m.id === moveId);
+    return { id: moveId, name: mData?.name || moveId };
+  });
+
   return (
     <>
       <div className="flex w-full flex-col gap-4 rounded-2xl bg-base-light p-4">
@@ -697,21 +583,22 @@ function TeamDetailsMon({ team, pokemon, pokemonCount, isDiscover, onAbilityChan
             {pokemon.nickname ? pokemon.nickname : mon.name}
           </h3>
           <div className="flex items-center gap-4">
-            {/* move slot position in editor */}
             {!isDiscover && pokemonCount > 1 && (
-              <Icon
-                name="switch"
-                color="fill-base-text-darker hover:fill-base-text-dark cursor-pointer"
+              <DropDown
+                type="slot"
+                current={pokemon.slot}
+                pokemonCount={pokemonCount}
+                onSelect={(newSlot) => {
+                  if (onSlotChange) onSlotChange(newSlot);
+                }}
               />
             )}
-            {/* pokepaste */}
             <Icon
               name="import"
               color="fill-base-text-darker hover:fill-base-text-dark cursor-pointer"
             />
-            {/* delete pokemon in editor */}
             {!isDiscover && (
-              <div onClick={() => deleteTeamPokemon(pokemon)}>
+              <div onClick={onPokemonDelete}>
                 <Icon
                   name="trash"
                   color="fill-base-text-darker hover:fill-base-text-dark cursor-pointer"
@@ -722,7 +609,6 @@ function TeamDetailsMon({ team, pokemon, pokemonCount, isDiscover, onAbilityChan
         </div>
         <div className="flex w-full items-stretch gap-4">
           <div className="flex shrink-0 flex-col gap-2">
-            {/* pokemon */}
             <div
               className={clsx(
                 "group gap-2",
@@ -740,21 +626,21 @@ function TeamDetailsMon({ team, pokemon, pokemonCount, isDiscover, onAbilityChan
                 {getFormName(mon)}
               </span>
             </div>
-            {/* ability */}
-            {/* ability selector in editor */}
-            <DropDown
-              type={"ability"}
-              current={pokemon.ability}
-              pokemon={pokemon}
-              onSelect={handleAbilitySelect}
-            />
-            {/* display ability in discover */}
-            {isDiscover && (
-              <span className={"w-full overflow-x-scroll text-small"}>
-                {pokemon.ability}
-              </span>
-            )}
-            {/* item */}
+            <>
+              {!isDiscover && (
+                <DropDown
+                  type={"ability"}
+                  current={pokemon.ability}
+                  pokemon={pokemon}
+                  onSelect={handleAbilitySelect}
+                />
+              )}
+              {isDiscover && (
+                <span className={"w-full overflow-x-scroll text-small"}>
+                  {pokemon.ability}
+                </span>
+              )}
+            </>
             <span
               className={clsx(
                 "w-full overflow-x-scroll text-small",
@@ -766,16 +652,17 @@ function TeamDetailsMon({ team, pokemon, pokemonCount, isDiscover, onAbilityChan
               {pokemon.item ? pokemon.item : "No item"}
             </span>
           </div>
-          {/* moves */}
-          <div className="flex w-full min-w-0 flex-col justify-between">
+          <>
             {moves ? (
-              <>
+              <div className="flex w-full min-w-0 flex-col justify-between">
                 {[1, 2, 3, 4].map((n) => {
                   const move = moves.find((m) => m.slot === n);
                   return (
                     <div
                       key={n}
-                      onClick={() => (!isDiscover ? openModal("move") : null)}
+                      onClick={() =>
+                        !isDiscover ? openModal("move", n) : null
+                      }
                     >
                       <Move
                         moveId={move?.moveId || ""}
@@ -784,15 +671,13 @@ function TeamDetailsMon({ team, pokemon, pokemonCount, isDiscover, onAbilityChan
                     </div>
                   );
                 })}
-              </>
+              </div>
             ) : (
               <span>Loading...</span>
             )}
-          </div>
+          </>
           <div className="flex min-w-64 flex-col gap-2">
             <div className="flex w-full items-center justify-between">
-              {/* nature */}
-              {/* nature selector in editor */}
               {!isDiscover && (
                 <DropDown
                   type={"nature"}
@@ -800,40 +685,105 @@ function TeamDetailsMon({ team, pokemon, pokemonCount, isDiscover, onAbilityChan
                   onSelect={handleNatureSelect}
                 />
               )}
-              {/* display nature in discover */}
               {isDiscover && (
                 <span className="items-center justify-between px-2 py-1 text-small font-medium">
                   {natureData.find((n) => n.id === pokemon.nature).name}
                 </span>
               )}
-              {/* ev total */}
               <span className="text-small font-medium">{`EV ${evTotal}/66`}</span>
             </div>
-            {/* ev */}
             <div className="grid h-full w-full grid-cols-2 grid-rows-3 gap-2 rounded-lg bg-base-lighter">
-              <Ev pokemon={pokemon} type={"HP"} isDiscover={isDiscover} onEvChange={onEvChange} />
-              <Ev pokemon={pokemon} type={"Atk"} isDiscover={isDiscover} onEvChange={onEvChange} />
-              <Ev pokemon={pokemon} type={"Def"} isDiscover={isDiscover} onEvChange={onEvChange} />
-              <Ev pokemon={pokemon} type={"SpA"} isDiscover={isDiscover} onEvChange={onEvChange} />
-              <Ev pokemon={pokemon} type={"SpD"} isDiscover={isDiscover} onEvChange={onEvChange} />
-              <Ev pokemon={pokemon} type={"Spe"} isDiscover={isDiscover} onEvChange={onEvChange} />
+              <Ev
+                pokemon={pokemon}
+                type={"HP"}
+                isDiscover={isDiscover}
+                onEvChange={onEvChange}
+              />
+              <Ev
+                pokemon={pokemon}
+                type={"Atk"}
+                isDiscover={isDiscover}
+                onEvChange={onEvChange}
+              />
+              <Ev
+                pokemon={pokemon}
+                type={"Def"}
+                isDiscover={isDiscover}
+                onEvChange={onEvChange}
+              />
+              <Ev
+                pokemon={pokemon}
+                type={"SpA"}
+                isDiscover={isDiscover}
+                onEvChange={onEvChange}
+              />
+              <Ev
+                pokemon={pokemon}
+                type={"SpD"}
+                isDiscover={isDiscover}
+                onEvChange={onEvChange}
+              />
+              <Ev
+                pokemon={pokemon}
+                type={"Spe"}
+                isDiscover={isDiscover}
+                onEvChange={onEvChange}
+              />
             </div>
           </div>
         </div>
       </div>
+
       {isModalOpen &&
         createPortal(
           <TeamSelectItemsModal
             team={team}
             pokemon={pokemon}
             type={modalType}
+            availableMoves={availableMoves}
+            activeSlot={activeMoveSlot}
+            hasExistingMove={
+              modalType === "move" &&
+              !!moves.find((m) => m.slot === activeMoveSlot)
+            }
+            onForgetMove={() => {
+              const packedMoves = moves
+                .filter((m) => m.slot !== activeMoveSlot)
+                .sort((a, b) => a.slot - b.slot)
+                .map((m, index) => ({ ...m, slot: index + 1 }));
+
+              if (onMoveChange) onMoveChange(packedMoves);
+              setIsModalOpen(false);
+            }}
             onClose={() => setIsModalOpen(false)}
             onChangeSuccess={(selectedData) => {
               if (modalType === "item" && onItemChange) {
                 onItemChange(selectedData);
-              } else if (modalType === "pokemonChange" && onItemChange) {
-                onItemChange(selectedData);
+              } else if (modalType === "pokemonChange" && onPokemonChange) {
+                onPokemonChange(selectedData);
+              } else if (modalType === "move" && onMoveChange) {
+                const updatedMoves = [...moves];
+                const existingIdx = updatedMoves.findIndex(
+                  (m) => m.slot === activeMoveSlot,
+                );
+
+                if (existingIdx > -1) {
+                  updatedMoves[existingIdx].moveId = selectedData;
+                } else {
+                  updatedMoves.push({
+                    moveId: selectedData,
+                    slot: activeMoveSlot,
+                  });
+                }
+
+                const packedMoves = updatedMoves
+                  .filter((m) => m && m.moveId)
+                  .sort((a, b) => a.slot - b.slot)
+                  .map((m, index) => ({ ...m, slot: index + 1 }));
+
+                onMoveChange(packedMoves);
               }
+              setIsModalOpen(false);
             }}
           />,
           document.body,
@@ -849,6 +799,8 @@ function TeamSelectItemsModal({
   onClose,
   onCreateSuccess,
   onChangeSuccess,
+  hasExistingMove,
+  onForgetMove,
 }) {
   const [isVisible, setIsVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -857,9 +809,10 @@ function TeamSelectItemsModal({
   const title = {
     pokemon: "Pokémon",
     pokemonChange: "Pokémon",
-    item: "Held Item",
-    move: "Moves",
+    item: `Held Item for ${pokemon.nickname}`,
+    move: `Moves for ${pokemon.nickname}`,
   };
+  console.log(pokemon);
   const handleClose = () => {
     setIsVisible(false);
     setTimeout(onClose, 150);
@@ -872,7 +825,7 @@ function TeamSelectItemsModal({
       if (onCreateSuccess) onCreateSuccess(mon);
     }, 150);
   };
-  const handleChange = (e, mon, pokemonId) => {
+  const handleChange = (e, pokemonId) => {
     e.stopPropagation();
     setIsVisible(false);
     setTimeout(() => {
@@ -880,12 +833,20 @@ function TeamSelectItemsModal({
       if (onChangeSuccess) onChangeSuccess(pokemonId);
     }, 150);
   };
-  const handleItemUpdate = (e, mon, item) => {
+  const handleItemUpdate = (e, item) => {
     e.stopPropagation();
     setIsVisible(false);
     setTimeout(() => {
       onClose();
       if (onChangeSuccess) onChangeSuccess(item);
+    }, 150);
+  };
+  const handleForgetMove = (e) => {
+    e.stopPropagation();
+    setIsVisible(false);
+    setTimeout(() => {
+      onClose();
+      if (onForgetMove) onForgetMove();
     }, 150);
   };
 
@@ -928,6 +889,9 @@ function TeamSelectItemsModal({
             return match ? match : null;
           })
           .filter(Boolean)
+          .filter((move) => {
+            return move.name.toLowerCase().includes(searchQuery.toLowerCase());
+          })
           .sort((a, b) => a.name.localeCompare(b.name))
       : [];
   const styles = {
@@ -999,8 +963,7 @@ function TeamSelectItemsModal({
                   className="flex w-full cursor-pointer items-center justify-between gap-8 rounded-2xl p-4 transition hover:bg-base-light"
                   onClick={(e) => {
                     if (type === "pokemon") handleCreate(e, mon.id);
-                    else if (type === "pokemonChange")
-                      handleChange(e, pokemon, mon.id);
+                    else if (type === "pokemonChange") handleChange(e, mon.id);
                   }}
                 >
                   <div className="flex items-center gap-4">
@@ -1037,7 +1000,7 @@ function TeamSelectItemsModal({
                 <div
                   key={item}
                   className="flex w-full cursor-pointer items-center gap-4 rounded-2xl p-4 transition hover:bg-base-light"
-                  onClick={(e) => handleItemUpdate(e, pokemon, item)}
+                  onClick={(e) => handleItemUpdate(e, item)}
                 >
                   {/* <ItemSprite item={item} /> */}
                   <p className="font-normal">{item}</p>
@@ -1052,7 +1015,7 @@ function TeamSelectItemsModal({
                 <div
                   key={move.id}
                   className="flex w-full cursor-pointer items-center justify-between gap-4 rounded-2xl p-4 transition hover:bg-base-light"
-                  onClick={(e) => null}
+                  onClick={(e) => handleChange(e, move.id)}
                 >
                   {/* <ItemSprite item={item} /> */}
                   <p className="font-normal">{move.name}</p>
@@ -1062,7 +1025,12 @@ function TeamSelectItemsModal({
             </>
           )}
         </div>
-        <div className="flex w-full items-center justify-end">
+        <div className="flex w-full items-center justify-end gap-4">
+          {type === "move" && hasExistingMove && (
+            <div onClick={handleForgetMove}>
+              <Button text={"Forget Move"} />
+            </div>
+          )}
           <div onClick={handleClose}>
             <Button text={"Cancel"} />
           </div>
@@ -1162,10 +1130,10 @@ function Move({ moveId, isDiscover }) {
       className={clsx(
         "flex w-full max-w-full min-w-0 cursor-pointer flex-col items-center overflow-hidden rounded-lg p-2 transition",
         move ? "ring-2 ring-inset" : "bg-base-lighter text-base-text-darker",
-        isDiscover && move
+        !isDiscover && move
           ? `cursor-pointer hover:bg-base-lighter ${style}`
           : "",
-        isDiscover && !move ? "hover:bg-base-lightest" : "",
+        !isDiscover && !move ? "hover:bg-base-lightest" : "",
       )}
     >
       <span className="block w-full truncate text-start">
@@ -1238,7 +1206,7 @@ export function Ev({ pokemon, type, isDiscover, onEvChange }) {
       }}
       className={clsx(
         "flex flex-col justify-center px-2 transition",
-        !isDiscover ? "group cursor-text rounded hover:bg-base-lighter" : "",
+        !isDiscover ? "group cursor-text rounded-lg hover:bg-base-lighter" : "",
       )}
     >
       <p className="text-small text-base-text-darker">{type}</p>
@@ -1274,9 +1242,10 @@ export function Ev({ pokemon, type, isDiscover, onEvChange }) {
   );
 }
 
-function DropDown({ type, current, pokemon, onSelect }) {
+function DropDown({ type, current, pokemon, onSelect, pokemonCount }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -1295,11 +1264,15 @@ function DropDown({ type, current, pokemon, onSelect }) {
     options = formatData.map((f) => ({ id: f.id, name: f.name, value: f.id }));
   } else if (type === "nature") {
     options = natureData.map((n) => ({ id: n.id, name: n.name, value: n.id }));
+  } else if (type === "slot") {
+    // Generate an option for every active slot dynamically
+    for (let i = 1; i <= pokemonCount; i++) {
+      options.push({ id: i, name: `Slot ${i}`, value: i });
+    }
   }
 
   return (
     <div ref={dropdownRef} className="relative inline-block w-fit text-left">
-      {/* Dropdown Trigger Button */}
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
@@ -1316,10 +1289,17 @@ function DropDown({ type, current, pokemon, onSelect }) {
             : "",
         )}
       >
-        <span>{current}</span>
+        {/* Render the Icon if it's the slot switcher, otherwise text */}
+        {type === "slot" ? (
+          <Icon
+            name="switch"
+            color="fill-base-text-darker hover:fill-base-text-dark cursor-pointer"
+          />
+        ) : (
+          <span>{current}</span>
+        )}
       </button>
 
-      {/* Dropdown Menu List */}
       {isOpen && (
         <ul className="absolute left-0 z-50 mt-2 max-h-64 w-max min-w-full overflow-y-auto overscroll-contain rounded-lg bg-base-light shadow-xl ring-1 ring-base-lightest focus:outline-none">
           {options.map((option) => (
@@ -1331,7 +1311,7 @@ function DropDown({ type, current, pokemon, onSelect }) {
               }}
               className={clsx(
                 "w-full cursor-pointer p-4 py-3 text-small whitespace-nowrap transition hover:bg-base-lighter",
-                current === option.name
+                current === option.value
                   ? "text-base-text"
                   : "text-base-text-darker hover:text-base-text",
               )}
@@ -1339,61 +1319,8 @@ function DropDown({ type, current, pokemon, onSelect }) {
               {option.name}
             </li>
           ))}
-
-          {options.length === 0 && (
-            <p className="p-3 text-center text-small whitespace-nowrap text-base-text-darker">
-              No options available
-            </p>
-          )}
         </ul>
       )}
-    </div>
-  );
-}
-
-export function Modal({ title, content, onClose }) {
-  const [isVisible, setIsVisible] = useState(false);
-
-  const handleClose = () => {
-    setIsVisible(false);
-    setTimeout(onClose, 150);
-  };
-  const handleKeyDown = (e) => {
-    if (e.key === "Escape") {
-      handleClose();
-    }
-  };
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), 10);
-    return () => clearTimeout(timer);
-  }, []);
-  return (
-    <div
-      className={clsx(
-        "fixed inset-0 z-50 flex items-center justify-center bg-base-background/80 backdrop-blur-sm transition",
-        isVisible ? "opacity-100" : "opacity-0",
-      )}
-      onClick={handleClose}
-    >
-      <div
-        className={clsx(
-          "flex w-[40dvw] min-w-lg flex-col gap-4 overflow-hidden rounded-2xl bg-base-base p-4 ring-2 ring-base-light transition-all",
-          isVisible ? "scale-100 opacity-100" : "scale-0 opacity-0",
-        )}
-        onClick={(e) => e.stopPropagation()}
-        onKeyDown={handleKeyDown}
-      >
-        <div className="flex flex-col gap-8 p-4">
-          <h3 className="text-large font-bold">{title}</h3>
-          <p className="w-full">{content}</p>
-        </div>
-        <div className="flex w-full items-center justify-end gap-4">
-          <div onClick={handleClose}>
-            <Button text={"Cancel"} />
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
