@@ -1,12 +1,14 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { createPortal } from "react-dom";
 import Icon from "../icons";
 import { TeamSprite } from "../sprite";
 import clsx from "clsx";
 import { deleteTeam, updateTeam } from "@/lib/actions/team-actions";
 import pokemonData from "@/data/pokemon.json";
+import itemData from "@/data/items.json";
+import abilityData from "@/data/abilities.json";
 import moveData from "@/data/moves.json";
 import learnsetData from "@/data/learnsets.json";
 import natureData from "@/data/natures.json";
@@ -85,6 +87,7 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
   const [hasChanges, setHasChanges] = useState(false);
   const [originalTeam] = useState(team);
   const inputRef = useRef(null);
+  const isTeamLegal = checkTeamLegality(displayTeam);
 
   // 1. AUTO-FOCUS INPUT
   useEffect(() => {
@@ -123,11 +126,13 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
   // 5. BATCH SAVE HANDLER
   const handleSaveChanges = async () => {
     setIsSaveConfirmationOpen(false);
+
     try {
       const payload = {
         name: editedName,
         replicaId: editedCode,
         pokemon: displayTeam.pokemon,
+        isLegal: isTeamLegal, // <-- Uses the pure variable
       };
       const response = await updateTeam(team.id, payload);
       if (!response.success) throw new Error(response.error);
@@ -136,9 +141,11 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
       alert("Failed to save your team. Please try again.");
       return;
     }
-    setIsVisible(false);
     setHasChanges(false);
-    setTimeout(onClose, 150);
+    if (isSaveConfirmationOpen) {
+      setIsVisible(false);
+      setTimeout(onClose, 150);
+    }
   };
 
   // 6. INPUT BLUR HANDLERS
@@ -162,6 +169,7 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
 
   return (
     <>
+      {/* modal background */}
       <div
         className={clsx(
           "fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm transition",
@@ -173,6 +181,7 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
           handleClose();
         }}
       >
+        {/* modal */}
         <div
           className={clsx(
             "flex h-[90dvh] w-210 flex-col gap-4 overflow-hidden rounded-2xl bg-base-base p-4 ring-2 ring-base-light transition-all duration-150",
@@ -182,6 +191,7 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
         >
           <header className="flex w-full flex-col gap-2">
             <div className="flex w-full items-center gap-4">
+              {/* team name */}
               <div className="min-w-0 flex-1 font-semibold">
                 {isEditingName ? (
                   <input
@@ -213,7 +223,9 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
                   </p>
                 )}
               </div>
+              {/* buttons */}
               <div className="flex shrink-0 gap-4">
+                {/* add pokemon in editor */}
                 {!isDiscover && team.pokemon.length < 6 && (
                   <div onClick={() => setIsSelectModalOpen(true)}>
                     <Icon
@@ -222,10 +234,21 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
                     />
                   </div>
                 )}
+                {/* save changes in editor */}
+                {!isDiscover && hasChanges && (
+                  <div onClick={handleSaveChanges}>
+                    <Icon
+                      name="save"
+                      color="fill-base-text-darker hover:fill-base-text cursor-pointer"
+                    />
+                  </div>
+                )}
+                {/* pokepaste */}
                 <Icon
                   name="import"
                   color="fill-base-text-darker hover:fill-base-text cursor-pointer"
                 />
+                {/* delete team in editor */}
                 {!isDiscover && (
                   <div onClick={() => setIsModalOpen(true)}>
                     <Icon
@@ -234,12 +257,14 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
                     />
                   </div>
                 )}
+                {/* fullscreen in discover */}
                 {isDiscover && (
                   <Icon
                     name="expand"
                     color="fill-base-text-darker hover:fill-base-text cursor-pointer"
                   />
                 )}
+                {/* close modal */}
                 <div onClick={handleClose}>
                   <Icon
                     name="cross"
@@ -249,38 +274,47 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
               </div>
             </div>
             <div className="flex w-full items-center justify-end gap-8 pl-2">
+              {/* team info */}
               <div className="flex w-fit items-center gap-8 text-small font-medium">
+                {/* likes if public */}
                 {team.isPublic && (
                   <span className="whitespace-nowrap">
                     {team.likes ? `${team.likes.length} likes` : "0 likes"}
                   </span>
                 )}
+                {/* visibility */}
                 <span>{team.isPublic ? "Public" : "Private"}</span>
+                {/* validation */}
                 <span
                   className={clsx(
-                    !team.isLegal
+                    !isTeamLegal
                       ? "cursor-help text-primary-light hover:underline"
                       : "",
                   )}
                 >
-                  {team.isLegal ? "Validated" : "Invalidated"}
+                  {isTeamLegal ? "Validated" : "Invalidated"}{" "}
                 </span>
               </div>
             </div>
             <div className="flex w-full items-center justify-between py-2">
+              {/* format */}
               {!isDiscover ? (
+                // format selector in editor
                 <DropDown
                   type={"format"}
                   current={formatData.find((f) => f.id === team.format).name}
                   onSelect={null}
                 />
               ) : (
+                // display format in discover
                 <span className="text-small font-medium">
                   {formatData.find((f) => f.id === team.format).name}
                 </span>
               )}
+              {/* replica id */}
               <div
                 onClick={() => {
+                  if (isDiscover) return;
                   setEditedCode(team.replicaId || "");
                   setIsEditingCode(true);
                 }}
@@ -329,6 +363,15 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
                       pokemon={pokemon}
                       pokemonCount={displayTeam.pokemon.length}
                       isDiscover={isDiscover}
+                      onNicknameChange={(nickname) => {
+                        setDisplayTeam((prev) => ({
+                          ...prev,
+                          pokemon: prev.pokemon.map((p) =>
+                            p.id === pokemon.id ? { ...p, nickname } : p,
+                          ),
+                        }));
+                        setHasChanges(true);
+                      }}
                       onAbilityChange={(ability) => {
                         setDisplayTeam((prev) => ({
                           ...prev,
@@ -403,7 +446,17 @@ export function TeamDetailsModal({ team, onClose, isDiscover }) {
                               ? {
                                   ...p,
                                   pokemonId: newPokemonId,
-                                  ability: monInfo?.abilities[0] || p.ability,
+                                  nickname: monInfo ? monInfo.name : p.nickname,
+                                  ability: monInfo?.abilities[0] || "",
+                                  nature: "hardy",
+                                  item: "",
+                                  moves: [],
+                                  evHp: 0,
+                                  evAtk: 0,
+                                  evDef: 0,
+                                  evSpa: 0,
+                                  evSpd: 0,
+                                  evSpe: 0,
                                 }
                               : p,
                           ),
@@ -518,6 +571,7 @@ function TeamDetailsMon({
   pokemon,
   pokemonCount,
   isDiscover,
+  onNicknameChange,
   onAbilityChange,
   onNatureChange,
   onItemChange,
@@ -530,6 +584,38 @@ function TeamDetailsMon({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState(null);
   const [activeMoveSlot, setActiveMoveSlot] = useState(null);
+  const [isEditingNickname, setIsEditingNickname] = useState(false);
+  const mon = pokemonData.find((p) => p.id === pokemon.pokemonId);
+  const currentDefaultName = pokemon.nickname || mon.name;
+
+  const [prevName, setPrevName] = useState(currentDefaultName);
+  const [editedNickname, setEditedNickname] = useState(currentDefaultName);
+  const nicknameInputRef = useRef(null);
+
+  // LIVE-SYNC STATE DURING RENDER: Detects changes instantly without useEffect
+  if (currentDefaultName !== prevName) {
+    setPrevName(currentDefaultName);
+    setEditedNickname(currentDefaultName);
+  }
+
+  // Auto-focus input when editing
+  useEffect(() => {
+    if (isEditingNickname && nicknameInputRef.current) {
+      nicknameInputRef.current.focus();
+      nicknameInputRef.current.select();
+    }
+  }, [isEditingNickname]);
+
+  // Handle saving the nickname
+  const handleNicknameSave = () => {
+    setIsEditingNickname(false);
+    const finalName =
+      editedNickname.trim() === "" ? mon.name : editedNickname.trim();
+    setEditedNickname(finalName);
+    if (finalName !== pokemon.nickname) {
+      if (onNicknameChange) onNicknameChange(finalName);
+    }
+  };
 
   function openModal(type, slot = null) {
     setModalType(type);
@@ -557,10 +643,11 @@ function TeamDetailsMon({
     if (onAbilityChange) onAbilityChange(ability);
   };
 
-  const mon = pokemonData.find((p) => p.id === pokemon.pokemonId);
-
   const moves = pokemon.moves || [];
-
+  const itemInfo = itemData.find((i) => i.id === pokemon.item);
+  const itemDisplayName = itemInfo ? itemInfo.name : pokemon.item;
+  const abilityInfo = abilityData.find((a) => a.id === pokemon.ability);
+  const abilityDisplayName = abilityInfo ? abilityInfo.name : pokemon.ability;
   const evTotal =
     pokemon.evHp +
     pokemon.evAtk +
@@ -579,10 +666,44 @@ function TeamDetailsMon({
     <>
       <div className="flex w-full flex-col gap-4 rounded-2xl bg-base-light p-4">
         <div className="flex w-full items-center justify-between gap-4">
-          <h3 className="font-medium hover:underline">
-            {pokemon.nickname ? pokemon.nickname : mon.name}
-          </h3>
+          {/* pokemon name */}
+          <div className="min-w-0 flex-1">
+            {isEditingNickname && !isDiscover ? (
+              <input
+                ref={nicknameInputRef}
+                type="text"
+                maxLength={24}
+                value={editedNickname}
+                onChange={(e) => setEditedNickname(e.target.value)}
+                onBlur={handleNicknameSave}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") handleNicknameSave();
+                  else if (e.key === "Escape") {
+                    setEditedNickname(pokemon.nickname || mon.name);
+                    setIsEditingNickname(false);
+                  }
+                }}
+                className="ring-primary-main w-full max-w-64 rounded-lg bg-base-lighter font-medium text-base-text ring-2 outline-none"
+              />
+            ) : (
+              <h3
+                onClick={(e) => {
+                  if (isDiscover) return;
+                  e.stopPropagation();
+                  setIsEditingNickname(true);
+                }}
+                className={clsx(
+                  "max-w-64 truncate rounded-lg font-medium transition",
+                  !isDiscover ? "cursor-text hover:underline" : "",
+                )}
+              >
+                {pokemon.nickname ? pokemon.nickname : mon.name}
+              </h3>
+            )}
+          </div>
+          {/* buttons */}
           <div className="flex items-center gap-4">
+            {/* move position in editor */}
             {!isDiscover && pokemonCount > 1 && (
               <DropDown
                 type="slot"
@@ -593,10 +714,12 @@ function TeamDetailsMon({
                 }}
               />
             )}
+            {/* pokepaste */}
             <Icon
               name="import"
               color="fill-base-text-darker hover:fill-base-text-dark cursor-pointer"
             />
+            {/* delete pokemon in editor */}
             {!isDiscover && (
               <div onClick={onPokemonDelete}>
                 <Icon
@@ -616,7 +739,9 @@ function TeamDetailsMon({
               )}
               onClick={() => (!isDiscover ? openModal("pokemonChange") : null)}
             >
+              {/* pokemon sprite */}
               <TeamSprite pokemon={pokemon.pokemonId} item={pokemon.item} />
+              {/* pokemon species */}
               <span
                 className={clsx(
                   "w-full overflow-x-scroll text-small text-base-text-darker",
@@ -627,20 +752,23 @@ function TeamDetailsMon({
               </span>
             </div>
             <>
+              {/* ability selector in editor */}
               {!isDiscover && (
                 <DropDown
                   type={"ability"}
-                  current={pokemon.ability}
+                  current={abilityDisplayName} // Changed to display name
                   pokemon={pokemon}
                   onSelect={handleAbilitySelect}
                 />
               )}
+              {/* display ability in discover */}
               {isDiscover && (
                 <span className={"w-full overflow-x-scroll text-small"}>
-                  {pokemon.ability}
+                  {abilityDisplayName}
                 </span>
               )}
             </>
+            {/* item */}
             <span
               className={clsx(
                 "w-full overflow-x-scroll text-small",
@@ -649,7 +777,7 @@ function TeamDetailsMon({
               )}
               onClick={() => (!isDiscover ? openModal("item") : null)}
             >
-              {pokemon.item ? pokemon.item : "No item"}
+              {pokemon.item ? itemDisplayName : "No item"}
             </span>
           </div>
           <>
@@ -678,6 +806,7 @@ function TeamDetailsMon({
           </>
           <div className="flex min-w-64 flex-col gap-2">
             <div className="flex w-full items-center justify-between">
+              {/* nature selector in editor */}
               {!isDiscover && (
                 <DropDown
                   type={"nature"}
@@ -685,13 +814,16 @@ function TeamDetailsMon({
                   onSelect={handleNatureSelect}
                 />
               )}
+              {/* display nature in discover */}
               {isDiscover && (
                 <span className="items-center justify-between px-2 py-1 text-small font-medium">
                   {natureData.find((n) => n.id === pokemon.nature).name}
                 </span>
               )}
+              {/* total EV */}
               <span className="text-small font-medium">{`EV ${evTotal}/66`}</span>
             </div>
+            {/* EV spread */}
             <div className="grid h-full w-full grid-cols-2 grid-rows-3 gap-2 rounded-lg bg-base-lighter">
               <Ev
                 pokemon={pokemon}
@@ -812,7 +944,6 @@ function TeamSelectItemsModal({
     item: `Held Item for ${pokemon.nickname}`,
     move: `Moves for ${pokemon.nickname}`,
   };
-  console.log(pokemon);
   const handleClose = () => {
     setIsVisible(false);
     setTimeout(onClose, 150);
@@ -833,12 +964,14 @@ function TeamSelectItemsModal({
       if (onChangeSuccess) onChangeSuccess(pokemonId);
     }, 150);
   };
-  const handleItemUpdate = (e, item) => {
-    e.stopPropagation();
+  const handleItemUpdate = (e, newId) => {
+    e.preventDefault();
     setIsVisible(false);
     setTimeout(() => {
       onClose();
-      if (onChangeSuccess) onChangeSuccess(item);
+      if (onChangeSuccess) {
+        onChangeSuccess(newId);
+      }
     }, 150);
   };
   const handleForgetMove = (e) => {
@@ -875,11 +1008,15 @@ function TeamSelectItemsModal({
       return a.id.localeCompare(b.id);
     });
   const itemList = format.items
+    .map((itemId) => {
+      const match = itemData.find((i) => i.id === itemId);
+      return match || { id: itemId, name: itemId }; // Fallback if item isn't in items.json
+    })
     .filter((item) => {
-      return item.toLowerCase().includes(searchQuery.toLowerCase());
+      return item.name.toLowerCase().includes(searchQuery.toLowerCase());
     })
     .sort((a, b) => {
-      return a.localeCompare(b);
+      return a.name.localeCompare(b.name);
     });
   const moveList =
     pokemon?.pokemonId && learnsetData[pokemon.pokemonId]
@@ -998,14 +1135,19 @@ function TeamSelectItemsModal({
             <>
               {itemList.map((item) => (
                 <div
-                  key={item}
+                  key={item.id}
                   className="flex w-full cursor-pointer items-center gap-4 rounded-2xl p-4 transition hover:bg-base-light"
-                  onClick={(e) => handleItemUpdate(e, item)}
+                  onClick={(e) => handleItemUpdate(e, item.id)}
                 >
-                  {/* <ItemSprite item={item} /> */}
-                  <p className="font-normal">{item}</p>
+                  {/* <ItemSprite item={item.id} /> */}
+                  <p className="font-normal">{item.name}</p>
                 </div>
               ))}
+              {itemList.length === 0 && (
+                <p className="flex h-full items-center justify-center text-base-text-darker">
+                  No results
+                </p>
+              )}
             </>
           )}
           {/* move */}
@@ -1026,6 +1168,11 @@ function TeamSelectItemsModal({
           )}
         </div>
         <div className="flex w-full items-center justify-end gap-4">
+          {type === "item" && pokemon.item && (
+            <div onClick={(e) => handleItemUpdate(e, "")}>
+              <Button text={"Remove Item"} />
+            </div>
+          )}
           {type === "move" && hasExistingMove && (
             <div onClick={handleForgetMove}>
               <Button text={"Forget Move"} />
@@ -1102,6 +1249,66 @@ export function TeamDeleteConfirmModal({ team, onClose, onDeleteSuccess }) {
   );
 }
 
+function checkTeamLegality(currentTeam) {
+  if (!currentTeam || !currentTeam.pokemon || currentTeam.pokemon.length !== 6)
+    return false;
+
+  const currentFormat = formatData.find((f) => f.id === currentTeam.format);
+  const dexNumbers = [];
+  const heldItems = [];
+
+  for (const p of currentTeam.pokemon) {
+    if (!p.pokemonId) return false;
+
+    const monInfo = pokemonData.find((pm) => pm.id === p.pokemonId);
+    if (!monInfo) return false;
+
+    // 1. Format Restrictions
+    if (currentFormat) {
+      if (currentFormat.pokemon && !currentFormat.pokemon.includes(p.pokemonId))
+        return false;
+      if (
+        currentFormat.bannedPokemon &&
+        currentFormat.bannedPokemon.includes(p.pokemonId)
+      )
+        return false;
+    }
+
+    // 2. Item Legality & Uniqueness
+    if (p.item) {
+      if (
+        currentFormat?.items?.length > 0 &&
+        !currentFormat.items.includes(p.item)
+      )
+        return false;
+      if (heldItems.includes(p.item)) return false;
+      heldItems.push(p.item);
+    }
+
+    // 3. Species Clause (Unique Dex Number)
+    if (monInfo.dexNumber) {
+      if (dexNumbers.includes(monInfo.dexNumber)) return false;
+      dexNumbers.push(monInfo.dexNumber);
+    }
+
+    // 4. Ability Legality
+    if (p.ability && monInfo.abilities) {
+      if (!monInfo.abilities.includes(p.ability)) return false;
+    }
+
+    // 5. Moves Legality
+    if (p.moves && p.moves.length > 0) {
+      const targetLearnsetId = monInfo.learnsetId || p.pokemonId;
+      const allowedMoves = learnsetData[targetLearnsetId] || [];
+      for (const m of p.moves) {
+        if (m.moveId && !allowedMoves.includes(m.moveId)) return false;
+      }
+    }
+  }
+
+  return true;
+}
+
 function Move({ moveId, isDiscover }) {
   const move = moveData.find((m) => m.id === moveId);
   const styles = {
@@ -1143,7 +1350,7 @@ function Move({ moveId, isDiscover }) {
   );
 }
 
-export function Ev({ pokemon, type, isDiscover, onEvChange }) {
+function Ev({ pokemon, type, isDiscover, onEvChange }) {
   const evValues = {
     HP: pokemon.evHp || 0,
     Atk: pokemon.evAtk || 0,
@@ -1259,7 +1466,14 @@ function DropDown({ type, current, pokemon, onSelect, pokemonCount }) {
   let options = [];
   if (type === "ability") {
     const mon = pokemonData.find((p) => p.id === pokemon.pokemonId);
-    options = mon.abilities.map((a) => ({ id: a, name: a, value: a }));
+    options = mon.abilities.map((abilityId) => {
+      const match = abilityData.find((a) => a.id === abilityId);
+      return {
+        id: abilityId,
+        name: match ? match.name : abilityId,
+        value: abilityId,
+      };
+    });
   } else if (type === "format") {
     options = formatData.map((f) => ({ id: f.id, name: f.name, value: f.id }));
   } else if (type === "nature") {
@@ -1311,7 +1525,7 @@ function DropDown({ type, current, pokemon, onSelect, pokemonCount }) {
               }}
               className={clsx(
                 "w-full cursor-pointer p-4 py-3 text-small whitespace-nowrap transition hover:bg-base-lighter",
-                current === option.value
+                current === option.value || current === option.name
                   ? "text-base-text"
                   : "text-base-text-darker hover:text-base-text",
               )}
